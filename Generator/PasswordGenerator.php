@@ -5,7 +5,7 @@ namespace Hackzilla\PasswordGenerator\Generator;
 class PasswordGenerator implements PasswordGeneratorInterface
 {
 
-    private $length;
+    private $length = 8;
     private $selectedOptions;
 
     const OPTION_UPPER_CASE = 1;
