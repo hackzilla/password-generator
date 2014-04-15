@@ -15,11 +15,26 @@ class PasswordGenerator implements PasswordGeneratorInterface
     const OPTION_AVOID_SIMILAR = 16;
 
     static public $options = array(
-        self::OPTION_UPPER_CASE => 'Uppercase',
-        self::OPTION_LOWER_CASE => 'Lowercase',
-        self::OPTION_NUMBERS => 'Numbers',
-        self::OPTION_SYMBOLS => 'Symbols',
-        self::OPTION_AVOID_SIMILAR => 'Avoid Similar Characters',
+        self::OPTION_UPPER_CASE => array(
+            'key' => 'includeUppercase',
+            'label' => 'Include Uppercase',
+        ),
+        self::OPTION_LOWER_CASE => array(
+            'key' => 'includeLowercase',
+            'label' => 'Include Lowercase',
+        ),
+        self::OPTION_NUMBERS => array(
+            'key' => 'includeNumbers',
+            'label' => 'Include Numbers',
+        ),
+        self::OPTION_SYMBOLS => array(
+            'key' => 'includeSymbols',
+            'label' => 'Include Symbols',
+        ),
+        self::OPTION_AVOID_SIMILAR => array(
+            'key' => 'avoidSimilarCharacters',
+            'label' => 'Avoid Similar Characters',
+        ),
     );
 
     public function __construct($options = null)
