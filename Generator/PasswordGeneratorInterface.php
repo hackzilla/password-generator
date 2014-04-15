@@ -5,6 +5,8 @@ namespace Hackzilla\PasswordGenerator\Generator;
 interface PasswordGeneratorInterface
 {
 
+    public function getPossibleOptions();
+
     public function setOptions($options);
 
     public function setLength($characterCount);

@@ -8,6 +8,11 @@ class DummyPasswordGenerator implements PasswordGeneratorInterface
     private $length;
     private $options;
 
+    public function getPossibleOptions()
+    {
+        return array();
+    }
+
     public function generatePassword()
     {
         if ($this->length < 8) {
