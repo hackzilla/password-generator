@@ -94,7 +94,7 @@ class PasswordGenerator implements PasswordGeneratorInterface
         }
 
         if ($this->selectedOptions & self::OPTION_SYMBOLS) {
-            $characters .= '!@£$%^&*()<>,.?/[]{}-=_+';
+            $characters .= '!@$%^&*()<>,.?/[]{}-=_+';
         }
 
         if ($this->selectedOptions & self::OPTION_AVOID_SIMILAR) {
