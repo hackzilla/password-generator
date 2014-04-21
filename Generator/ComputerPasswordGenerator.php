@@ -5,8 +5,8 @@ namespace Hackzilla\PasswordGenerator\Generator;
 class ComputerPasswordGenerator implements PasswordGeneratorInterface
 {
 
-    private $length = 8;
-    private $selectedOptions;
+    private $_length = 8;
+    private $_selectedOptions;
 
     const OPTION_UPPER_CASE = 1;
     const OPTION_LOWER_CASE = 2;
@@ -81,23 +81,23 @@ class ComputerPasswordGenerator implements PasswordGeneratorInterface
     {
         $characters = '';
 
-        if ($this->selectedOptions & self::OPTION_UPPER_CASE) {
+        if ($this->_selectedOptions & self::OPTION_UPPER_CASE) {
             $characters .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         }
 
-        if ($this->selectedOptions & self::OPTION_LOWER_CASE) {
+        if ($this->_selectedOptions & self::OPTION_LOWER_CASE) {
             $characters .= 'abcdefghijklmnopqrstuvwxyz';
         }
 
-        if ($this->selectedOptions & self::OPTION_NUMBERS) {
+        if ($this->_selectedOptions & self::OPTION_NUMBERS) {
             $characters .= '0123456789';
         }
 
-        if ($this->selectedOptions & self::OPTION_SYMBOLS) {
+        if ($this->_selectedOptions & self::OPTION_SYMBOLS) {
             $characters .= '!@$%^&*()<>,.?/[]{}-=_+';
         }
 
-        if ($this->selectedOptions & self::OPTION_AVOID_SIMILAR) {
+        if ($this->_selectedOptions & self::OPTION_AVOID_SIMILAR) {
             $characters = \str_replace(array('l', 'O', 'o'), '', $characters);
         }
 
@@ -119,7 +119,7 @@ class ComputerPasswordGenerator implements PasswordGeneratorInterface
         $characters = \strlen($characterList);
         $password = '';
 
-        for ($i = 0; $i < $this->length; $i++) {
+        for ($i = 0; $i < $this->_length; $i++) {
             $password .= $characterList[mt_rand(0, $characters - 1)];
         }
 
@@ -163,7 +163,7 @@ class ComputerPasswordGenerator implements PasswordGeneratorInterface
             throw new \InvalidArgumentException('Expected positive integer');
         }
 
-        $this->selectedOptions = $options;
+        $this->_selectedOptions = $options;
 
         return $this;
     }
@@ -183,7 +183,7 @@ class ComputerPasswordGenerator implements PasswordGeneratorInterface
             throw new \InvalidArgumentException('Expected positive integer');
         }
 
-        $this->length = $characterCount;
+        $this->_length = $characterCount;
 
         return $this;
     }
