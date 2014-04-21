@@ -7,6 +7,11 @@ class ComputerPasswordGenerator implements PasswordGeneratorInterface
 
     private $_length = 8;
     private $_selectedOptions;
+    private $_uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    private $_lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';
+    private $_numbers = '0123456789';
+    private $_symbols = '!@$%^&*()<>,.?/[]{}-=_+';
+    private $_avoidSimilar = 'lOo';
 
     const OPTION_UPPER_CASE = 1;
     const OPTION_LOWER_CASE = 2;
@@ -82,23 +87,24 @@ class ComputerPasswordGenerator implements PasswordGeneratorInterface
         $characters = '';
 
         if ($this->_selectedOptions & self::OPTION_UPPER_CASE) {
-            $characters .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $characters .= $this->getUppercaseLetters();
         }
 
         if ($this->_selectedOptions & self::OPTION_LOWER_CASE) {
-            $characters .= 'abcdefghijklmnopqrstuvwxyz';
+            $characters .= $this->getLowercaseLetters();
         }
 
         if ($this->_selectedOptions & self::OPTION_NUMBERS) {
-            $characters .= '0123456789';
+            $characters .= $this->getNumbers();
         }
 
         if ($this->_selectedOptions & self::OPTION_SYMBOLS) {
-            $characters .= '!@$%^&*()<>,.?/[]{}-=_+';
+            $characters .= $this->getSymbols();
         }
 
         if ($this->_selectedOptions & self::OPTION_AVOID_SIMILAR) {
-            $characters = \str_replace(array('l', 'O', 'o'), '', $characters);
+            $removeCharacters = \str_split($this->getAvoidSimiliar());
+            $characters = \str_replace($removeCharacters, '', $characters);
         }
 
         if (!$characters) {
@@ -184,6 +190,156 @@ class ComputerPasswordGenerator implements PasswordGeneratorInterface
         }
 
         $this->_length = $characterCount;
+
+        return $this;
+    }
+
+    /**
+     * Get Uppercase characters
+     *
+     * @return string
+     */
+    public function getUppercaseLetters()
+    {
+        return $this->_uppercaseLetters;
+    }
+
+    /**
+     * Set characters to use for uppercase characters
+     *
+     * @param string $characters
+     *
+     * @return \Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function setUppercaseLetters($characters)
+    {
+        if (!is_string($characters)) {
+            throw new \InvalidArgumentException('Expected string containing Uppercase letters');
+        }
+
+        $this->_uppercaseLetters = $characters;
+
+        return $this;
+    }
+
+    /**
+     * Get Lowercase characters
+     *
+     * @return string
+     */
+    public function getLowercaseLetters()
+    {
+        return $this->_lowercaseLetters;
+    }
+
+    /**
+     * Set characters to use for lowercase characters
+     *
+     * @param string $characters
+     *
+     * @return \Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function setLowercaseLetters($characters)
+    {
+        if (!is_string($characters)) {
+            throw new \InvalidArgumentException('Expected string containing Lowercase letters');
+        }
+
+        $this->_lowercaseLetters = $characters;
+
+        return $this;
+    }
+
+    /**
+     * Get Number characters
+     *
+     * @return string
+     */
+    public function getNumbers()
+    {
+        return $this->_numbers;
+    }
+
+    /**
+     * Set characters to use for number characters
+     *
+     * @param string $characters
+     *
+     * @return \Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function setNumbers($characters)
+    {
+        if (!is_string($characters)) {
+            throw new \InvalidArgumentException('Expected string containing Numbers');
+        }
+
+        $this->_numbers = $characters;
+
+        return $this;
+    }
+
+    /**
+     * Get Symbol characters
+     *
+     * @return string
+     */
+    public function getSymbols()
+    {
+        return $this->_symbols;
+    }
+
+    /**
+     * Set characters to use for symbol characters
+     *
+     * @param string $characters
+     *
+     * @return \Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function setSymbols($characters)
+    {
+        if (!is_string($characters)) {
+            throw new \InvalidArgumentException('Expected string containing Symbols');
+        }
+
+        $this->_symbols = $characters;
+
+        return $this;
+    }
+
+    /**
+     * Get characters to remove that are similar
+     *
+     * @return string
+     */
+    public function getAvoidSimiliar()
+    {
+        return $this->_avoidSimilar;
+    }
+
+    /**
+     * Set characters to be removed when avoiding similar characters
+     *
+     * @param string $characters
+     *
+     * @return \Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function setAvoidSimiliar($characters)
+    {
+        if (!is_string($characters)) {
+            throw new \InvalidArgumentException('Expected string containing characters to remove');
+        }
+
+        $this->_avoidSimilar = $characters;
 
         return $this;
     }

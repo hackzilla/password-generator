@@ -75,15 +75,36 @@ class ComputerPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @dataProvider optionsProvider
+     */
+    public function testSetGet($method, $option)
+    {
+        $this->_object->{'set' . $method}('A');
+        $this->_object->setOptions($option);
+        $this->_object->setLength(4);
+
+        $this->assertEquals('AAAA', $this->_object->generatePassword());
+    }
+
     public function optionsProvider()
     {
         return array(
-            ComputerPasswordGenerator::OPTION_UPPER_CASE,
-            ComputerPasswordGenerator::OPTION_LOWER_CASE,
-            ComputerPasswordGenerator::OPTION_NUMBERS,
-            ComputerPasswordGenerator::OPTION_SYMBOLS,
-            ComputerPasswordGenerator::OPTION_AVOID_SIMILAR,
+            array('UppercaseLetters', ComputerPasswordGenerator::OPTION_UPPER_CASE),
+            array('LowercaseLetters', ComputerPasswordGenerator::OPTION_LOWER_CASE),
+            array('Numbers', ComputerPasswordGenerator::OPTION_NUMBERS),
+            array('Symbols', ComputerPasswordGenerator::OPTION_SYMBOLS),
         );
+    }
+
+    public function testAvoidSimilar()
+    {
+        $this->_object->setUppercaseLetters('AB');
+        $this->_object->setAvoidSimiliar('B');
+        $this->_object->setOptions(ComputerPasswordGenerator::OPTION_UPPER_CASE | ComputerPasswordGenerator::OPTION_AVOID_SIMILAR);
+        $this->_object->setLength(4);
+
+        $this->assertEquals('AAAA', $this->_object->generatePassword());
     }
 
 }
