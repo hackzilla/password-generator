@@ -2,7 +2,7 @@
 
 namespace Hackzilla\PasswordGenerator\Generator;
 
-class PasswordGenerator implements PasswordGeneratorInterface
+class ComputerPasswordGenerator implements PasswordGeneratorInterface
 {
 
     private $length = 8;
