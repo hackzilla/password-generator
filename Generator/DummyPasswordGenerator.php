@@ -6,7 +6,6 @@ class DummyPasswordGenerator implements PasswordGeneratorInterface
 {
 
     private $length;
-    private $options;
 
     public function getPossibleOptions()
     {
