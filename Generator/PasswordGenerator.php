@@ -3,7 +3,7 @@
 namespace Hackzilla\PasswordGenerator\Generator;
 
 /*
- * @@Deprecated;
+ * @Deprecated;
  */
 
 class PasswordGenerator extends ComputerPasswordGenerator
