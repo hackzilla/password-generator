@@ -107,4 +107,11 @@ class ComputerPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('AAAA', $this->_object->generatePassword());
     }
 
+    public function testCharacterListException()
+    {
+        $this->_object->setOptions(0);
+        $this->setExpectedException('\Hackzilla\PasswordGenerator\Exception\CharactersNotFoundException');
+        $this->_object->getCharacterList();
+    }
+
 }
