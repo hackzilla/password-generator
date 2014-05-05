@@ -8,6 +8,7 @@ use Hackzilla\PasswordGenerator\Exception\WordsNotFoundException;
 class HumanPasswordGenerator implements PasswordGeneratorInterface
 {
 
+    private $_wordCache;
     private $wordList;
     private $length = 4;
     private $minWordLength = 3;
@@ -47,6 +48,10 @@ class HumanPasswordGenerator implements PasswordGeneratorInterface
      */
     public function generateWordList()
     {
+        if (!is_null($this->_wordCache)) {
+            return $this->_wordCache;
+        }
+
         $words = explode("\n", \file_get_contents($this->getWordList()));
 
         foreach ($words as $i => $word) {
@@ -60,6 +65,8 @@ class HumanPasswordGenerator implements PasswordGeneratorInterface
         if (!$words) {
             throw new WordsNotFoundException('No words selected.');
         }
+
+        $this->_wordCache = $words;
 
         return $words;
     }
@@ -179,6 +186,7 @@ class HumanPasswordGenerator implements PasswordGeneratorInterface
         }
 
         $this->maxWordLength = $length;
+        $this->_wordCache = null;
 
         return $this;
     }
@@ -207,6 +215,7 @@ class HumanPasswordGenerator implements PasswordGeneratorInterface
         }
 
         $this->minWordLength = $length;
+        $this->_wordCache = null;
 
         return $this;
     }
@@ -228,6 +237,7 @@ class HumanPasswordGenerator implements PasswordGeneratorInterface
         }
 
         $this->wordList = $filename;
+        $this->_wordCache = null;
 
         return $this;
     }
