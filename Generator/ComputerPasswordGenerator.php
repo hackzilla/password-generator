@@ -2,6 +2,8 @@
 
 namespace Hackzilla\PasswordGenerator\Generator;
 
+use Hackzilla\PasswordGenerator\Exception\CharactersNotFoundException;
+
 class ComputerPasswordGenerator implements PasswordGeneratorInterface
 {
 
@@ -108,7 +110,7 @@ class ComputerPasswordGenerator implements PasswordGeneratorInterface
         }
 
         if (!$characters) {
-            throw new \Exception('No character sets selected.');
+            throw new CharactersNotFoundException('No character sets selected.');
         }
 
         return $characters;
