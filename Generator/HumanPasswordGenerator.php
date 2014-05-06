@@ -10,6 +10,7 @@ class HumanPasswordGenerator implements PasswordGeneratorInterface
 
     private $_wordCache;
     private $wordList;
+    private $wordSeparator = '';
     private $length = 4;
     private $minWordLength = 3;
     private $maxWordLength = 99;
@@ -85,6 +86,10 @@ class HumanPasswordGenerator implements PasswordGeneratorInterface
         $password = '';
 
         for ($i = 0; $i < $this->length; $i++) {
+            if ($i) {
+                $password .= $this->wordSeparator;
+            }
+
             $password .= $wordList[mt_rand(0, $words - 1)];
         }
 
@@ -245,6 +250,36 @@ class HumanPasswordGenerator implements PasswordGeneratorInterface
     public function getWordList()
     {
         return $this->wordList;
+    }
+
+    /**
+     * Get word separator
+     *
+     * @return string
+     */
+    public function getWordSeparator()
+    {
+        return $this->wordSeparator;
+    }
+
+    /**
+     * Set word separator
+     *
+     * @param string $separator
+     *
+     * @return $this
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function setWordSeparator($separator)
+    {
+        if (!is_string($separator)) {
+            throw new \InvalidArgumentException('Expected string');
+        }
+
+        $this->wordSeparator = $separator;
+
+        return $this;
     }
 
 }

@@ -12,6 +12,7 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     public function setup()
     {
         $this->_object = new HumanPasswordGenerator();
+        $this->_object->setWordSeparator('');
     }
 
     public function testLength()
@@ -57,6 +58,24 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException('InvalidArgumentException');
         $this->_object->setMaxWordLength('fail');
+    }
+
+    public function testWordSeparator()
+    {
+        $this->_object->setWordSeparator('');
+        $this->assertEquals($this->_object->getWordSeparator(), '');
+
+        $this->_object->setWordSeparator('-');
+        $this->assertEquals($this->_object->getWordSeparator(), '-');
+
+        $this->_object->setWordSeparator('-?*');
+        $this->assertEquals($this->_object->getWordSeparator(), '-?*');
+
+        $this->setExpectedException('InvalidArgumentException');
+        $this->_object->setWordSeparator(-6);
+
+        $this->setExpectedException('InvalidArgumentException');
+        $this->_object->setMaxWordLength(null);
     }
 
     public function getSimpleWordList()
@@ -120,6 +139,34 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->_object->setWordList($filename);
         $this->_object->setLength($length);
         $this->assertEquals($this->_object->generatePassword(), \str_repeat('blancmange', $length));
+    }
+
+    /**
+     * @dataProvider lengthProvider
+     */
+    public function testGeneratePasswordWithSeparator($length)
+    {
+        $filename = $this->getSimpleWordList();
+
+        $this->_object->setWordList($filename);
+        $this->_object->setLength($length);
+        $this->_object->setWordSeparator('-');
+        $this->assertEquals($this->_object->generatePassword(), $this->makePassword('blancmange', $length, '-'));
+    }
+
+    private function makePassword($word, $length, $separator)
+    {
+        $password = '';
+
+        for ($i = 0; $i < $length; $i++) {
+            if ($i) {
+                $password .= $separator;
+            }
+
+            $password .= $word;
+        }
+
+        return $password;
     }
 
     public function lengthProvider()
