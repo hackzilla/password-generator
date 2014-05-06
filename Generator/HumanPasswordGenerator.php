@@ -14,11 +14,6 @@ class HumanPasswordGenerator implements PasswordGeneratorInterface
     private $minWordLength = 3;
     private $maxWordLength = 99;
 
-    public function __construct($options = null)
-    {
-        
-    }
-
     /**
      * Possible options
      * 
