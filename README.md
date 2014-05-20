@@ -59,3 +59,10 @@ $generator->setOptions(PasswordGenerator::OPTION_UPPER_CASE | PasswordGenerator:
 $generator->setLength(12);
 $password = $generator->generatePasswords(10);
 ```
+
+
+Example Implementations
+-----------------------
+
+* Password Generator Library [https://github.com/hackzilla/password-generator-app]
+* Password Generator Bundle [https://github.com/hackzilla/password-generator-bundle]
