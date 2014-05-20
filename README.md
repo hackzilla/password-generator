@@ -38,8 +38,10 @@ Simple Usage
 ------------
 
 ```php
-$generator = new \Hackzilla\PasswordGenerator\Generator\PasswordGenerator();
-$generator->setOptions(self::OPTION_UPPER_CASE | self::OPTION_LOWER_CASE | self::OPTION_NUMBERS);
+use \Hackzilla\PasswordGenerator\Generator\PasswordGenerator;
+
+$generator = new PasswordGenerator();
+$generator->setOptions(PasswordGenerator::OPTION_UPPER_CASE | PasswordGenerator::OPTION_LOWER_CASE | PasswordGenerator::OPTION_NUMBERS);
 $password = $generator->generatePassword();
 ```
 
@@ -50,8 +52,10 @@ More Passwords Usage
 If you want to generate 10 passwords that are 12 characters long.
 
 ```php
-$generator = new \Hackzilla\PasswordGenerator\Generator\PasswordGenerator();
-$generator->setOptions(self::OPTION_UPPER_CASE | self::OPTION_LOWER_CASE | self::OPTION_NUMBERS);
+use \Hackzilla\PasswordGenerator\Generator\PasswordGenerator;
+
+$generator = new PasswordGenerator();
+$generator->setOptions(PasswordGenerator::OPTION_UPPER_CASE | PasswordGenerator::OPTION_LOWER_CASE | PasswordGenerator::OPTION_NUMBERS);
 $generator->setLength(12);
 $password = $generator->generatePasswords(10);
 ```
