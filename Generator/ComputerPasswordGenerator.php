@@ -163,7 +163,7 @@ class ComputerPasswordGenerator implements PasswordGeneratorInterface
      *
      * @param integer $options
      *
-     * @return \Hackzilla\PasswordGenerator\PasswordGenerator
+     * @return $this
      */
     public function setOptions($options)
     {
@@ -211,7 +211,7 @@ class ComputerPasswordGenerator implements PasswordGeneratorInterface
      *
      * @param string $characters
      *
-     * @return \Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator
+     * @return $this
      *
      * @throws \InvalidArgumentException
      */
@@ -241,7 +241,7 @@ class ComputerPasswordGenerator implements PasswordGeneratorInterface
      *
      * @param string $characters
      *
-     * @return \Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator
+     * @return $this
      *
      * @throws \InvalidArgumentException
      */
@@ -271,7 +271,7 @@ class ComputerPasswordGenerator implements PasswordGeneratorInterface
      *
      * @param string $characters
      *
-     * @return \Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator
+     * @return $this
      *
      * @throws \InvalidArgumentException
      */
@@ -301,7 +301,7 @@ class ComputerPasswordGenerator implements PasswordGeneratorInterface
      *
      * @param string $characters
      *
-     * @return \Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator
+     * @return $this
      *
      * @throws \InvalidArgumentException
      */
@@ -331,7 +331,7 @@ class ComputerPasswordGenerator implements PasswordGeneratorInterface
      *
      * @param string $characters
      *
-     * @return \Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator
+     * @return $this
      *
      * @throws \InvalidArgumentException
      */

@@ -125,7 +125,7 @@ class HumanPasswordGenerator implements PasswordGeneratorInterface
      *
      * @param integer $options
      *
-     * @return \Hackzilla\PasswordGenerator\PasswordGenerator
+     * @return $this
      */
     public function setOptions($options)
     {
@@ -176,7 +176,7 @@ class HumanPasswordGenerator implements PasswordGeneratorInterface
      * set max word length
      *
      * @param integer $length
-     * @return \Hackzilla\PasswordGenerator\Generator\HumanPasswordGenerator
+     * @return $this
      * @throws \InvalidArgumentException
      */
     public function setMaxWordLength($length)
@@ -205,7 +205,7 @@ class HumanPasswordGenerator implements PasswordGeneratorInterface
      * set min word length
      *
      * @param integer $length
-     * @return \Hackzilla\PasswordGenerator\Generator\HumanPasswordGenerator
+     * @return $this
      * @throws \InvalidArgumentException
      */
     public function setMinWordLength($length)
@@ -224,7 +224,7 @@ class HumanPasswordGenerator implements PasswordGeneratorInterface
      * Set word list
      *
      * @param string $filename
-     * @return \Hackzilla\PasswordGenerator\Generator\HumanPasswordGenerator
+     * @return $this
      * @throws \InvalidArgumentException
      * @throws FileNotFoundException
      */
