@@ -82,7 +82,7 @@ class ComputerPasswordGenerator implements PasswordGeneratorInterface
      * Generate character list for us in generating passwords
      *
      * @return string Character list
-     * @throws \Exception
+     * @throws CharactersNotFoundException
      */
     public function getCharacterList()
     {
