@@ -60,6 +60,21 @@ $generator->setLength(12);
 $password = $generator->generatePasswords(10);
 ```
 
+Hybrid Password Generator Usage
+-------------------------------
+
+```php
+use \Hackzilla\PasswordGenerator\Generator\HybridPasswordGenerator;
+
+$generator = new HybridPasswordGenerator();
+$generator->setOptions(ComputerPasswordGenerator::OPTION_UPPER_CASE | ComputerPasswordGenerator::OPTION_LOWER_CASE | ComputerPasswordGenerator::OPTION_NUMBERS);
+generator->setSegmentLength(3);
+generator->setSegmentCount(4);
+generator->setSegmentSeparator('-');
+
+$password = $generator->generatePasswords(10);
+```
+
 
 Example Implementations
 -----------------------
