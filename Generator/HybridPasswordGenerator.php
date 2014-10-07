@@ -113,7 +113,7 @@ class HybridPasswordGenerator implements PasswordGeneratorInterface
                 $password .= $this->getSegmentSeparator();
             }
 
-            for ($j = 0; $j < $this->getSegmentLength(); $j++) {
+            for ($j = 0; $j < $this->_segmentLength; $j++) {
                 $password .= $characterList[mt_rand(0, $characters - 1)];
             }
         }
