@@ -67,7 +67,7 @@ Hybrid Password Generator Usage
 use \Hackzilla\PasswordGenerator\Generator\HybridPasswordGenerator;
 
 $generator = new HybridPasswordGenerator();
-$generator->setOptions(ComputerPasswordGenerator::OPTION_UPPER_CASE | ComputerPasswordGenerator::OPTION_LOWER_CASE | ComputerPasswordGenerator::OPTION_NUMBERS);
+$generator->setOptions(HybridPasswordGenerator::OPTION_UPPER_CASE | HybridPasswordGenerator::OPTION_LOWER_CASE | HybridPasswordGenerator::OPTION_NUMBERS);
 generator->setSegmentLength(3);
 generator->setSegmentCount(4);
 generator->setSegmentSeparator('-');
