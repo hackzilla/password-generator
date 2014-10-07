@@ -88,23 +88,23 @@ class ComputerPasswordGenerator implements PasswordGeneratorInterface
     {
         $characters = '';
 
-        if ($this->_selectedOptions & self::OPTION_UPPER_CASE) {
+        if ($this->getOption(self::OPTION_UPPER_CASE)) {
             $characters .= $this->getUppercaseLetters();
         }
 
-        if ($this->_selectedOptions & self::OPTION_LOWER_CASE) {
+        if ($this->getOption(self::OPTION_LOWER_CASE)) {
             $characters .= $this->getLowercaseLetters();
         }
 
-        if ($this->_selectedOptions & self::OPTION_NUMBERS) {
+        if ($this->getOption(self::OPTION_NUMBERS)) {
             $characters .= $this->getNumbers();
         }
 
-        if ($this->_selectedOptions & self::OPTION_SYMBOLS) {
+        if ($this->getOption(self::OPTION_SYMBOLS)) {
             $characters .= $this->getSymbols();
         }
 
-        if ($this->_selectedOptions & self::OPTION_AVOID_SIMILAR) {
+        if ($this->getOption(self::OPTION_AVOID_SIMILAR)) {
             $removeCharacters = \str_split($this->getAvoidSimiliar());
             $characters = \str_replace($removeCharacters, '', $characters);
         }
@@ -174,6 +174,11 @@ class ComputerPasswordGenerator implements PasswordGeneratorInterface
         $this->_selectedOptions = $options;
 
         return $this;
+    }
+
+    public function getOption($option)
+    {
+        return $this->_selectedOptions & $option;
     }
 
     /**
