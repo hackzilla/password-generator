@@ -75,6 +75,8 @@ generator->setSegmentSeparator('-');
 $password = $generator->generatePasswords(10);
 ```
 
+If you can think of a better name for this password generator then let me know.
+
 
 Example Implementations
 -----------------------
