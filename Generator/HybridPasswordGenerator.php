@@ -27,6 +27,16 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
     );
 
     /**
+     * Possible options
+     *
+     * @return array
+     */
+    public function getPossibleOptions()
+    {
+        return self::$options;
+    }
+
+    /**
      * Generate character list for us in generating passwords
      *
      * @return string Character list
