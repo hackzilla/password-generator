@@ -19,6 +19,8 @@ abstract class AbstractPasswordGenerator
     {
         if (!is_int($count)) {
             throw new \InvalidArgumentException('Expected integer');
+        } else if ($count < 0) {
+            throw new \InvalidArgumentException('Expected positive integer');
         }
 
         $passwords = array();
