@@ -134,13 +134,13 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
      *
      * @throws \InvalidArgumentException
      */
-    public function setSegmentCount($characterCount)
+    public function setSegmentCount($segmentCount)
     {
-        if (!is_int($characterCount) || $characterCount < 1) {
+        if (!is_int($segmentCount) || $segmentCount < 1) {
             throw new \InvalidArgumentException('Expected positive integer');
         }
 
-        $this->_segmentCount = $characterCount;
+        $this->_segmentCount = $segmentCount;
 
         return $this;
     }
