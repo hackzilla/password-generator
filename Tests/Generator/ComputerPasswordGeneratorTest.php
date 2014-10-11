@@ -17,21 +17,6 @@ class ComputerPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider lengthProvider
      */
-    public function testGeneratePasswords($length)
-    {
-        $this->_object->setLength($length);
-        $passwords = $this->_object->generatePasswords($length);
-
-        $this->assertEquals(count($passwords), $length);
-
-        foreach ($passwords as $password) {
-            $this->assertEquals(\strlen($password), $length);
-        }
-    }
-
-    /**
-     * @dataProvider lengthProvider
-     */
     public function testGeneratePassword($length)
     {
         $this->_object->setLength($length);

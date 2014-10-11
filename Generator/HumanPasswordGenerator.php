@@ -5,7 +5,7 @@ namespace Hackzilla\PasswordGenerator\Generator;
 use Hackzilla\PasswordGenerator\Exception\FileNotFoundException;
 use Hackzilla\PasswordGenerator\Exception\WordsNotFoundException;
 
-class HumanPasswordGenerator implements PasswordGeneratorInterface
+class HumanPasswordGenerator extends AbstractPasswordGenerator implements PasswordGeneratorInterface
 {
 
     private $_wordCache;
@@ -94,30 +94,6 @@ class HumanPasswordGenerator implements PasswordGeneratorInterface
         }
 
         return $password;
-    }
-
-    /**
-     * Generate $count number of passwords
-     *
-     * @param integer $count Number of passwords to return
-     *
-     * @return array
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function generatePasswords($count = 1)
-    {
-        if (!is_int($count)) {
-            throw new \InvalidArgumentException('Expected integer');
-        }
-
-        $passwords = array();
-
-        for ($i = 0; $i < $count; $i++) {
-            $passwords[] = $this->generatePassword();
-        }
-
-        return $passwords;
     }
 
     /**

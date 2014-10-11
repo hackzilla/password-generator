@@ -4,7 +4,7 @@ namespace Hackzilla\PasswordGenerator\Generator;
 
 use Hackzilla\PasswordGenerator\Exception\CharactersNotFoundException;
 
-class ComputerPasswordGenerator implements PasswordGeneratorInterface
+class ComputerPasswordGenerator extends AbstractPasswordGenerator implements PasswordGeneratorInterface
 {
 
     private $_length = 8;
@@ -132,30 +132,6 @@ class ComputerPasswordGenerator implements PasswordGeneratorInterface
         }
 
         return $password;
-    }
-
-    /**
-     * Generate $count number of passwords
-     *
-     * @param integer $count Number of passwords to return
-     *
-     * @return array
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function generatePasswords($count = 1)
-    {
-        if (!is_int($count)) {
-            throw new \InvalidArgumentException('Expected integer');
-        }
-
-        $passwords = array();
-
-        for ($i = 0; $i < $count; $i++) {
-            $passwords[] = $this->generatePassword();
-        }
-
-        return $passwords;
     }
 
     /**
