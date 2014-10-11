@@ -42,7 +42,7 @@ class HybridPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     public function testSetSegmentCount($count)
     {
         $this->_object->setSegmentCount($count);
-        $this->assertEquals($this->_object->getSegementCount(), $count);
+        $this->assertEquals($this->_object->getSegmentCount(), $count);
     }
 
     /**
