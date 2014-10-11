@@ -11,31 +11,6 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
     private $_segmentLength = 3;
     private $_segmentSeparator = '-';
 
-    static public $options = array(
-        self::OPTION_UPPER_CASE => array(
-            'key' => 'includeUppercase',
-            'label' => 'Include Uppercase',
-        ),
-        self::OPTION_LOWER_CASE => array(
-            'key' => 'includeLowercase',
-            'label' => 'Include Lowercase',
-        ),
-        self::OPTION_NUMBERS => array(
-            'key' => 'includeNumbers',
-            'label' => 'Include Numbers',
-        ),
-    );
-
-    /**
-     * Possible options
-     *
-     * @return array
-     */
-    public function getPossibleOptions()
-    {
-        return self::$options;
-    }
-
     /**
      * Generate character list for us in generating passwords
      *
@@ -44,25 +19,10 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
      */
     public function getCharacterList()
     {
-        $characters = '';
+        $characterList = parent::getCharacterList();
+        $characterList = \str_replace($this->getSegmentSeparator(), '', $characterList);
 
-        if ($this->getOption(self::OPTION_UPPER_CASE)) {
-            $characters .= $this->getUppercaseLetters();
-        }
-
-        if ($this->getOption(self::OPTION_LOWER_CASE)) {
-            $characters .= $this->getLowercaseLetters();
-        }
-
-        if ($this->getOption(self::OPTION_NUMBERS)) {
-            $characters .= $this->getNumbers();
-        }
-
-        if (!$characters) {
-            throw new CharactersNotFoundException('No character sets selected.');
-        }
-
-        return $characters;
+        return $characterList;
     }
 
     /**
