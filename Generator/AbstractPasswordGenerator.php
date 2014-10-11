@@ -3,7 +3,8 @@
 namespace Hackzilla\PasswordGenerator\Generator;
 
 
-class AbstractPasswordGenerator {
+abstract class AbstractPasswordGenerator
+{
 
     /**
      * Generate $count number of passwords
