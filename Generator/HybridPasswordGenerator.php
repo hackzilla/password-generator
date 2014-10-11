@@ -96,7 +96,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
      */
     public function getLength()
     {
-        return $this->getSegementCount();
+        return $this->getSegmentCount();
     }
 
     /**
@@ -120,7 +120,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
      *
      * @return integer
      */
-    public function getSegementCount()
+    public function getSegmentCount()
     {
         return $this->_segmentCount;
     }
