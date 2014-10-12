@@ -77,6 +77,8 @@ $password = $generator->generatePasswords(10);
 
 If you can think of a better name for this password generator then let me know.
 
+The segment separator will be remove from the possible characters.
+
 
 Example Implementations
 -----------------------
