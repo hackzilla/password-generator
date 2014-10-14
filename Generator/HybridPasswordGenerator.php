@@ -2,8 +2,6 @@
 
 namespace Hackzilla\PasswordGenerator\Generator;
 
-use Hackzilla\PasswordGenerator\Exception\CharactersNotFoundException;
-
 class HybridPasswordGenerator extends ComputerPasswordGenerator
 {
 
