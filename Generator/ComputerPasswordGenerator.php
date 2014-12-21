@@ -105,7 +105,7 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator implements Pas
         }
 
         if ($this->getOption(self::OPTION_AVOID_SIMILAR)) {
-            $removeCharacters = \str_split($this->getAvoidSimiliar());
+            $removeCharacters = \str_split($this->getAvoidSimilar());
             $characters = \str_replace($removeCharacters, '', $characters);
         }
 
@@ -302,9 +302,19 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator implements Pas
      *
      * @return string
      */
-    public function getAvoidSimiliar()
+    public function getAvoidSimilar()
     {
         return $this->_avoidSimilar;
+    }
+
+    /**
+     * @deprecated deprecated since 0.8
+     *
+     * @return string
+     */
+    public function getAvoidSimiliar()
+    {
+        return $this->getAvoidSimilar();
     }
 
     /**
@@ -316,13 +326,29 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator implements Pas
      *
      * @throws \InvalidArgumentException
      */
-    public function setAvoidSimiliar($characters)
+    public function setAvoidSimilar($characters)
     {
         if (!is_string($characters)) {
             throw new \InvalidArgumentException('Expected string containing characters to remove');
         }
 
         $this->_avoidSimilar = $characters;
+
+        return $this;
+    }
+
+    /**
+     * @deprecated deprecated since 0.8
+     *
+     * @param string $characters
+     *
+     * @return $this
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function setAvoidSimiliar($characters)
+    {
+        $this->setAvoidSimilar($characters);
 
         return $this;
     }

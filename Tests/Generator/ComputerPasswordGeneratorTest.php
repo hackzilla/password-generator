@@ -85,7 +85,7 @@ class ComputerPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     public function testAvoidSimilar()
     {
         $this->_object->setUppercaseLetters('AB');
-        $this->_object->setAvoidSimiliar('B');
+        $this->_object->setAvoidSimilar('B');
         $this->_object->setOptions(ComputerPasswordGenerator::OPTION_UPPER_CASE | ComputerPasswordGenerator::OPTION_AVOID_SIMILAR);
         $this->_object->setLength(4);
 
