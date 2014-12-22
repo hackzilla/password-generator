@@ -5,7 +5,7 @@ namespace Hackzilla\PasswordGenerator\Generator;
 use Hackzilla\PasswordGenerator\Exception\FileNotFoundException;
 use Hackzilla\PasswordGenerator\Exception\WordsNotFoundException;
 
-class HumanPasswordGenerator extends AbstractPasswordGenerator implements PasswordGeneratorInterface
+class HumanPasswordGenerator extends AbstractPasswordGenerator
 {
     private $_wordCache;
     private $wordList;
@@ -13,27 +13,6 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator implements Passwo
     private $length = 4;
     private $minWordLength = 3;
     private $maxWordLength = 99;
-
-    /**
-     * Possible options
-     *
-     * @return array
-     */
-    public function getPossibleOptions()
-    {
-        return array();
-    }
-
-    /**
-     * Lookup options key value
-     *
-     * @param int $option
-     * @return null|string
-     */
-    public function getOptionKey($option)
-    {
-        return null;
-    }
 
     /**
      * Generate character list for us in generating passwords
@@ -93,18 +72,6 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator implements Passwo
         }
 
         return $password;
-    }
-
-    /**
-     * Set password generator options
-     *
-     * @param integer $options
-     *
-     * @return $this
-     */
-    public function setOptions($options)
-    {
-        return $this;
     }
 
     /**

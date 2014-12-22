@@ -4,10 +4,9 @@ namespace Hackzilla\PasswordGenerator\Generator;
 
 use Hackzilla\PasswordGenerator\Exception\CharactersNotFoundException;
 
-class ComputerPasswordGenerator extends AbstractPasswordGenerator implements PasswordGeneratorInterface
+class ComputerPasswordGenerator extends AbstractPasswordGenerator
 {
     private $_length = 8;
-    private $_selectedOptions;
     private $_uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     private $_lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';
     private $_numbers = '0123456789';
@@ -53,31 +52,6 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator implements Pas
         }
 
         $this->setOptions($options);
-    }
-
-    /**
-     * Possible options
-     *
-     * @return array
-     */
-    public function getPossibleOptions()
-    {
-        return self::$options;
-    }
-
-    /**
-     * Lookup options key value
-     *
-     * @param int $option
-     * @return null|string
-     */
-    public function getOptionKey($option)
-    {
-        if (isset(self::$options[$option])) {
-            return self::$options[$option]['key'];
-        }
-
-        return null;
     }
 
     /**
@@ -134,34 +108,6 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator implements Pas
         }
 
         return $password;
-    }
-
-    /**
-     * Set password generator options
-     *
-     * @param integer $options
-     *
-     * @return $this
-     */
-    public function setOptions($options)
-    {
-        if (!is_int($options)) {
-            throw new \InvalidArgumentException('Expected positive integer');
-        }
-
-        $this->_selectedOptions = $options;
-
-        return $this;
-    }
-
-    /**
-     * @param $option
-     *
-     * @return int
-     */
-    public function getOption($option)
-    {
-        return $this->_selectedOptions & $option;
     }
 
     /**

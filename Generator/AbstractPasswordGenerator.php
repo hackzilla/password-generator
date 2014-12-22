@@ -3,8 +3,11 @@
 namespace Hackzilla\PasswordGenerator\Generator;
 
 
-abstract class AbstractPasswordGenerator
+abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
 {
+    private $_selectedOptions;
+
+    static public $options = array();
 
     /**
      * Generate $count number of passwords
@@ -32,4 +35,51 @@ abstract class AbstractPasswordGenerator
         return $passwords;
     }
 
+    /**
+     * Set password generator options
+     *
+     * @param integer $options
+     *
+     * @return $this
+     */
+    public function setOptions($options)
+    {
+        if (!is_int($options)) {
+            throw new \InvalidArgumentException('Expected positive integer');
+        }
+
+        $this->_selectedOptions = $options;
+
+        return $this;
+    }
+
+    public function getOption($option)
+    {
+        return $this->_selectedOptions & $option;
+    }
+
+    /**
+     * Possible options
+     *
+     * @return array
+     */
+    public function getPossibleOptions()
+    {
+        return self::$options;
+    }
+
+    /**
+     * Lookup options key value
+     *
+     * @param int $option
+     * @return null|string
+     */
+    public function getOptionKey($option)
+    {
+        if (isset(self::$options[$option])) {
+            return self::$options[$option]['key'];
+        }
+
+        return null;
+    }
 }
