@@ -8,5 +8,5 @@ namespace Hackzilla\PasswordGenerator\Generator;
 
 class PasswordGenerator extends ComputerPasswordGenerator
 {
-    
+
 }

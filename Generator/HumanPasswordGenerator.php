@@ -7,7 +7,6 @@ use Hackzilla\PasswordGenerator\Exception\WordsNotFoundException;
 
 class HumanPasswordGenerator extends AbstractPasswordGenerator implements PasswordGeneratorInterface
 {
-
     private $_wordCache;
     private $wordList;
     private $wordSeparator = '';
@@ -17,7 +16,7 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator implements Passwo
 
     /**
      * Possible options
-     * 
+     *
      * @return array
      */
     public function getPossibleOptions()
@@ -69,7 +68,7 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator implements Passwo
 
     /**
      * Generate one password based on options
-     * 
+     *
      * @return string password
      * @throws WordsNotFoundException
      */
@@ -110,7 +109,7 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator implements Passwo
 
     /**
      * Get number of words in desired password
-     * 
+     *
      * @return integer
      */
     public function getLength()
@@ -257,5 +256,4 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator implements Passwo
 
         return $this;
     }
-
 }

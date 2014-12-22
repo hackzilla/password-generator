@@ -4,7 +4,6 @@ namespace Hackzilla\PasswordGenerator\Generator;
 
 class HybridPasswordGenerator extends ComputerPasswordGenerator
 {
-
     private $_segmentCount = 4;
     private $_segmentLength = 3;
     private $_segmentSeparator = '-';
@@ -25,7 +24,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
 
     /**
      * Generate one password based on options
-     * 
+     *
      * @return string password
      */
     public function generatePassword()
@@ -161,5 +160,4 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
 
         return $this;
     }
-
 }

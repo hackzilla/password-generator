@@ -6,7 +6,6 @@ use Hackzilla\PasswordGenerator\Generator\HumanPasswordGenerator;
 
 class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 {
-
     private $_object;
 
     public function setup()
@@ -178,5 +177,4 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
             array(16),
         );
     }
-
 }

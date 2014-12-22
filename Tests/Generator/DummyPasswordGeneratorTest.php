@@ -6,7 +6,6 @@ use Hackzilla\PasswordGenerator\Generator\DummyPasswordGenerator;
 
 class DummyPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 {
-
     private $_object;
 
     public function setup()
@@ -47,5 +46,4 @@ class DummyPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
             array(16, 'password????????'),
         );
     }
-
 }

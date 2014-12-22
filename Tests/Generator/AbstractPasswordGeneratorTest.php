@@ -2,7 +2,6 @@
 
 namespace Hackzilla\PasswordGenerator\Tests\Generator;
 
-use Hackzilla\PasswordGenerator\Generator\AbstractPasswordGenerator;
 
 class AbstractPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 {
@@ -59,5 +58,4 @@ class AbstractPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
             array(16),
         );
     }
-
 }

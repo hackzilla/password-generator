@@ -6,7 +6,6 @@ use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator;
 
 class ComputerPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 {
-
     private $_object;
 
     public function setup()
@@ -98,5 +97,4 @@ class ComputerPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('\Hackzilla\PasswordGenerator\Exception\CharactersNotFoundException');
         $this->_object->getCharacterList();
     }
-
 }

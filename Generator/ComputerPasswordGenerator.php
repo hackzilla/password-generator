@@ -6,7 +6,6 @@ use Hackzilla\PasswordGenerator\Exception\CharactersNotFoundException;
 
 class ComputerPasswordGenerator extends AbstractPasswordGenerator implements PasswordGeneratorInterface
 {
-
     private $_length = 8;
     private $_selectedOptions;
     private $_uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -55,7 +54,7 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator implements Pas
 
     /**
      * Possible options
-     * 
+     *
      * @return array
      */
     public function getPossibleOptions()
@@ -118,7 +117,7 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator implements Pas
 
     /**
      * Generate one password based on options
-     * 
+     *
      * @return string password
      */
     public function generatePassword()
@@ -352,5 +351,4 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator implements Pas
 
         return $this;
     }
-
 }

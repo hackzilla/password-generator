@@ -6,7 +6,6 @@ use Hackzilla\PasswordGenerator\Generator\HybridPasswordGenerator;
 
 class HybridPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 {
-
     private $_object;
 
     public function setup()
@@ -134,5 +133,4 @@ class HybridPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('\Hackzilla\PasswordGenerator\Exception\CharactersNotFoundException');
         $this->_object->getCharacterList();
     }
-
 }

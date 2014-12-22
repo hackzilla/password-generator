@@ -4,7 +4,6 @@ namespace Hackzilla\PasswordGenerator\Generator;
 
 class DummyPasswordGenerator extends AbstractPasswordGenerator implements PasswordGeneratorInterface
 {
-
     private $length;
 
     public function getPossibleOptions()
@@ -23,7 +22,7 @@ class DummyPasswordGenerator extends AbstractPasswordGenerator implements Passwo
 
     public function setOptions($options)
     {
-        
+
     }
 
     /**
@@ -45,5 +44,4 @@ class DummyPasswordGenerator extends AbstractPasswordGenerator implements Passwo
 
         return $this;
     }
-
 }
