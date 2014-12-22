@@ -15,8 +15,6 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
     private $maxWordLength = 99;
 
     /**
-<<<<<<< HEAD
-=======
      * Possible options
      *
      * @return array
@@ -38,7 +36,6 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
     }
 
     /**
->>>>>>> code cleanup
      * Generate character list for us in generating passwords
      *
      * @return string Character list

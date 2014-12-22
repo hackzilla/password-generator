@@ -15,14 +15,11 @@ class DummyPasswordGenerator extends AbstractPasswordGenerator
         return str_pad('password', $this->length, '?');
     }
 
-<<<<<<< HEAD
-=======
     public function setOptions($options)
     {
 
     }
 
->>>>>>> code cleanup
     /**
      * Set length of desired password(s)
      *

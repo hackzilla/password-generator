@@ -55,8 +55,6 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
     }
 
     /**
-<<<<<<< HEAD
-=======
      * Possible options
      *
      * @return array
@@ -82,7 +80,6 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
     }
 
     /**
->>>>>>> code cleanup
      * Generate character list for us in generating passwords
      *
      * @return string Character list
