@@ -15,6 +15,30 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
     private $maxWordLength = 99;
 
     /**
+<<<<<<< HEAD
+=======
+     * Possible options
+     *
+     * @return array
+     */
+    public function getPossibleOptions()
+    {
+        return array();
+    }
+
+    /**
+     * Lookup options key value
+     *
+     * @param int $option
+     * @return null|string
+     */
+    public function getOptionKey($option)
+    {
+        return null;
+    }
+
+    /**
+>>>>>>> code cleanup
      * Generate character list for us in generating passwords
      *
      * @return string Character list

@@ -55,6 +55,34 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Possible options
+     *
+     * @return array
+     */
+    public function getPossibleOptions()
+    {
+        return self::$options;
+    }
+
+    /**
+     * Lookup options key value
+     *
+     * @param int $option
+     * @return null|string
+     */
+    public function getOptionKey($option)
+    {
+        if (isset(self::$options[$option])) {
+            return self::$options[$option]['key'];
+        }
+
+        return null;
+    }
+
+    /**
+>>>>>>> code cleanup
      * Generate character list for us in generating passwords
      *
      * @return string Character list
