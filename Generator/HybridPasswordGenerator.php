@@ -2,6 +2,8 @@
 
 namespace Hackzilla\PasswordGenerator\Generator;
 
+use Hackzilla\PasswordGenerator\Model\CharacterSet;
+
 class HybridPasswordGenerator extends ComputerPasswordGenerator
 {
     private $_segmentCount = 4;
@@ -11,7 +13,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
     /**
      * Generate character list for us in generating passwords
      *
-     * @return string Character list
+     * @return CharacterSet Character list
      * @throws \Exception
      */
     public function getCharacterList()
@@ -19,7 +21,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
         $characterList = parent::getCharacterList();
         $characterList = \str_replace($this->getSegmentSeparator(), '', $characterList);
 
-        return $characterList;
+        return new CharacterSet($characterList);
     }
 
     /**
@@ -29,7 +31,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
      */
     public function generatePassword()
     {
-        $characterList = $this->getCharacterList();
+        $characterList = $this->getCharacterList()->getCharacters();
         $characters = \strlen($characterList);
         $password = '';
 

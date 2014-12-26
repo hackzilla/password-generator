@@ -3,6 +3,7 @@
 namespace Hackzilla\PasswordGenerator\Generator;
 
 use Hackzilla\PasswordGenerator\Exception\CharactersNotFoundException;
+use Hackzilla\PasswordGenerator\Model\CharacterSet;
 
 class ComputerPasswordGenerator extends AbstractPasswordGenerator
 {
@@ -82,7 +83,7 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
     /**
      * Generate character list for us in generating passwords
      *
-     * @return string Character list
+     * @return CharacterSet Character list
      * @throws CharactersNotFoundException
      */
     public function getCharacterList()
@@ -114,7 +115,7 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
             throw new CharactersNotFoundException('No character sets selected.');
         }
 
-        return $characters;
+        return new CharacterSet($characters);
     }
 
     /**
@@ -124,7 +125,7 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
      */
     public function generatePassword()
     {
-        $characterList = $this->getCharacterList();
+        $characterList = $this->getCharacterList()->getCharacters();
         $characters = \strlen($characterList);
         $password = '';
 

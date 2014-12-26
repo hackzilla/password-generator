@@ -47,7 +47,7 @@ class ComputerPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     public function testSetOption($options, $exists, $dontExist)
     {
         $this->_object->setOptions($options);
-        $availableCharacters = $this->_object->getCharacterList();
+        $availableCharacters = $this->_object->getCharacterList()->getCharacters();
 
         foreach ($exists as $check) {
             $this->assertContains($check, $availableCharacters);
