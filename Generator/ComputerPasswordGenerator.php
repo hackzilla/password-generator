@@ -43,6 +43,9 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator implements Pas
         ),
     );
 
+    /**
+     * @param null|int $options
+     */
     public function __construct($options = null)
     {
         if (\is_null($options)) {
@@ -151,6 +154,11 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator implements Pas
         return $this;
     }
 
+    /**
+     * @param $option
+     *
+     * @return int
+     */
     public function getOption($option)
     {
         return $this->_selectedOptions & $option;

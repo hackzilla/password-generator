@@ -8,6 +8,9 @@ class ComputerPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 {
     private $_object;
 
+    /**
+     *
+     */
     public function setup()
     {
         $this->_object = new ComputerPasswordGenerator();
@@ -22,6 +25,9 @@ class ComputerPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(\strlen($this->_object->generatePassword()), $length);
     }
 
+    /**
+     * @return array
+     */
     public function lengthProvider()
     {
         return array(
@@ -34,6 +40,9 @@ class ComputerPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider optionProvider
+     * @param $options
+     * @param $exists
+     * @param $dontExist
      */
     public function testSetOption($options, $exists, $dontExist)
     {
@@ -48,6 +57,9 @@ class ComputerPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @return array
+     */
     public function optionProvider()
     {
         return array(
@@ -61,6 +73,8 @@ class ComputerPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider optionsProvider
+     * @param $method
+     * @param $option
      */
     public function testSetGet($method, $option)
     {
@@ -71,6 +85,9 @@ class ComputerPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('AAAA', $this->_object->generatePassword());
     }
 
+    /**
+     * @return array
+     */
     public function optionsProvider()
     {
         return array(
@@ -81,6 +98,9 @@ class ComputerPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     *
+     */
     public function testAvoidSimilar()
     {
         $this->_object->setUppercaseLetters('AB');
@@ -91,6 +111,9 @@ class ComputerPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('AAAA', $this->_object->generatePassword());
     }
 
+    /**
+     *
+     */
     public function testCharacterListException()
     {
         $this->_object->setOptions(0);

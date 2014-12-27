@@ -145,7 +145,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
     /**
      * Set segment separator
      *
-     * @param type $segmentSeparator
+     * @param string $segmentSeparator
      *
      * @return \Hackzilla\PasswordGenerator\Generator\HybridPasswordGenerator
      * @throws \InvalidArgumentException

@@ -8,12 +8,18 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 {
     private $_object;
 
+    /**
+     *
+     */
     public function setup()
     {
         $this->_object = new HumanPasswordGenerator();
         $this->_object->setWordSeparator('');
     }
 
+    /**
+     *
+     */
     public function testLength()
     {
         $this->_object->setLength(1);
@@ -29,6 +35,9 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->_object->setLength('fail');
     }
 
+    /**
+     *
+     */
     public function testMinWordLength()
     {
         $this->_object->setMinWordLength(1);
@@ -44,6 +53,9 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->_object->setMinWordLength('fail');
     }
 
+    /**
+     *
+     */
     public function testMaxWordLength()
     {
         $this->_object->setMaxWordLength(1);
@@ -59,6 +71,9 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->_object->setMaxWordLength('fail');
     }
 
+    /**
+     *
+     */
     public function testWordSeparator()
     {
         $this->_object->setWordSeparator('');
@@ -77,6 +92,9 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->_object->setMaxWordLength(null);
     }
 
+    /**
+     * @return string
+     */
     public function getSimpleWordList()
     {
         $reflClass = new \ReflectionClass(get_class($this));
@@ -85,6 +103,9 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         return $filename;
     }
 
+    /**
+     *
+     */
     public function testWordList()
     {
         $filename = $this->getSimpleWordList();
@@ -99,6 +120,9 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->_object->setWordList('fail');
     }
 
+    /**
+     *
+     */
     public function testGenerateWordList()
     {
         $filename = $this->getSimpleWordList();
@@ -112,6 +136,7 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider lengthProvider
+     * @param $length
      */
     public function testGeneratePasswords($length)
     {
@@ -130,6 +155,7 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider lengthProvider
+     * @param $length
      */
     public function testGeneratePassword($length)
     {
@@ -142,6 +168,7 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider lengthProvider
+     * @param $length
      */
     public function testGeneratePasswordWithSeparator($length)
     {
@@ -153,6 +180,13 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->_object->generatePassword(), $this->makePassword('blancmange', $length, '-'));
     }
 
+    /**
+     * @param $word
+     * @param $length
+     * @param $separator
+     *
+     * @return string
+     */
     private function makePassword($word, $length, $separator)
     {
         $password = '';
@@ -168,6 +202,9 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         return $password;
     }
 
+    /**
+     * @return array
+     */
     public function lengthProvider()
     {
         return array(

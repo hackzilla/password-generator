@@ -25,6 +25,11 @@ class HybridPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider passwordProvider
+     *
+     * @param $segmentLength
+     * @param $segmentCount
+     * @param $segmentSeparator
+     * @param $regExp
      */
     public function testGeneratePassword($segmentLength, $segmentCount, $segmentSeparator, $regExp)
     {
@@ -37,6 +42,8 @@ class HybridPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider lengthProvider
+     *
+     * @param $count
      */
     public function testSetSegmentCount($count)
     {
@@ -81,6 +88,7 @@ class HybridPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param
      * @dataProvider optionProvider
      */
     public function testSetOption($options, $exists, $dontExist)

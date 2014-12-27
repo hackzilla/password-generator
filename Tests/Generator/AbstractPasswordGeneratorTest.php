@@ -21,7 +21,8 @@ class AbstractPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider generatePasswordsProvider
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
+     * @param $passwordCount
      */
     public function testGeneratePasswordsException($passwordCount)
     {
@@ -41,6 +42,7 @@ class AbstractPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider lengthProvider
+     * @param $count
      */
     public function testGeneratePasswords($count)
     {
@@ -49,6 +51,9 @@ class AbstractPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(\count($passwords), $count);
     }
 
+    /**
+     * @return array
+     */
     public function lengthProvider()
     {
         return array(

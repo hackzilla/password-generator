@@ -8,6 +8,9 @@ class DummyPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 {
     private $_object;
 
+    /**
+     *
+     */
     public function setup()
     {
         $this->_object = new DummyPasswordGenerator();
@@ -15,6 +18,8 @@ class DummyPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider lengthProvider
+     * @param $length
+     * @param $comparePassword
      */
     public function testGeneratePasswords($length, $comparePassword)
     {
@@ -30,6 +35,8 @@ class DummyPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider lengthProvider
+     * @param $length
+     * @param $password
      */
     public function testGeneratePassword($length, $password)
     {
@@ -37,6 +44,9 @@ class DummyPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->_object->generatePassword(), $password);
     }
 
+    /**
+     * @return array
+     */
     public function lengthProvider()
     {
         return array(
