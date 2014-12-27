@@ -25,10 +25,17 @@ Add HackzillaPasswordGenerator in your composer.json:
 }
 ```
 
+Install Composer
+
+```
+curl -sS https://getcomposer.org/installer | php
+mv composer.phar /usr/local/bin/composer
+```
+
 Now tell composer to download the library by running the command:
 
 ``` bash
-$ php composer.phar update hackzilla/password-generator
+$ composer update hackzilla/password-generator
 ```
 
 Composer will install the bundle into your project's `vendor/hackzilla` directory.
