@@ -109,7 +109,7 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
      *
      * @param $option
      *
-     * @return null
+     * @return mixed
      */
     public function getOptionValue($option)
     {

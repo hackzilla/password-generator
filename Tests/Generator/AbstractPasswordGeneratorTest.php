@@ -75,11 +75,11 @@ class AbstractPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider setOptionProvider
+     * @dataProvider setOptionValueProvider
      * @param $option
      * @param $value
      */
-    public function testSetOption($option, $value)
+    public function testSetOptionValue($option, $value)
     {
         $this->_object->setOptionValue($option, $value);
         $this->assertEquals($this->_object->getOptionValue($option), $value);
@@ -88,7 +88,7 @@ class AbstractPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function setOptionProvider()
+    public function setOptionValueProvider()
     {
         return array(
             array(AbstractPasswordGeneratorClass::OPTION_TEST_BOOLEAN, true),
@@ -131,7 +131,7 @@ class AbstractPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
      */
     public function testUnknownSetOption()
     {
-        $this->assertNull($this->_object->setOptionValue('unknown', true));
+        $this->_object->setOption('unknown', array());
     }
 
     public function testUnknownOption()
