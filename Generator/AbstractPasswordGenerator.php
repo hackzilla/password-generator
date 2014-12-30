@@ -154,11 +154,11 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
                 return is_bool($value);
 
             case self::TYPE_INTEGER:
+                /* check within min / max */
                 if ($optionSettings['min'] > $value || $optionSettings['max'] < $value) {
                     return false;
                 }
 
-                /* check within min / max */
                 return is_int($value);
         }
 
