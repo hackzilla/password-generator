@@ -153,6 +153,33 @@ class AbstractPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->_object->getOptionValue('unknown', true));
     }
 
+    public function testUnknownParameter()
+    {
+        $this->assertNull($this->_object->getParameter('unknown'));
+    }
+
+    /**
+     * @dataProvider parameterProvider
+     * @param $parameter
+     * @param $value
+     */
+    public function testParameter($parameter, $value)
+    {
+        $this->_object->setParameter($parameter, $value);
+
+        $this->assertEquals($value, $this->_object->getParameter($parameter));
+    }
+
+    public function parameterProvider()
+    {
+        return array(
+            array('a', 1),
+            array('ab', null),
+            array('test', true),
+            array('test2', 'value'),
+        );
+    }
+
     /**
      * @dataProvider validateValueProvider
      * @param $option

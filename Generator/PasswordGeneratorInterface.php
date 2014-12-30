@@ -14,6 +14,10 @@ interface PasswordGeneratorInterface
 
     public function getOptionValue($option);
 
+    public function setParameter($parameter, $value);
+
+    public function getParameter($parameter);
+
     public function generatePasswords($count = 1);
 
     public function generatePassword();

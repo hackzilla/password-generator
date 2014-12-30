@@ -6,6 +6,7 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
 {
     private $options = array();
     private $optionValues = array();
+    private $parameters = array();
 
     const TYPE_BOOLEAN = 'boolean';
     const TYPE_INTEGER = 'integer';
@@ -133,6 +134,33 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
         }
 
         return $this->optionValues[$option];
+    }
+
+    /**
+     * @param $parameter
+     * @param $value
+     *
+     * @return $this
+     */
+    public function setParameter($parameter, $value)
+    {
+        $this->parameters[$parameter] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param $parameter
+     *
+     * @return null|mixed
+     */
+    public function getParameter($parameter)
+    {
+        if (!isset($this->parameters[$parameter])) {
+            return null;
+        }
+
+        return $this->parameters[$parameter];
     }
 
     /**
