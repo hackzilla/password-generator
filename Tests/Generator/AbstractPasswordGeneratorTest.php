@@ -69,6 +69,11 @@ class AbstractPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(count($this->_object->getPossibleOptions()), 3);
     }
 
+    public function testGetOptionValueDefault()
+    {
+        $this->assertEquals(99, $this->_object->getOptionValue(AbstractPasswordGeneratorClass::OPTION_TEST_INTEGER_DEFAULT));
+    }
+
     /**
      * @dataProvider setOptionProvider
      * @param $option

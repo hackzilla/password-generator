@@ -113,7 +113,11 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
      */
     public function getOptionValue($option)
     {
-        if (!isset($this->options[$option])) {
+        if (!isset($this->optionValues[$option])) {
+            if (isset($this->options[$option]['default'])) {
+                return $this->options[$option]['default'];
+            }
+
             return null;
         }
 

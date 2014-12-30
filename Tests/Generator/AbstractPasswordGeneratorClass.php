@@ -15,7 +15,7 @@ class AbstractPasswordGeneratorClass extends AbstractPasswordGenerator
         $this
             ->setOption(self::OPTION_TEST_BOOLEAN, array('type' => self::TYPE_BOOLEAN))
             ->setOption(self::OPTION_TEST_INTEGER, array('type' => self::TYPE_INTEGER, 'min' => -100, 'max' => 100))
-            ->setOption(self::OPTION_TEST_INTEGER_DEFAULT, array('type' => self::TYPE_INTEGER));
+            ->setOption(self::OPTION_TEST_INTEGER_DEFAULT, array('type' => self::TYPE_INTEGER, 'default' => 99));
     }
 
     public function generatePassword()
