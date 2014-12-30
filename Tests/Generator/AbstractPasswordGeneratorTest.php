@@ -136,6 +136,19 @@ class AbstractPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
     public function testUnknownOption()
     {
+        $this->assertNull($this->_object->getOption('unknown', array()));
+    }
+
+    /**
+     * @expectedException        \InvalidArgumentException
+     */
+    public function testUnknownSetOptionValue()
+    {
+        $this->_object->setOptionValue('unknown', true);
+    }
+
+    public function testUnknownOptionValue()
+    {
         $this->assertNull($this->_object->getOptionValue('unknown', true));
     }
 
@@ -171,6 +184,28 @@ class AbstractPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
             array(AbstractPasswordGeneratorClass::OPTION_TEST_INTEGER_DEFAULT, -2147483648, true),
 
             array('fail', '', false),
+        );
+    }
+
+    /**
+     * @dataProvider validateTypeProvider
+     * @param $type
+     * @param $return
+     */
+    public function testValidateType($type, $return)
+    {
+        $this->assertEquals($return, $this->_object->validateType($type));
+    }
+
+    /**
+     * @return array
+     */
+    public function validateTypeProvider()
+    {
+        return array(
+            array(AbstractPasswordGeneratorClass::TYPE_BOOLEAN, true),
+            array(AbstractPasswordGeneratorClass::TYPE_INTEGER, true),
+            array('fail', false),
         );
     }
 }
