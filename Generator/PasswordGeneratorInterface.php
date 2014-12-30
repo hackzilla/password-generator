@@ -6,11 +6,13 @@ interface PasswordGeneratorInterface
 {
     public function getPossibleOptions();
 
-    public function setOptions($options);
-    
-    public function setParameter($parameter, $value);
+    public function setOption($option, $optionSettings);
 
-    public function setLength($characterCount);
+    public function getOption($option);
+
+    public function setOptionValue($option, $value);
+
+    public function getOptionValue($option);
 
     public function generatePasswords($count = 1);
 

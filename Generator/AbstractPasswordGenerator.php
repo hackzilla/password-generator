@@ -5,9 +5,11 @@ namespace Hackzilla\PasswordGenerator\Generator;
 
 abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
 {
-    private $_selectedOptions;
+    private $options = array();
+    private $optionValues = array();
 
-    static public $options = array();
+    const TYPE_BOOLEAN = 'boolean';
+    const TYPE_INTEGER = 'integer';
 
     /**
      * Generate $count number of passwords
@@ -36,26 +38,86 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
     }
 
     /**
-     * Set password generator options
+     * Set password generator option
      *
-     * @param integer $options
+     * @param string $option
+     * @param array $optionSettings
      *
      * @return $this
      */
-    public function setOptions($options)
+    public function setOption($option, $optionSettings)
     {
-        if (!is_int($options)) {
-            throw new \InvalidArgumentException('Expected positive integer');
+        if (!isset($optionSettings['type']) || !$this->validateType($optionSettings['type'])) {
+            throw new \InvalidArgumentException('Invalid Option Type');
         }
 
-        $this->_selectedOptions = $options;
+        if ($optionSettings['type'] == self::TYPE_INTEGER) {
+            if (!isset($optionSettings['min'])) {
+                $optionSettings['min'] = ~PHP_INT_MAX;
+            }
+            if (!isset($optionSettings['max'])) {
+                $optionSettings['max'] = PHP_INT_MAX;
+            }
+        }
+
+        $this->options[$option] = $optionSettings;
 
         return $this;
     }
 
+    /**
+     * Get option
+     *
+     * @param $option
+     *
+     * @return null
+     */
     public function getOption($option)
     {
-        return $this->_selectedOptions & $option;
+        if (!isset($this->options[$option])) {
+            return null;
+        }
+
+        return $this->options[$option];
+    }
+
+    /**
+     * Set password generator option value
+     *
+     * @param string $option
+     * @param $value
+     *
+     * @return $this
+     */
+    public function setOptionValue($option, $value)
+    {
+        if (!isset($this->options[$option]) || !is_array($this->options[$option])) {
+            throw new \InvalidArgumentException('Invalid Option');
+        }
+
+        if (!$this->validateValue($option, $value)) {
+            throw new \InvalidArgumentException('Invalid Option Value');
+        }
+
+        $this->optionValues[$option] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Get option value
+     *
+     * @param $option
+     *
+     * @return null
+     */
+    public function getOptionValue($option)
+    {
+        if (!isset($this->options[$option])) {
+            return null;
+        }
+
+        return $this->optionValues[$option];
     }
 
     /**
@@ -65,21 +127,37 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
      */
     public function getPossibleOptions()
     {
-        return self::$options;
+        return $this->options;
     }
 
-    /**
-     * Lookup options key value
-     *
-     * @param int $option
-     * @return null|string
-     */
-    public function getOptionKey($option)
+    public function validateType($type)
     {
-        if (isset(self::$options[$option])) {
-            return self::$options[$option]['key'];
+        switch ($type) {
+            case self::TYPE_BOOLEAN:
+            case self::TYPE_INTEGER:
+                return true;
         }
 
-        return null;
+        return false;
+    }
+
+    public function validateValue($option, $value)
+    {
+        $optionSettings = $this->getOption($option);
+
+        switch ($optionSettings['type']) {
+            case self::TYPE_BOOLEAN:
+                return is_bool($value);
+
+            case self::TYPE_INTEGER:
+                if ($optionSettings['min'] > $value || $optionSettings['max'] < $value) {
+                    return false;
+                }
+
+                /* check within min / max */
+                return is_int($value);
+        }
+
+        return false;
     }
 }
