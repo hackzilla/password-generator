@@ -2,7 +2,6 @@
 
 namespace Hackzilla\PasswordGenerator\Generator;
 
-
 abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
 {
     private $options = array();
@@ -10,6 +9,7 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
 
     const TYPE_BOOLEAN = 'boolean';
     const TYPE_INTEGER = 'integer';
+    const TYPE_STRING = 'string';
 
     /**
      * Generate $count number of passwords
@@ -51,13 +51,24 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
             throw new \InvalidArgumentException('Invalid Option Type');
         }
 
-        if ($optionSettings['type'] == self::TYPE_INTEGER) {
-            if (!isset($optionSettings['min'])) {
-                $optionSettings['min'] = ~PHP_INT_MAX;
-            }
-            if (!isset($optionSettings['max'])) {
-                $optionSettings['max'] = PHP_INT_MAX;
-            }
+        switch ($optionSettings['type']) {
+            case self::TYPE_INTEGER:
+                if (!isset($optionSettings['min'])) {
+                    $optionSettings['min'] = ~PHP_INT_MAX;
+                }
+                if (!isset($optionSettings['max'])) {
+                    $optionSettings['max'] = PHP_INT_MAX;
+                }
+                break;
+
+            case self::TYPE_STRING:
+                if (!isset($optionSettings['min'])) {
+                    $optionSettings['min'] = 0;
+                }
+                if (!isset($optionSettings['max'])) {
+                    $optionSettings['max'] = 255;
+                }
+                break;
         }
 
         $this->options[$option] = $optionSettings;
@@ -139,6 +150,7 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
         switch ($type) {
             case self::TYPE_BOOLEAN:
             case self::TYPE_INTEGER:
+            case self::TYPE_STRING:
                 return true;
         }
 
@@ -160,6 +172,14 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
                 }
 
                 return is_int($value);
+
+            case self::TYPE_STRING:
+                /* check length within min / max */
+                if ($optionSettings['min'] > strlen($value) || $optionSettings['max'] < strlen($value)) {
+                    return false;
+                }
+
+                return is_string($value);
         }
 
         return false;

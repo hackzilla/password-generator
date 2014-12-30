@@ -66,12 +66,13 @@ class AbstractPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
          */
 
         $this->assertTrue(is_array($this->_object->getPossibleOptions()));
-        $this->assertEquals(count($this->_object->getPossibleOptions()), 3);
+        $this->assertEquals(count($this->_object->getPossibleOptions()), 5);
     }
 
     public function testGetOptionValueDefault()
     {
         $this->assertEquals(99, $this->_object->getOptionValue(AbstractPasswordGeneratorClass::OPTION_TEST_INTEGER_DEFAULT));
+        $this->assertEquals('test', $this->_object->getOptionValue(AbstractPasswordGeneratorClass::OPTION_TEST_STRING_DEFAULT));
     }
 
     /**
@@ -183,6 +184,17 @@ class AbstractPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
             array(AbstractPasswordGeneratorClass::OPTION_TEST_INTEGER_DEFAULT, 2147483647, true),
             array(AbstractPasswordGeneratorClass::OPTION_TEST_INTEGER_DEFAULT, -2147483648, true),
 
+            array(AbstractPasswordGeneratorClass::OPTION_TEST_STRING, 'abc', true),
+            array(AbstractPasswordGeneratorClass::OPTION_TEST_STRING, 'a', true),
+            array(AbstractPasswordGeneratorClass::OPTION_TEST_STRING, '', false),
+            array(AbstractPasswordGeneratorClass::OPTION_TEST_STRING, 0, false),
+            array(AbstractPasswordGeneratorClass::OPTION_TEST_STRING, null, false),
+            array(AbstractPasswordGeneratorClass::OPTION_TEST_STRING, true, false),
+
+            array(AbstractPasswordGeneratorClass::OPTION_TEST_STRING, 'ac', true),
+            array(AbstractPasswordGeneratorClass::OPTION_TEST_STRING, 'abcd', false),
+            array(AbstractPasswordGeneratorClass::OPTION_TEST_STRING, '', false),
+
             array('fail', '', false),
         );
     }
@@ -205,6 +217,7 @@ class AbstractPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         return array(
             array(AbstractPasswordGeneratorClass::TYPE_BOOLEAN, true),
             array(AbstractPasswordGeneratorClass::TYPE_INTEGER, true),
+            array(AbstractPasswordGeneratorClass::TYPE_STRING, true),
             array('fail', false),
         );
     }
