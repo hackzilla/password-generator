@@ -4,20 +4,36 @@ namespace Hackzilla\PasswordGenerator\Generator;
 
 class DummyPasswordGenerator extends AbstractPasswordGenerator
 {
-    private $length;
+    const OPTION_LENGTH = 'LENGTH';
+
+    /**
+     */
+    public function __construct()
+    {
+        $this
+            ->setOption(self::OPTION_LENGTH, array('type' => self::TYPE_INTEGER, 'default' => 10))
+        ;
+    }
 
     public function generatePassword()
     {
-        if ($this->length < 8) {
-            return \substr('password', 0, $this->length);
+        $length = $this->getOptionValue(self::OPTION_LENGTH);
+
+        if ($length < 8) {
+            return \substr('password', 0, $length);
         }
 
-        return str_pad('password', $this->length, '?');
+        return str_pad('password', $length, '?');
     }
 
-    public function setOptions($options)
+    /**
+     * Password length
+     *
+     * @return integer
+     */
+    public function getLength()
     {
-
+        return $this->getOptionValue(self::OPTION_LENGTH);
     }
 
     /**
@@ -31,11 +47,11 @@ class DummyPasswordGenerator extends AbstractPasswordGenerator
      */
     public function setLength($characterCount)
     {
-        if (!is_int($characterCount)) {
-            throw new \InvalidArgumentException('Expected integer');
+        if (!is_int($characterCount) || $characterCount < 1) {
+            throw new \InvalidArgumentException('Expected positive integer');
         }
 
-        $this->length = $characterCount;
+        $this->setOptionValue(self::OPTION_LENGTH, $characterCount);
 
         return $this;
     }

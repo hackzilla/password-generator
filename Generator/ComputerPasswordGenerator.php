@@ -7,77 +7,36 @@ use Hackzilla\PasswordGenerator\Model\CharacterSet;
 
 class ComputerPasswordGenerator extends AbstractPasswordGenerator
 {
-    private $_length = 8;
-    private $_uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    private $_lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';
-    private $_numbers = '0123456789';
-    private $_symbols = '!@$%^&*()<>,.?/[]{}-=_+';
-    private $_avoidSimilar = 'lOo';
+    const OPTION_UPPER_CASE = 'UPPERCASE';
+    const OPTION_LOWER_CASE = 'LOWERCASE';
+    const OPTION_NUMBERS = 'NUMBERS';
+    const OPTION_SYMBOLS = 'SYMBOLS';
+    const OPTION_AVOID_SIMILAR = 'AVOID_SIMILAR';
+    const OPTION_LENGTH = 'LENGTH';
 
-    const OPTION_UPPER_CASE = 1;
-    const OPTION_LOWER_CASE = 2;
-    const OPTION_NUMBERS = 4;
-    const OPTION_SYMBOLS = 8;
-    const OPTION_AVOID_SIMILAR = 16;
-
-    static public $options = array(
-        self::OPTION_UPPER_CASE => array(
-            'key' => 'includeUppercase',
-            'label' => 'Include Uppercase',
-        ),
-        self::OPTION_LOWER_CASE => array(
-            'key' => 'includeLowercase',
-            'label' => 'Include Lowercase',
-        ),
-        self::OPTION_NUMBERS => array(
-            'key' => 'includeNumbers',
-            'label' => 'Include Numbers',
-        ),
-        self::OPTION_SYMBOLS => array(
-            'key' => 'includeSymbols',
-            'label' => 'Include Symbols',
-        ),
-        self::OPTION_AVOID_SIMILAR => array(
-            'key' => 'avoidSimilarCharacters',
-            'label' => 'Avoid Similar Characters',
-        ),
-    );
+    const PARAMETER_UPPER_CASE = 'UPPERCASE';
+    const PARAMETER_LOWER_CASE = 'LOWERCASE';
+    const PARAMETER_NUMBERS = 'NUMBERS';
+    const PARAMETER_SYMBOLS = 'SYMBOLS';
+    const PARAMETER_SIMILAR = 'AVOID_SIMILAR';
 
     /**
-     * @param null|int $options
      */
-    public function __construct($options = null)
+    public function __construct()
     {
-        if (\is_null($options)) {
-            $options = self::OPTION_UPPER_CASE | self::OPTION_LOWER_CASE | self::OPTION_NUMBERS;
-        }
-
-        $this->setOptions($options);
-    }
-
-    /**
-     * Possible options
-     *
-     * @return array
-     */
-    public function getPossibleOptions()
-    {
-        return self::$options;
-    }
-
-    /**
-     * Lookup options key value
-     *
-     * @param int $option
-     * @return null|string
-     */
-    public function getOptionKey($option)
-    {
-        if (isset(self::$options[$option])) {
-            return self::$options[$option]['key'];
-        }
-
-        return null;
+        $this
+            ->setOption(self::OPTION_UPPER_CASE, array('type' => self::TYPE_BOOLEAN, 'default' => true))
+            ->setOption(self::OPTION_LOWER_CASE, array('type' => self::TYPE_BOOLEAN, 'default' => true))
+            ->setOption(self::OPTION_NUMBERS, array('type' => self::TYPE_BOOLEAN, 'default' => true))
+            ->setOption(self::OPTION_SYMBOLS, array('type' => self::TYPE_BOOLEAN, 'default' => false))
+            ->setOption(self::OPTION_AVOID_SIMILAR, array('type' => self::TYPE_BOOLEAN, 'default' => true))
+            ->setOption(self::OPTION_LENGTH, array('type' => self::TYPE_INTEGER, 'default' => 10))
+            ->setParameter(self::PARAMETER_UPPER_CASE, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+            ->setParameter(self::PARAMETER_LOWER_CASE, 'abcdefghijklmnopqrstuvwxyz')
+            ->setParameter(self::PARAMETER_NUMBERS, '0123456789')
+            ->setParameter(self::PARAMETER_SYMBOLS, '!@$%^&*()<>,.?/[]{}-=_+')
+            ->setParameter(self::PARAMETER_SIMILAR, 'lOo')
+        ;
     }
 
     /**
@@ -90,24 +49,24 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
     {
         $characters = '';
 
-        if ($this->getOption(self::OPTION_UPPER_CASE)) {
-            $characters .= $this->getUppercaseLetters();
+        if ($this->getOptionValue(self::OPTION_UPPER_CASE)) {
+            $characters .= $this->getParameter(self::PARAMETER_UPPER_CASE, '');
         }
 
-        if ($this->getOption(self::OPTION_LOWER_CASE)) {
-            $characters .= $this->getLowercaseLetters();
+        if ($this->getOptionValue(self::OPTION_LOWER_CASE)) {
+            $characters .= $this->getParameter(self::PARAMETER_LOWER_CASE, '');
         }
 
-        if ($this->getOption(self::OPTION_NUMBERS)) {
-            $characters .= $this->getNumbers();
+        if ($this->getOptionValue(self::OPTION_NUMBERS)) {
+            $characters .= $this->getParameter(self::PARAMETER_NUMBERS, '');
         }
 
-        if ($this->getOption(self::OPTION_SYMBOLS)) {
-            $characters .= $this->getSymbols();
+        if ($this->getOptionValue(self::OPTION_SYMBOLS)) {
+            $characters .= $this->getParameter(self::PARAMETER_SYMBOLS, '');
         }
 
-        if ($this->getOption(self::OPTION_AVOID_SIMILAR)) {
-            $removeCharacters = \str_split($this->getAvoidSimilar());
+        if ($this->getOptionValue(self::OPTION_AVOID_SIMILAR)) {
+            $removeCharacters = \str_split($this->getParameter(self::PARAMETER_SIMILAR, ''));
             $characters = \str_replace($removeCharacters, '', $characters);
         }
 
@@ -129,11 +88,23 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
         $characters = \strlen($characterList);
         $password = '';
 
-        for ($i = 0; $i < $this->_length; $i++) {
+        $length = $this->getLength();
+
+        for ($i = 0; $i < $length; $i++) {
             $password .= $characterList[mt_rand(0, $characters - 1)];
         }
 
         return $password;
+    }
+
+    /**
+     * Password length
+     *
+     * @return integer
+     */
+    public function getLength()
+    {
+        return $this->getOptionValue(self::OPTION_LENGTH);
     }
 
     /**
@@ -151,157 +122,157 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
             throw new \InvalidArgumentException('Expected positive integer');
         }
 
-        $this->_length = $characterCount;
+        $this->setOptionValue(self::OPTION_LENGTH, $characterCount);
 
         return $this;
     }
 
     /**
-     * Get Uppercase characters
+     * Are Uppercase characters enabled?
      *
-     * @return string
+     * @return bool
      */
-    public function getUppercaseLetters()
+    public function getUppercase()
     {
-        return $this->_uppercaseLetters;
+        return $this->getOptionValue(self::OPTION_UPPER_CASE);
     }
 
     /**
-     * Set characters to use for uppercase characters
+     * Enable uppercase characters
      *
-     * @param string $characters
+     * @param boolean $enable
      *
      * @return $this
      *
      * @throws \InvalidArgumentException
      */
-    public function setUppercaseLetters($characters)
+    public function setUppercase($enable = true)
     {
-        if (!is_string($characters)) {
-            throw new \InvalidArgumentException('Expected string containing Uppercase letters');
+        if (!is_bool($enable)) {
+            throw new \InvalidArgumentException('Expected boolean');
         }
 
-        $this->_uppercaseLetters = $characters;
+        $this->setOptionValue(self::OPTION_UPPER_CASE, $enable);
 
         return $this;
     }
 
     /**
-     * Get Lowercase characters
+     * Are Lowercase characters enabled?
      *
      * @return string
      */
-    public function getLowercaseLetters()
+    public function getLowercase()
     {
-        return $this->_lowercaseLetters;
+        return $this->getOptionValue(self::OPTION_LOWER_CASE);
     }
 
     /**
-     * Set characters to use for lowercase characters
+     * Enable lowercase characters
      *
-     * @param string $characters
+     * @param boolean $enable
      *
      * @return $this
      *
      * @throws \InvalidArgumentException
      */
-    public function setLowercaseLetters($characters)
+    public function setLowercase($enable = true)
     {
-        if (!is_string($characters)) {
-            throw new \InvalidArgumentException('Expected string containing Lowercase letters');
+        if (!is_bool($enable)) {
+            throw new \InvalidArgumentException('Expected boolean');
         }
 
-        $this->_lowercaseLetters = $characters;
+        $this->setOptionValue(self::OPTION_LOWER_CASE, $enable);
 
         return $this;
     }
 
     /**
-     * Get Number characters
+     * Are Numbers enabled?
      *
      * @return string
      */
     public function getNumbers()
     {
-        return $this->_numbers;
+        return $this->getOptionValue(self::OPTION_NUMBERS);
     }
 
     /**
-     * Set characters to use for number characters
+     * Enable numbers
      *
-     * @param string $characters
+     * @param boolean $enable
      *
      * @return $this
      *
      * @throws \InvalidArgumentException
      */
-    public function setNumbers($characters)
+    public function setNumbers($enable = true)
     {
-        if (!is_string($characters)) {
-            throw new \InvalidArgumentException('Expected string containing Numbers');
+        if (!is_bool($enable)) {
+            throw new \InvalidArgumentException('Expected boolean');
         }
 
-        $this->_numbers = $characters;
+        $this->setOptionValue(self::OPTION_NUMBERS, $enable);
 
         return $this;
     }
 
     /**
-     * Get Symbol characters
+     * Are Symbols enabled?
      *
      * @return string
      */
     public function getSymbols()
     {
-        return $this->_symbols;
+        return $this->getOptionValue(self::OPTION_SYMBOLS);
     }
 
     /**
-     * Set characters to use for symbol characters
+     * Enable symbol characters
      *
-     * @param string $characters
+     * @param boolean $enable
      *
      * @return $this
      *
      * @throws \InvalidArgumentException
      */
-    public function setSymbols($characters)
+    public function setSymbols($enable = true)
     {
-        if (!is_string($characters)) {
-            throw new \InvalidArgumentException('Expected string containing Symbols');
+        if (!is_bool($enable)) {
+            throw new \InvalidArgumentException('Expected boolean');
         }
 
-        $this->_symbols = $characters;
+        $this->setOptionValue(self::OPTION_SYMBOLS, $enable);
 
         return $this;
     }
 
     /**
-     * Get characters to remove that are similar
+     * Avoid similar characters enabled?
      *
      * @return string
      */
     public function getAvoidSimilar()
     {
-        return $this->_avoidSimilar;
+        return $this->getOptionValue(self::OPTION_AVOID_SIMILAR);
     }
 
     /**
-     * Set characters to be removed when avoiding similar characters
+     * Enable characters to be removed when avoiding similar characters
      *
-     * @param string $characters
+     * @param bool $enable
      *
      * @return $this
      *
      * @throws \InvalidArgumentException
      */
-    public function setAvoidSimilar($characters)
+    public function setAvoidSimilar($enable = true)
     {
-        if (!is_string($characters)) {
-            throw new \InvalidArgumentException('Expected string containing characters to remove');
+        if (!is_bool($enable)) {
+            throw new \InvalidArgumentException('Expected boolean');
         }
 
-        $this->_avoidSimilar = $characters;
+        $this->setOptionValue(self::OPTION_AVOID_SIMILAR, $enable);
 
         return $this;
     }
