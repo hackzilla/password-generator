@@ -287,16 +287,6 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
     }
 
     /**
-     * @deprecated deprecated since 0.8
-     *
-     * @return string
-     */
-    public function getAvoidSimiliar()
-    {
-        return $this->getAvoidSimilar();
-    }
-
-    /**
      * Set characters to be removed when avoiding similar characters
      *
      * @param string $characters
@@ -312,22 +302,6 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
         }
 
         $this->_avoidSimilar = $characters;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated deprecated since 0.8
-     *
-     * @param string $characters
-     *
-     * @return $this
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function setAvoidSimiliar($characters)
-    {
-        $this->setAvoidSimilar($characters);
 
         return $this;
     }
