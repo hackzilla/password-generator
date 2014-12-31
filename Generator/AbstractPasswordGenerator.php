@@ -137,8 +137,8 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
     }
 
     /**
-     * @param $parameter
-     * @param $value
+     * @param string $parameter
+     * @param mixed $value
      *
      * @return $this
      */
@@ -150,7 +150,7 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
     }
 
     /**
-     * @param $parameter
+     * @param string $parameter
      *
      * @return null|mixed
      */
