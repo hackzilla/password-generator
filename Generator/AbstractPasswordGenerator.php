@@ -78,6 +78,21 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
     }
 
     /**
+     * Remove Option
+     *
+     * @param $option
+     *
+     * @return $this
+     */
+    public function removeOption($option)
+    {
+        unset($this->options[$option]);
+        unset($this->optionValues[$option]);
+
+        return $this;
+    }
+
+    /**
      * Get option
      *
      * @param $option
