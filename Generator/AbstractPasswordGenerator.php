@@ -151,13 +151,14 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
 
     /**
      * @param string $parameter
+     * @param mixed $default
      *
      * @return null|mixed
      */
-    public function getParameter($parameter)
+    public function getParameter($parameter, $default = null)
     {
         if (!isset($this->parameters[$parameter])) {
-            return null;
+            return $default;
         }
 
         return $this->parameters[$parameter];
