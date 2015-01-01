@@ -16,6 +16,8 @@ class CharacterSetTest extends \PHPUnit_Framework_TestCase
         $characterSet = new CharacterSet($characters);
 
         $this->assertEquals($result, $characterSet->getCharacters());
+        $this->assertEquals($result, $characterSet->__toString());
+        $this->assertEquals($result, (string) $characterSet);
     }
 
     public function characterProvider()
