@@ -3,9 +3,15 @@ Password Generator Library
 
 Simple library for generating random passwords.
 
-[![Build Status](https://travis-ci.org/hackzilla/password-generator.png?branch=master)](https://travis-ci.org/hackzilla/password-generator)
+[![Build Status](https://travis-ci.org/hackzilla/password-generator.png?branch=master)](https://travis-ci.org/hackzilla/password-generator) 
+[![Coverage Status](https://coveralls.io/repos/hackzilla/password-generator/badge.png)](https://coveralls.io/r/hackzilla/password-generator)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/dd072918-d39c-4bd8-bbf0-f9928acee31e/mini.png)](https://insight.sensiolabs.com/projects/dd072918-d39c-4bd8-bbf0-f9928acee31e)
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/dd072918-d39c-4bd8-bbf0-f9928acee31e/big.png)](https://insight.sensiolabs.com/projects/dd072918-d39c-4bd8-bbf0-f9928acee31e)
+[![Latest Stable Version](https://poser.pugx.org/hackzilla/password-generator/v/stable.svg)](https://packagist.org/packages/hackzilla/password-generator)
+[![Total Downloads](https://poser.pugx.org/hackzilla/password-generator/downloads.svg)](https://packagist.org/packages/hackzilla/password-generator)
+[![Latest Unstable Version](https://poser.pugx.org/hackzilla/password-generator/v/unstable.svg)](https://packagist.org/packages/hackzilla/password-generator)
+[![License](https://poser.pugx.org/hackzilla/password-generator/license.svg)](https://packagist.org/packages/hackzilla/password-generator)
+
 
 Requirements
 ------------
