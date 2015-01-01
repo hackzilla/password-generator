@@ -20,7 +20,7 @@ Add HackzillaPasswordGenerator in your composer.json:
 ```json
 {
     "require": {
-        "hackzilla/password-generator": "~0.1",
+        "hackzilla/password-generator": "~1.0",
     }
 }
 ```
@@ -45,25 +45,38 @@ Simple Usage
 ------------
 
 ```php
-use \Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator;
+use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator;
 
 $generator = new ComputerPasswordGenerator();
-$generator->setOptions(ComputerPasswordGenerator::OPTION_UPPER_CASE | ComputerPasswordGenerator::OPTION_LOWER_CASE | ComputerPasswordGenerator::OPTION_NUMBERS);
+
+$generator
+  ->setOptionValue(ComputerPasswordGenerator::OPTION_UPPER_CASE, true)
+  ->setOptionValue(ComputerPasswordGenerator::OPTION_LOWER_CASE, true)
+  ->setOptionValue(ComputerPasswordGenerator::OPTION_NUMBERS, true)
+  ->setOptionValue(ComputerPasswordGenerator::OPTION_SYMBOLS, false)
+;
+
 $password = $generator->generatePassword();
 ```
 
 
 More Passwords Usage
-------------
+--------------------
 
 If you want to generate 10 passwords that are 12 characters long.
 
 ```php
-use \Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator;
+use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator;
 
 $generator = new ComputerPasswordGenerator();
-$generator->setOptions(ComputerPasswordGenerator::OPTION_UPPER_CASE | ComputerPasswordGenerator::OPTION_LOWER_CASE | ComputerPasswordGenerator::OPTION_NUMBERS);
-$generator->setLength(12);
+
+$generator
+  ->setUppercase()
+  ->setLowercase()
+  ->setNumbers()
+  ->setSymbols(false)
+  ->setLength(12);
+
 $password = $generator->generatePasswords(10);
 ```
 
@@ -71,13 +84,18 @@ Hybrid Password Generator Usage
 -------------------------------
 
 ```php
-use \Hackzilla\PasswordGenerator\Generator\HybridPasswordGenerator;
+use Hackzilla\PasswordGenerator\Generator\HybridPasswordGenerator;
 
 $generator = new HybridPasswordGenerator();
-$generator->setOptions(HybridPasswordGenerator::OPTION_UPPER_CASE | HybridPasswordGenerator::OPTION_LOWER_CASE | HybridPasswordGenerator::OPTION_NUMBERS);
-generator->setSegmentLength(3);
-generator->setSegmentCount(4);
-generator->setSegmentSeparator('-');
+
+$generator
+  ->setUppercase()
+  ->setLowercase()
+  ->setNumbers()
+  ->setSymbols(false)
+  ->setSegmentLength(3)
+  ->setSegmentCount(4)
+  ->setSegmentSeparator('-');
 
 $password = $generator->generatePasswords(10);
 ```
