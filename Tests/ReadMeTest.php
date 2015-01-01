@@ -58,6 +58,8 @@ class ReadMeTest extends \PHPUnit_Framework_TestCase
 
         $generator
             ->setWordList('/usr/share/dict/words')
+            ->setMinWordLength(5)
+            ->setMaxWordLength(8)
             ->setWordCount(3)
             ->setWordSeparator('-');
 
