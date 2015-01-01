@@ -7,12 +7,23 @@ use Hackzilla\PasswordGenerator\Exception\WordsNotFoundException;
 
 class HumanPasswordGenerator extends AbstractPasswordGenerator
 {
-    private $_wordCache;
-    private $wordList;
-    private $wordSeparator = '';
-    private $length = 4;
-    private $minWordLength = 3;
-    private $maxWordLength = 99;
+    const OPTION_WORDS = 'WORDS';
+    const OPTION_MIN_WORD_LENGTH = 'MIN';
+    const OPTION_MAX_WORD_LENGTH = 'MAX';
+
+    const PARAMETER_DICTIONARY_FILE = 'DICTIONARY';
+    const PARAMETER_WORD_CACHE = 'CACHE';
+    const PARAMETER_WORD_SEPARATOR = 'SEPARATOR';
+
+    public function __construct()
+    {
+        $this
+            ->setOption(self::OPTION_WORDS, array('type' => self::TYPE_INTEGER, 'default' => 4))
+            ->setOption(self::OPTION_MIN_WORD_LENGTH, array('type' => self::TYPE_INTEGER, 'default' => 3))
+            ->setOption(self::OPTION_MAX_WORD_LENGTH, array('type' => self::TYPE_INTEGER, 'default' => 20))
+            ->setParameter(self::PARAMETER_WORD_SEPARATOR, '')
+        ;
+    }
 
     /**
      * Generate character list for us in generating passwords
@@ -22,14 +33,14 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
      */
     public function generateWordList()
     {
-        if (!is_null($this->_wordCache)) {
-            return $this->_wordCache;
+        if ($this->getParameter(self::PARAMETER_WORD_CACHE) !== null) {
+            return $this->getParameter(self::PARAMETER_WORD_CACHE);
         }
 
         $words = explode("\n", \file_get_contents($this->getWordList()));
 
         foreach ($words as $i => $word) {
-            if (\strlen($word) > $this->maxWordLength || \strlen($word) < $this->minWordLength) {
+            if (\strlen($word) > $this->getOptionValue(self::OPTION_MAX_WORD_LENGTH) || \strlen($word) < $this->getOptionValue(self::OPTION_MIN_WORD_LENGTH)) {
                 unset($words[$i]);
             }
         }
@@ -40,7 +51,7 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
             throw new WordsNotFoundException('No words selected.');
         }
 
-        $this->_wordCache = $words;
+        $this->setParameter(self::PARAMETER_WORD_CACHE, $words);
 
         return $words;
     }
@@ -63,9 +74,9 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
 
         $password = '';
 
-        for ($i = 0; $i < $this->length; $i++) {
+        for ($i = 0; $i < $this->getOptionValue(self::OPTION_WORDS); $i++) {
             if ($i) {
-                $password .= $this->wordSeparator;
+                $password .= $this->getParameter(self::PARAMETER_WORD_SEPARATOR);
             }
 
             $password .= $wordList[mt_rand(0, $words - 1)];
@@ -79,9 +90,9 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
      *
      * @return integer
      */
-    public function getLength()
+    public function getWordCount()
     {
-        return $this->length;
+        return $this->getOptionValue(self::OPTION_WORDS);
     }
 
     /**
@@ -93,13 +104,13 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
      *
      * @throws \InvalidArgumentException
      */
-    public function setLength($characterCount)
+    public function setWordCount($characterCount)
     {
         if (!is_int($characterCount) || $characterCount < 1) {
             throw new \InvalidArgumentException('Expected positive integer');
         }
 
-        $this->length = $characterCount;
+        $this->setOptionValue(self::OPTION_WORDS, $characterCount);
 
         return $this;
     }
@@ -111,7 +122,7 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
      */
     public function getMaxWordLength()
     {
-        return $this->maxWordLength;
+        return $this->getOptionValue(self::OPTION_MAX_WORD_LENGTH);
     }
 
     /**
@@ -127,8 +138,8 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
             throw new \InvalidArgumentException('Expected positive integer');
         }
 
-        $this->maxWordLength = $length;
-        $this->_wordCache = null;
+        $this->setOptionValue(self::OPTION_MAX_WORD_LENGTH, $length);
+        $this->setParameter(self::PARAMETER_WORD_CACHE, null);
 
         return $this;
     }
@@ -140,7 +151,7 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
      */
     public function getMinWordLength()
     {
-        return $this->minWordLength;
+        return $this->getOptionValue(self::OPTION_MIN_WORD_LENGTH);
     }
 
     /**
@@ -156,8 +167,8 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
             throw new \InvalidArgumentException('Expected positive integer');
         }
 
-        $this->minWordLength = $length;
-        $this->_wordCache = null;
+        $this->setOptionValue(self::OPTION_MIN_WORD_LENGTH, $length);
+        $this->setParameter(self::PARAMETER_WORD_CACHE, null);
 
         return $this;
     }
@@ -178,8 +189,8 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
             throw new FileNotFoundException('File not found');
         }
 
-        $this->wordList = $filename;
-        $this->_wordCache = null;
+        $this->setParameter(self::PARAMETER_DICTIONARY_FILE, $filename);
+        $this->setParameter(self::PARAMETER_WORD_CACHE, null);
 
         return $this;
     }
@@ -187,11 +198,16 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
     /**
      * Get word list filename
      *
+     * @throws FileNotFoundException
      * @return string
      */
     public function getWordList()
     {
-        return $this->wordList;
+        if (!file_exists($this->getParameter(self::PARAMETER_DICTIONARY_FILE))) {
+            throw new FileNotFoundException();
+        }
+
+        return $this->getParameter(self::PARAMETER_DICTIONARY_FILE);
     }
 
     /**
@@ -201,7 +217,7 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
      */
     public function getWordSeparator()
     {
-        return $this->wordSeparator;
+        return $this->getParameter(self::PARAMETER_WORD_SEPARATOR);
     }
 
     /**
@@ -219,7 +235,7 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
             throw new \InvalidArgumentException('Expected string');
         }
 
-        $this->wordSeparator = $separator;
+        $this->setParameter(self::PARAMETER_WORD_SEPARATOR, $separator);
 
         return $this;
     }

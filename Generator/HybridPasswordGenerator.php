@@ -2,16 +2,30 @@
 
 namespace Hackzilla\PasswordGenerator\Generator;
 
+use Hackzilla\PasswordGenerator\Model\CharacterSet;
+
 class HybridPasswordGenerator extends ComputerPasswordGenerator
 {
-    private $_segmentCount = 4;
-    private $_segmentLength = 3;
-    private $_segmentSeparator = '-';
+    const OPTION_COUNT = 'COUNT';
+
+    const PARAMETER_SEPARATOR = 'SEPARATOR';
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this
+            ->removeOption(self::OPTION_LENGTH)
+            ->setOption(self::OPTION_COUNT, array('type' => self::TYPE_INTEGER, 'default' => 4))
+            ->setOption(self::OPTION_LENGTH, array('type' => self::TYPE_INTEGER, 'default' => 3))
+            ->setParameter(self::PARAMETER_SEPARATOR, '-')
+        ;
+    }
 
     /**
      * Generate character list for us in generating passwords
      *
-     * @return string Character list
+     * @return CharacterSet Character list
      * @throws \Exception
      */
     public function getCharacterList()
@@ -19,7 +33,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
         $characterList = parent::getCharacterList();
         $characterList = \str_replace($this->getSegmentSeparator(), '', $characterList);
 
-        return $characterList;
+        return new CharacterSet($characterList);
     }
 
     /**
@@ -29,16 +43,16 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
      */
     public function generatePassword()
     {
-        $characterList = $this->getCharacterList();
+        $characterList = $this->getCharacterList()->getCharacters();
         $characters = \strlen($characterList);
         $password = '';
 
-        for ($i = 0; $i < $this->_segmentCount; $i++) {
+        for ($i = 0; $i < $this->getSegmentCount(); $i++) {
             if ($password) {
                 $password .= $this->getSegmentSeparator();
             }
 
-            for ($j = 0; $j < $this->_segmentLength; $j++) {
+            for ($j = 0; $j < $this->getSegmentLength(); $j++) {
                 $password .= $characterList[mt_rand(0, $characters - 1)];
             }
         }
@@ -79,7 +93,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
      */
     public function getSegmentCount()
     {
-        return $this->_segmentCount;
+        return $this->getOptionValue(self::OPTION_COUNT);
     }
 
     /**
@@ -97,7 +111,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
             throw new \InvalidArgumentException('Expected positive integer');
         }
 
-        $this->_segmentCount = $segmentCount;
+        $this->setOptionValue(self::OPTION_COUNT, $segmentCount);
 
         return $this;
     }
@@ -109,7 +123,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
      */
     public function getSegmentLength()
     {
-        return $this->_segmentLength;
+        return $this->getOptionValue(self::OPTION_LENGTH);
     }
 
     /**
@@ -127,7 +141,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
             throw new \InvalidArgumentException('Expected positive integer');
         }
 
-        $this->_segmentLength = $segmentLength;
+        $this->setOptionValue(self::OPTION_LENGTH, $segmentLength);
 
         return $this;
     }
@@ -139,7 +153,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
      */
     public function getSegmentSeparator()
     {
-        return $this->_segmentSeparator;
+        return $this->getParameter(self::PARAMETER_SEPARATOR);
     }
 
     /**
@@ -156,7 +170,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
             throw new \InvalidArgumentException('Expected string');
         }
 
-        $this->_segmentSeparator = $segmentSeparator;
+        $this->setParameter(self::PARAMETER_SEPARATOR, $segmentSeparator);
 
         return $this;
     }

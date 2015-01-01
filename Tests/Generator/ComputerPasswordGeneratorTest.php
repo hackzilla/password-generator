@@ -14,13 +14,38 @@ class ComputerPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     public function setup()
     {
         $this->_object = new ComputerPasswordGenerator();
+
+        $this->_object
+            ->setOptionValue(ComputerPasswordGenerator::OPTION_UPPER_CASE, false)
+            ->setOptionValue(ComputerPasswordGenerator::OPTION_LOWER_CASE, false)
+            ->setOptionValue(ComputerPasswordGenerator::OPTION_NUMBERS, false)
+            ->setOptionValue(ComputerPasswordGenerator::OPTION_SYMBOLS, false)
+            ->setOptionValue(ComputerPasswordGenerator::OPTION_AVOID_SIMILAR, false);
     }
 
     /**
      * @dataProvider lengthProvider
+     * @param $length
+     */
+    public function testLength($length)
+    {
+        $this->_object->setLength($length);
+        $this->assertEquals($this->_object->getLength(), $length);
+    }
+
+    /**
+     * @dataProvider lengthProvider
+     * @param $length
      */
     public function testGeneratePassword($length)
     {
+        $this->_object
+            ->setOptionValue(ComputerPasswordGenerator::OPTION_UPPER_CASE, true)
+            ->setOptionValue(ComputerPasswordGenerator::OPTION_LOWER_CASE, true)
+            ->setOptionValue(ComputerPasswordGenerator::OPTION_NUMBERS, true)
+            ->setOptionValue(ComputerPasswordGenerator::OPTION_SYMBOLS, true)
+            ->setOptionValue(ComputerPasswordGenerator::OPTION_AVOID_SIMILAR, true);
+
         $this->_object->setLength($length);
         $this->assertEquals(\strlen($this->_object->generatePassword()), $length);
     }
@@ -39,15 +64,69 @@ class ComputerPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider getterSetterProvider
+     * @param $method
+     */
+    public function testGetterSetters($method)
+    {
+        $this->_object->{'set' . $method}(true);
+        $this->assertTrue($this->_object->{'get' . $method}());
+
+        $this->_object->{'set' . $method}(false);
+        $this->assertTrue(!$this->_object->{'get' . $method}());
+    }
+
+    /**
+     * @dataProvider      lengthExceptionProvider
+     * @expectedException \InvalidArgumentException
+     * @param $param
+     */
+    public function testLengthException($param)
+    {
+        $this->_object->setLength($param);
+    }
+
+    public function lengthExceptionProvider()
+    {
+        return array(
+            array('a'),
+            array(false),
+            array(null),
+            array(-1),
+        );
+    }
+
+    /**
+     * @dataProvider      getterSetterProvider
+     * @expectedException \InvalidArgumentException
+     * @param $method
+     */
+    public function testGetterSettersException($method)
+    {
+        $this->_object->{'set' . $method}(1);
+    }
+
+    public function getterSetterProvider()
+    {
+        return array(
+            array('Uppercase'),
+            array('Lowercase'),
+            array('Numbers'),
+            array('Symbols'),
+            array('AvoidSimilar'),
+        );
+    }
+
+    /**
      * @dataProvider optionProvider
-     * @param $options
+     * @param $option
      * @param $exists
      * @param $dontExist
      */
-    public function testSetOption($options, $exists, $dontExist)
+    public function testSetOption($option, $exists, $dontExist)
     {
-        $this->_object->setOptions($options);
-        $availableCharacters = $this->_object->getCharacterList();
+        $this->_object->setOptionValue($option, true);
+        $availableCharacters = $this->_object->getCharacterList()->getCharacters();
 
         foreach ($exists as $check) {
             $this->assertContains($check, $availableCharacters);
@@ -67,20 +146,40 @@ class ComputerPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
             array(ComputerPasswordGenerator::OPTION_LOWER_CASE, array('a', 'b', 'c'), array('A', 'B', 'C')),
             array(ComputerPasswordGenerator::OPTION_NUMBERS, array('1', '2', '3'), array('a', 'b', 'c', 'A', 'B', 'C')),
             array(ComputerPasswordGenerator::OPTION_SYMBOLS, array('+', '=', '?'), array('a', 'b', 'c', 'A', 'B', 'C')),
-            array(ComputerPasswordGenerator::OPTION_LOWER_CASE | ComputerPasswordGenerator::OPTION_UPPER_CASE | ComputerPasswordGenerator::OPTION_AVOID_SIMILAR, array('a', 'b', 'c', 'A', 'B', 'C'), array('o', 'l', 'O')),
         );
+    }
+
+    public function testSetOptionSimilar()
+    {
+        $exists = array('a', 'b', 'c', 'A', 'B', 'C');
+        $dontExist = array('o', 'l', 'O');
+
+        $this->_object
+            ->setOptionValue(ComputerPasswordGenerator::OPTION_UPPER_CASE, true)
+            ->setOptionValue(ComputerPasswordGenerator::OPTION_LOWER_CASE, true)
+            ->setOptionValue(ComputerPasswordGenerator::OPTION_AVOID_SIMILAR, true);
+
+        $availableCharacters = $this->_object->getCharacterList()->getCharacters();
+
+        foreach ($exists as $check) {
+            $this->assertContains($check, $availableCharacters);
+        }
+        foreach ($dontExist as $check) {
+            $this->assertNotContains($check, $availableCharacters);
+        }
     }
 
     /**
      * @dataProvider optionsProvider
-     * @param $method
      * @param $option
+     * @param $parameter
      */
-    public function testSetGet($method, $option)
+    public function testSetGet($option, $parameter)
     {
-        $this->_object->{'set' . $method}('A');
-        $this->_object->setOptions($option);
-        $this->_object->setLength(4);
+        $this->_object
+            ->setOptionValue($option, true)
+            ->setParameter($parameter, 'A')
+            ->setLength(4);
 
         $this->assertEquals('AAAA', $this->_object->generatePassword());
     }
@@ -91,10 +190,10 @@ class ComputerPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     public function optionsProvider()
     {
         return array(
-            array('UppercaseLetters', ComputerPasswordGenerator::OPTION_UPPER_CASE),
-            array('LowercaseLetters', ComputerPasswordGenerator::OPTION_LOWER_CASE),
-            array('Numbers', ComputerPasswordGenerator::OPTION_NUMBERS),
-            array('Symbols', ComputerPasswordGenerator::OPTION_SYMBOLS),
+            array(ComputerPasswordGenerator::OPTION_UPPER_CASE, ComputerPasswordGenerator::PARAMETER_UPPER_CASE),
+            array(ComputerPasswordGenerator::OPTION_LOWER_CASE, ComputerPasswordGenerator::PARAMETER_LOWER_CASE),
+            array(ComputerPasswordGenerator::OPTION_NUMBERS, ComputerPasswordGenerator::PARAMETER_NUMBERS),
+            array(ComputerPasswordGenerator::OPTION_SYMBOLS, ComputerPasswordGenerator::PARAMETER_SYMBOLS),
         );
     }
 
@@ -103,9 +202,12 @@ class ComputerPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
      */
     public function testAvoidSimilar()
     {
-        $this->_object->setUppercaseLetters('AB');
-        $this->_object->setAvoidSimilar('B');
-        $this->_object->setOptions(ComputerPasswordGenerator::OPTION_UPPER_CASE | ComputerPasswordGenerator::OPTION_AVOID_SIMILAR);
+        $this->_object
+            ->setParameter(ComputerPasswordGenerator::PARAMETER_UPPER_CASE, 'AB')
+            ->setParameter(ComputerPasswordGenerator::PARAMETER_SIMILAR, 'B')
+            ->setOptionValue(ComputerPasswordGenerator::OPTION_UPPER_CASE, true)
+            ->setOptionValue(ComputerPasswordGenerator::OPTION_AVOID_SIMILAR, true);
+
         $this->_object->setLength(4);
 
         $this->assertEquals('AAAA', $this->_object->generatePassword());
@@ -116,7 +218,6 @@ class ComputerPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
      */
     public function testCharacterListException()
     {
-        $this->_object->setOptions(0);
         $this->setExpectedException('\Hackzilla\PasswordGenerator\Exception\CharactersNotFoundException');
         $this->_object->getCharacterList();
     }
