@@ -25,4 +25,3 @@ class CharacterSet
         return $this->characters;
     }
 }
- 
