@@ -76,8 +76,9 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
         }
 
         $password = '';
+        $words = $this->getOptionValue(self::OPTION_WORDS);
 
-        for ($i = 0; $i < $this->getOptionValue(self::OPTION_WORDS); $i++) {
+        for ($i = 0; $i < $words; $i++) {
             if ($i) {
                 $password .= $this->getParameter(self::PARAMETER_WORD_SEPARATOR);
             }
