@@ -3,6 +3,7 @@
 namespace Hackzilla\PasswordGenerator\Tests;
 
 use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator;
+use Hackzilla\PasswordGenerator\Generator\HumanPasswordGenerator;
 use Hackzilla\PasswordGenerator\Generator\HybridPasswordGenerator;
 
 class ReadMeTest extends \PHPUnit_Framework_TestCase
@@ -47,6 +48,18 @@ class ReadMeTest extends \PHPUnit_Framework_TestCase
             ->setSegmentLength(3)
             ->setSegmentCount(4)
             ->setSegmentSeparator('-');
+
+        $password = $generator->generatePasswords(10);
+    }
+
+    public function testHumanPasswordGeneratorUsage()
+    {
+        $generator = new HumanPasswordGenerator();
+
+        $generator
+            ->setWordList('/usr/share/dict/words')
+            ->setWordCount(3)
+            ->setWordSeparator('-');
 
         $password = $generator->generatePasswords(10);
     }

@@ -105,6 +105,24 @@ If you can think of a better name for this password generator then let me know.
 The segment separator will be remove from the possible characters.
 
 
+Human Password Generator Usage
+-------------------------------
+
+
+```php
+use Hackzilla\PasswordGenerator\Generator\HumanPasswordGenerator;
+
+$generator = new HumanPasswordGenerator();
+
+$generator
+  ->setWordList('/usr/share/dict/words')
+  ->setWordCount(3)
+  ->setWordSeparator('-');
+
+$password = $generator->generatePasswords(10);
+```
+
+
 Example Implementations
 -----------------------
 
