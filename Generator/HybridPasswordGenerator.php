@@ -47,12 +47,15 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
         $characters = \strlen($characterList);
         $password = '';
 
-        for ($i = 0; $i < $this->getSegmentCount(); $i++) {
+        $segmentCount = $this->getSegmentCount();
+        $segmentLength = $this->getSegmentLength();
+
+        for ($i = 0; $i < $segmentCount; $i++) {
             if ($password) {
                 $password .= $this->getSegmentSeparator();
             }
 
-            for ($j = 0; $j < $this->getSegmentLength(); $j++) {
+            for ($j = 0; $j < $segmentLength; $j++) {
                 $password .= $characterList[mt_rand(0, $characters - 1)];
             }
         }
