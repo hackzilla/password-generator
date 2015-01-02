@@ -17,9 +17,8 @@
         "satooshi/php-coveralls": "dev-master"
     },
     "autoload": {
-        "psr-0": {
-            "Hackzilla\\PasswordGenerator": ""
+        "psr-4": {
+            "Hackzilla\\PasswordGenerator\\": ""
         }
-    },
-    "target-dir": "Hackzilla/PasswordGenerator"
+    }
 }
