@@ -2,6 +2,8 @@
 
 namespace Hackzilla\PasswordGenerator\Generator;
 
+use Hackzilla\PasswordGenerator\Model\Option\Option;
+
 class DummyPasswordGenerator extends AbstractPasswordGenerator
 {
     const OPTION_LENGTH = 'LENGTH';
@@ -11,7 +13,7 @@ class DummyPasswordGenerator extends AbstractPasswordGenerator
     public function __construct()
     {
         $this
-            ->setOption(self::OPTION_LENGTH, array('type' => self::TYPE_INTEGER, 'default' => 10))
+            ->setOption(self::OPTION_LENGTH, array('type' => Option::TYPE_INTEGER, 'default' => 10))
         ;
     }
 

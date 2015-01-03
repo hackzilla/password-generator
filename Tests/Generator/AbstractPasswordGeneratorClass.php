@@ -3,6 +3,7 @@
 namespace Hackzilla\PasswordGenerator\Tests\Generator;
 
 use Hackzilla\PasswordGenerator\Generator\AbstractPasswordGenerator;
+use Hackzilla\PasswordGenerator\Model\Option\Option;
 
 class AbstractPasswordGeneratorClass extends AbstractPasswordGenerator
 {
@@ -15,11 +16,11 @@ class AbstractPasswordGeneratorClass extends AbstractPasswordGenerator
     public function __construct()
     {
         $this
-            ->setOption(self::OPTION_TEST_BOOLEAN, array('type' => self::TYPE_BOOLEAN))
-            ->setOption(self::OPTION_TEST_INTEGER, array('type' => self::TYPE_INTEGER, 'min' => -100, 'max' => 100))
-            ->setOption(self::OPTION_TEST_INTEGER_DEFAULT, array('type' => self::TYPE_INTEGER, 'default' => 99))
-            ->setOption(self::OPTION_TEST_STRING, array('type' => self::TYPE_STRING, 'min' => 1, 'max' => 3,  'default' => ''))
-            ->setOption(self::OPTION_TEST_STRING_DEFAULT, array('type' => self::TYPE_STRING, 'default' => 'test'));
+            ->setOption(self::OPTION_TEST_BOOLEAN, array('type' => Option::TYPE_BOOLEAN))
+            ->setOption(self::OPTION_TEST_INTEGER, array('type' => Option::TYPE_INTEGER, 'min' => -100, 'max' => 100))
+            ->setOption(self::OPTION_TEST_INTEGER_DEFAULT, array('type' => Option::TYPE_INTEGER, 'default' => 99))
+            ->setOption(self::OPTION_TEST_STRING, array('type' => Option::TYPE_STRING, 'min' => 1, 'max' => 3,  'default' => ''))
+            ->setOption(self::OPTION_TEST_STRING_DEFAULT, array('type' => Option::TYPE_STRING, 'default' => 'test'));
     }
 
     public function generatePassword()

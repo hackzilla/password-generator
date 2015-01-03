@@ -2,15 +2,12 @@
 
 namespace Hackzilla\PasswordGenerator\Generator;
 
+use Hackzilla\PasswordGenerator\Model\Option\Option;
+
 abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
 {
     private $options = array();
-    private $optionValues = array();
     private $parameters = array();
-
-    const TYPE_BOOLEAN = 'boolean';
-    const TYPE_INTEGER = 'integer';
-    const TYPE_STRING = 'string';
 
     /**
      * Generate $count number of passwords
@@ -48,31 +45,13 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
      */
     public function setOption($option, $optionSettings)
     {
-        if (!isset($optionSettings['type']) || !$this->validateType($optionSettings['type'])) {
+        $type = isset($optionSettings['type']) ? $optionSettings['type'] : '';
+
+        $this->options[$option] = Option::createFromType($type, $optionSettings);
+
+        if ($this->options[$option] === null) {
             throw new \InvalidArgumentException('Invalid Option Type');
         }
-
-        switch ($optionSettings['type']) {
-            case self::TYPE_INTEGER:
-                if (!isset($optionSettings['min'])) {
-                    $optionSettings['min'] = ~PHP_INT_MAX;
-                }
-                if (!isset($optionSettings['max'])) {
-                    $optionSettings['max'] = PHP_INT_MAX;
-                }
-                break;
-
-            case self::TYPE_STRING:
-                if (!isset($optionSettings['min'])) {
-                    $optionSettings['min'] = 0;
-                }
-                if (!isset($optionSettings['max'])) {
-                    $optionSettings['max'] = 255;
-                }
-                break;
-        }
-
-        $this->options[$option] = $optionSettings;
 
         return $this;
     }
@@ -118,15 +97,11 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
      */
     public function setOptionValue($option, $value)
     {
-        if (!isset($this->options[$option]) || !is_array($this->options[$option])) {
+        if (!isset($this->options[$option])) {
             throw new \InvalidArgumentException('Invalid Option');
         }
 
-        if (!$this->validateValue($option, $value)) {
-            throw new \InvalidArgumentException('Invalid Option Value');
-        }
-
-        $this->optionValues[$option] = $value;
+        $this->options[$option]->setValue($value);
 
         return $this;
     }
@@ -140,15 +115,11 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
      */
     public function getOptionValue($option)
     {
-        if (!isset($this->optionValues[$option])) {
-            if (isset($this->options[$option]['default'])) {
-                return $this->options[$option]['default'];
-            }
-
-            return null;
+        if (!isset($this->options[$option])) {
+            throw new \InvalidArgumentException('Invalid Option');
         }
 
-        return $this->optionValues[$option];
+        return $this->options[$option]->getValue();
     }
 
     /**
@@ -187,45 +158,5 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
     public function getOptions()
     {
         return $this->options;
-    }
-
-    public function validateType($type)
-    {
-        switch ($type) {
-            case self::TYPE_BOOLEAN:
-            case self::TYPE_INTEGER:
-            case self::TYPE_STRING:
-                return true;
-        }
-
-        return false;
-    }
-
-    public function validateValue($option, $value)
-    {
-        $optionSettings = $this->getOption($option);
-
-        switch ($optionSettings['type']) {
-            case self::TYPE_BOOLEAN:
-                return is_bool($value);
-
-            case self::TYPE_INTEGER:
-                /* check within min / max */
-                if ($optionSettings['min'] > $value || $optionSettings['max'] < $value) {
-                    return false;
-                }
-
-                return is_int($value);
-
-            case self::TYPE_STRING:
-                /* check length within min / max */
-                if ($optionSettings['min'] > strlen($value) || $optionSettings['max'] < strlen($value)) {
-                    return false;
-                }
-
-                return is_string($value);
-        }
-
-        return false;
     }
 }

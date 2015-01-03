@@ -4,6 +4,7 @@ namespace Hackzilla\PasswordGenerator\Generator;
 
 use Hackzilla\PasswordGenerator\Exception\CharactersNotFoundException;
 use Hackzilla\PasswordGenerator\Model\CharacterSet;
+use Hackzilla\PasswordGenerator\Model\Option\Option;
 
 class ComputerPasswordGenerator extends AbstractPasswordGenerator
 {
@@ -25,12 +26,12 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
     public function __construct()
     {
         $this
-            ->setOption(self::OPTION_UPPER_CASE, array('type' => self::TYPE_BOOLEAN, 'default' => true))
-            ->setOption(self::OPTION_LOWER_CASE, array('type' => self::TYPE_BOOLEAN, 'default' => true))
-            ->setOption(self::OPTION_NUMBERS, array('type' => self::TYPE_BOOLEAN, 'default' => true))
-            ->setOption(self::OPTION_SYMBOLS, array('type' => self::TYPE_BOOLEAN, 'default' => false))
-            ->setOption(self::OPTION_AVOID_SIMILAR, array('type' => self::TYPE_BOOLEAN, 'default' => true))
-            ->setOption(self::OPTION_LENGTH, array('type' => self::TYPE_INTEGER, 'default' => 10))
+            ->setOption(self::OPTION_UPPER_CASE, array('type' => Option::TYPE_BOOLEAN, 'default' => true))
+            ->setOption(self::OPTION_LOWER_CASE, array('type' => Option::TYPE_BOOLEAN, 'default' => true))
+            ->setOption(self::OPTION_NUMBERS, array('type' => Option::TYPE_BOOLEAN, 'default' => true))
+            ->setOption(self::OPTION_SYMBOLS, array('type' => Option::TYPE_BOOLEAN, 'default' => false))
+            ->setOption(self::OPTION_AVOID_SIMILAR, array('type' => Option::TYPE_BOOLEAN, 'default' => true))
+            ->setOption(self::OPTION_LENGTH, array('type' => Option::TYPE_INTEGER, 'default' => 10))
             ->setParameter(self::PARAMETER_UPPER_CASE, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')
             ->setParameter(self::PARAMETER_LOWER_CASE, 'abcdefghijklmnopqrstuvwxyz')
             ->setParameter(self::PARAMETER_NUMBERS, '0123456789')

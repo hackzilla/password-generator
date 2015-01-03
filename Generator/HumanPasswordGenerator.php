@@ -4,6 +4,7 @@ namespace Hackzilla\PasswordGenerator\Generator;
 
 use Hackzilla\PasswordGenerator\Exception\FileNotFoundException;
 use Hackzilla\PasswordGenerator\Exception\WordsNotFoundException;
+use Hackzilla\PasswordGenerator\Model\Option\Option;
 
 class HumanPasswordGenerator extends AbstractPasswordGenerator
 {
@@ -18,9 +19,9 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
     public function __construct()
     {
         $this
-            ->setOption(self::OPTION_WORDS, array('type' => self::TYPE_INTEGER, 'default' => 4))
-            ->setOption(self::OPTION_MIN_WORD_LENGTH, array('type' => self::TYPE_INTEGER, 'default' => 3))
-            ->setOption(self::OPTION_MAX_WORD_LENGTH, array('type' => self::TYPE_INTEGER, 'default' => 20))
+            ->setOption(self::OPTION_WORDS, array('type' => Option::TYPE_INTEGER, 'default' => 4))
+            ->setOption(self::OPTION_MIN_WORD_LENGTH, array('type' => Option::TYPE_INTEGER, 'default' => 3))
+            ->setOption(self::OPTION_MAX_WORD_LENGTH, array('type' => Option::TYPE_INTEGER, 'default' => 20))
             ->setParameter(self::PARAMETER_WORD_SEPARATOR, '')
         ;
     }

@@ -3,6 +3,7 @@
 namespace Hackzilla\PasswordGenerator\Generator;
 
 use Hackzilla\PasswordGenerator\Model\CharacterSet;
+use Hackzilla\PasswordGenerator\Model\Option\Option;
 
 class HybridPasswordGenerator extends ComputerPasswordGenerator
 {
@@ -16,8 +17,8 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
 
         $this
             ->removeOption(self::OPTION_LENGTH)
-            ->setOption(self::OPTION_COUNT, array('type' => self::TYPE_INTEGER, 'default' => 4))
-            ->setOption(self::OPTION_LENGTH, array('type' => self::TYPE_INTEGER, 'default' => 3))
+            ->setOption(self::OPTION_COUNT, array('type' => Option::TYPE_INTEGER, 'default' => 4))
+            ->setOption(self::OPTION_LENGTH, array('type' => Option::TYPE_INTEGER, 'default' => 3))
             ->setParameter(self::PARAMETER_SEPARATOR, '-')
         ;
     }
