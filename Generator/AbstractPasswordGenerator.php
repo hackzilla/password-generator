@@ -184,7 +184,7 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
      *
      * @return array
      */
-    public function getPossibleOptions()
+    public function getOptions()
     {
         return $this->options;
     }

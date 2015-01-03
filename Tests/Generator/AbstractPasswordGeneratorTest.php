@@ -59,14 +59,8 @@ class AbstractPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
     public function testGetPossibleOptions()
     {
-        /*
-         * set different options
-         * check match return
-         * and is array
-         */
-
-        $this->assertTrue(is_array($this->_object->getPossibleOptions()));
-        $this->assertEquals(count($this->_object->getPossibleOptions()), 5);
+        $this->assertTrue(is_array($this->_object->getOptions()));
+        $this->assertEquals(count($this->_object->getOptions()), 5);
     }
 
     public function testGetOptionValueDefault()
