@@ -7,7 +7,8 @@ use Hackzilla\PasswordGenerator\Model\Option\Option;
 
 class HybridPasswordGenerator extends ComputerPasswordGenerator
 {
-    const OPTION_COUNT = 'COUNT';
+    const OPTION_SEGMENT_COUNT = 'SEGMENT_COUNT';
+    const OPTION_SEGMENT_LENGTH = 'SEGMENT_LENGTH';
 
     const PARAMETER_SEPARATOR = 'SEPARATOR';
 
@@ -17,8 +18,8 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
 
         $this
             ->removeOption(self::OPTION_LENGTH)
-            ->setOption(self::OPTION_COUNT, array('type' => Option::TYPE_INTEGER, 'default' => 4))
-            ->setOption(self::OPTION_LENGTH, array('type' => Option::TYPE_INTEGER, 'default' => 3))
+            ->setOption(self::OPTION_SEGMENT_COUNT, array('type' => Option::TYPE_INTEGER, 'default' => 4))
+            ->setOption(self::OPTION_SEGMENT_LENGTH, array('type' => Option::TYPE_INTEGER, 'default' => 3))
             ->setParameter(self::PARAMETER_SEPARATOR, '-')
         ;
     }
@@ -97,7 +98,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
      */
     public function getSegmentCount()
     {
-        return $this->getOptionValue(self::OPTION_COUNT);
+        return $this->getOptionValue(self::OPTION_SEGMENT_COUNT);
     }
 
     /**
@@ -115,7 +116,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
             throw new \InvalidArgumentException('Expected positive integer');
         }
 
-        $this->setOptionValue(self::OPTION_COUNT, $segmentCount);
+        $this->setOptionValue(self::OPTION_SEGMENT_COUNT, $segmentCount);
 
         return $this;
     }
@@ -127,7 +128,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
      */
     public function getSegmentLength()
     {
-        return $this->getOptionValue(self::OPTION_LENGTH);
+        return $this->getOptionValue(self::OPTION_SEGMENT_LENGTH);
     }
 
     /**
@@ -145,7 +146,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
             throw new \InvalidArgumentException('Expected positive integer');
         }
 
-        $this->setOptionValue(self::OPTION_LENGTH, $segmentLength);
+        $this->setOptionValue(self::OPTION_SEGMENT_LENGTH, $segmentLength);
 
         return $this;
     }
