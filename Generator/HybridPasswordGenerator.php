@@ -26,6 +26,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
 
     /**
      * Generate character list for us in generating passwords
+     * and remove segment separator from character list pool
      *
      * @return CharacterSet Character list
      * @throws \Exception
