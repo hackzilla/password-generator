@@ -36,7 +36,7 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
             ->setParameter(self::PARAMETER_LOWER_CASE, 'abcdefghijklmnopqrstuvwxyz')
             ->setParameter(self::PARAMETER_NUMBERS, '0123456789')
             ->setParameter(self::PARAMETER_SYMBOLS, '!@$%^&*()<>,.?/[]{}-=_+')
-            ->setParameter(self::PARAMETER_SIMILAR, 'lOo')
+            ->setParameter(self::PARAMETER_SIMILAR, 'iIl1Oo0')
         ;
     }
 
