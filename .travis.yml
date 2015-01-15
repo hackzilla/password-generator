@@ -17,4 +17,4 @@ before_script:
 
 script:
   - mkdir -p build/logs
-  - phpunit -c travis.phpunit.xml --coverage-clover build/logs/clover.xml
+  - phpunit -c travis.phpunit.xml
