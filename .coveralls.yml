@@ -1,4 +1,5 @@
 #.coveralls.yml
+src_dir: .
 
 # single file
 coverage_clover: build/logs/clover.xml

@@ -18,3 +18,4 @@ before_script:
 script:
   - mkdir -p build/logs
   - phpunit -c travis.phpunit.xml
+  - php vendor/bin/coveralls -c .coveralls.yml -v
