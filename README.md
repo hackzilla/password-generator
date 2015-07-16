@@ -144,7 +144,7 @@ Basically an attacker could predict the random passwords this library produces g
 
 If you have a source of randomness you can inject it into the PasswordGenerator, using RandomGeneratorInterface.
 
-PHP 7 has random_int function which they say is good to use for cryptographic random integers.
+PHP 7 has [random_int](http://www.php.net/random_int) function which they say is good to use for cryptographic random integers.
 
 ```php
 use Hackzilla\PasswordGenerator\Generator\HumanPasswordGenerator;
