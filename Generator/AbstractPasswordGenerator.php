@@ -66,7 +66,6 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
     public function removeOption($option)
     {
         unset($this->options[$option]);
-        unset($this->optionValues[$option]);
 
         return $this;
     }
