@@ -26,7 +26,7 @@ Add HackzillaPasswordGenerator in your composer.json:
 ```json
 {
     "require": {
-        "hackzilla/password-generator": "~1.0",
+        "hackzilla/password-generator": "~1.0"
     }
 }
 ```
