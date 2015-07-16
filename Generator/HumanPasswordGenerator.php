@@ -84,7 +84,7 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
                 $password .= $this->getParameter(self::PARAMETER_WORD_SEPARATOR);
             }
 
-            $password .= $wordList[mt_rand(0, $words - 1)];
+            $password .= $wordList[$this->randomInteger(0, $words - 1)];
         }
 
         return $password;

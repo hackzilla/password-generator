@@ -59,7 +59,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
             }
 
             for ($j = 0; $j < $segmentLength; $j++) {
-                $password .= $characterList[mt_rand(0, $characters - 1)];
+                $password .= $characterList[$this->randomInteger(0, $characters - 1)];
             }
         }
 

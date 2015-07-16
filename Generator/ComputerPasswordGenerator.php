@@ -92,7 +92,7 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
         $length = $this->getLength();
 
         for ($i = 0; $i < $length; $i++) {
-            $password .= $characterList[mt_rand(0, $characters - 1)];
+            $password .= $characterList[$this->randomInteger(0, $characters - 1)];
         }
 
         return $password;

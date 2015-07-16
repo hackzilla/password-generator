@@ -3,9 +3,11 @@
 namespace Hackzilla\PasswordGenerator\Generator;
 
 use Hackzilla\PasswordGenerator\Model\Option\Option;
+use Hackzilla\PasswordGenerator\RandomGenerator\RandomGeneratorInterface;
 
 abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
 {
+    private $randomGenerator;
     private $options = array();
     private $parameters = array();
 
@@ -157,5 +159,37 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
     public function getOptions()
     {
         return $this->options;
+    }
+
+    /**
+     * Set source of randomness
+     *
+     * @param RandomGeneratorInterface $randomGenerator
+     *
+     * @return $this
+     */
+    public function setRandomGenerator(RandomGeneratorInterface $randomGenerator)
+    {
+        $this->randomGenerator = $randomGenerator;
+
+        return $this;
+    }
+
+    /**
+     * Generate a random value
+     * Fallback to mt_rand if none provided
+     *
+     * @param int $min
+     * @param int $max
+     *
+     * @return int
+     */
+    public function randomInteger($min, $max)
+    {
+        if ($this->randomGenerator) {
+            return $this->randomGenerator->randomInteger($min, $max);
+        }
+
+        return mt_rand($min, $max);
     }
 }
