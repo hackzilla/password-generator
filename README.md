@@ -21,16 +21,6 @@ Requirements
 Installation
 ------------
 
-Add HackzillaPasswordGenerator in your composer.json:
-
-```json
-{
-    "require": {
-        "hackzilla/password-generator": "~1.0"
-    }
-}
-```
-
 Install Composer
 
 ```
@@ -41,10 +31,10 @@ mv composer.phar /usr/local/bin/composer
 Now tell composer to download the library by running the command:
 
 ``` bash
-$ composer update hackzilla/password-generator
+$ composer require hackzilla/password-generator
 ```
 
-Composer will install the bundle into your project's `vendor/hackzilla` directory.
+Composer will add the library to your composer.json file and install it into your project's `vendor/hackzilla` directory.
 
 
 Simple Usage
