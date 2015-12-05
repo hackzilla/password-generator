@@ -3,6 +3,7 @@
 namespace Hackzilla\PasswordGenerator\Generator;
 
 use Hackzilla\PasswordGenerator\Exception\FileNotFoundException;
+use Hackzilla\PasswordGenerator\Exception\ImpossiblePasswordLengthException;
 use Hackzilla\PasswordGenerator\Exception\WordsNotFoundException;
 use Hackzilla\PasswordGenerator\Model\Option\Option;
 
