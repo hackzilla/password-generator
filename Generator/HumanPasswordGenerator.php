@@ -346,6 +346,6 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
 
         $wordCount = $this->getWordCount();
 
-        return ($this->getMinWordLength() * $wordCount) + (strlen($this->getWordSeparator()) * ($wordCount - 1));
+        return ($this->getMaxWordLength() * $wordCount) + (strlen($this->getWordSeparator()) * ($wordCount - 1));
     }
 }
