@@ -64,6 +64,24 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
         return $words;
     }
 
+    private function generateWordListSubset($min, $max)
+    {
+        $wordList = $this->generateWordList();
+        $newWordList = array();
+
+        foreach ($wordList as $word) {
+            $wordLength = strlen($word);
+
+            if ($wordLength < $min || $wordLength > $max) {
+                continue;
+            }
+
+            $newWordList[] = $word;
+        }
+
+        return $newWordList;
+    }
+
     /**
      * Generate one password based on options.
      *
@@ -93,6 +111,22 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
         }
 
         return $password;
+    }
+
+    public function randomWord($minLength = null, $maxLength = null)
+    {
+        if (is_null($minLength)) {
+            $minLength = $this->getMinWordLength();
+        }
+
+        if (is_null($maxLength)) {
+            $maxLength = $this->getMaxWordLength();
+        }
+
+        $wordList = $this->generateWordListSubset($minLength, $maxLength);
+        $words = \count($wordList);
+
+        return $wordList[$this->randomInteger(0, $words - 1)];
     }
 
     /**
