@@ -12,6 +12,7 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
     const OPTION_WORDS = 'WORDS';
     const OPTION_MIN_WORD_LENGTH = 'MIN';
     const OPTION_MAX_WORD_LENGTH = 'MAX';
+    const OPTION_LENGTH = 'LENGTH';
 
     const PARAMETER_DICTIONARY_FILE = 'DICTIONARY';
     const PARAMETER_WORD_CACHE = 'CACHE';
@@ -20,6 +21,7 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
     public function __construct()
     {
         $this
+            ->setOption(self::OPTION_LENGTH, array('type' => Option::TYPE_INTEGER, 'default' => null))
             ->setOption(self::OPTION_WORDS, array('type' => Option::TYPE_INTEGER, 'default' => 4))
             ->setOption(self::OPTION_MIN_WORD_LENGTH, array('type' => Option::TYPE_INTEGER, 'default' => 3))
             ->setOption(self::OPTION_MAX_WORD_LENGTH, array('type' => Option::TYPE_INTEGER, 'default' => 20))
@@ -251,6 +253,36 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
         }
 
         $this->setParameter(self::PARAMETER_WORD_SEPARATOR, $separator);
+
+        return $this;
+    }
+
+    /**
+     * Password length
+     *
+     * @return integer
+     */
+    public function getLength()
+    {
+        return $this->getOptionValue(self::OPTION_LENGTH);
+    }
+
+    /**
+     * Set length of desired password(s)
+     *
+     * @param integer $characterCount
+     *
+     * @return $this
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function setLength($characterCount)
+    {
+        if (!is_int($characterCount) || $characterCount < 1) {
+            throw new \InvalidArgumentException('Expected positive integer');
+        }
+
+        $this->setOptionValue(self::OPTION_LENGTH, $characterCount);
 
         return $this;
     }
