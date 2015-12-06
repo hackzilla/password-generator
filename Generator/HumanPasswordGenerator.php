@@ -32,7 +32,7 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
     /**
      * Generate character list for us in generating passwords.
      *
-     * @return string Character list
+     * @return string[] Character list
      *
      * @throws WordsNotFoundException
      */
