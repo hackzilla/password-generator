@@ -4,6 +4,7 @@ namespace Hackzilla\PasswordGenerator\Generator;
 
 use Hackzilla\PasswordGenerator\Exception\FileNotFoundException;
 use Hackzilla\PasswordGenerator\Exception\ImpossiblePasswordLengthException;
+use Hackzilla\PasswordGenerator\Exception\NotEnoughWordsException;
 use Hackzilla\PasswordGenerator\Exception\WordsNotFoundException;
 use Hackzilla\PasswordGenerator\Model\Option\Option;
 
@@ -134,6 +135,10 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
 
         $wordList = $this->generateWordListSubset($minLength, $maxLength);
         $words = \count($wordList);
+
+        if (!$words) {
+            throw new NotEnoughWordsException(sprintf('No words with a length between %d and %d', $minLength, $maxLength));
+        }
 
         return $wordList[$this->randomInteger(0, $words - 1)];
     }
