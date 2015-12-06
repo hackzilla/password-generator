@@ -104,6 +104,17 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
         $password = '';
         $wordCount = $this->getWordCount();
 
+        if (
+            $this->getLength() > 0 &&
+            (
+                $this->getMinPasswordLength() > $this->getLength()
+                ||
+                $this->getMaxPasswordLength() < $this->getLength()
+            )
+        ) {
+            throw new ImpossiblePasswordLengthException();
+        }
+
         for ($i = 0; $i < $wordCount; ++$i) {
             if ($i) {
                 $password .= $this->getWordSeparator();
