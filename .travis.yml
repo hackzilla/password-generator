@@ -37,6 +37,4 @@ before_script:
   - composer update --prefer-dist --no-interaction $COMPOSER_FLAGS
 
 script:
-  - mkdir -p build/logs
-  - phpunit -c travis.phpunit.xml
-  - php vendor/bin/coveralls -c .coveralls.yml -v
+  - make test
