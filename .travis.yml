@@ -5,18 +5,39 @@ php:
   - 5.5
   - 5.4
   - 5.3
-  - hhvm
   - 7.0
+  - nightly
+  - hhvm
+
+env:
+  global:
+    - PATH="$HOME/.composer/vendor/bin:$PATH"
 
 matrix:
+  fast_finish: true
+  include:
+    - php: 5.6
+      env: CS_FIXER=run
+    - php: 5.3
+      env: COMPOSER_FLAGS="--prefer-lowest"
   allow_failures:
-    - php: 7.0
-    - php: hhvm
+    - php: nightly
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
 
 before_script:
-  - composer install --dev --no-interaction --prefer-source
+  - composer selfupdate
+  - composer config -g github-oauth.github.com $GITHUB_OAUTH_TOKEN
+  - composer global require phpunit/phpunit fabpot/php-cs-fixer --no-update
+  - composer global update --prefer-dist --no-interaction
+  - composer update --prefer-dist --no-interaction $COMPOSER_FLAGS
 
 script:
-  - mkdir -p build/logs
-  - phpunit -c travis.phpunit.xml
+  - make test
+
+after_success:
   - php vendor/bin/coveralls -c .coveralls.yml -v
