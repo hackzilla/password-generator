@@ -23,10 +23,10 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     public function testWordCount()
     {
         $this->_object->setWordCount(1);
-        $this->assertEquals($this->_object->getWordCount(), 1);
+        $this->assertSame($this->_object->getWordCount(), 1);
 
         $this->_object->setWordCount(6);
-        $this->assertEquals($this->_object->getWordCount(), 6);
+        $this->assertSame($this->_object->getWordCount(), 6);
 
         $this->setExpectedException('InvalidArgumentException');
         $this->_object->setWordCount(-6);
@@ -41,10 +41,10 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     public function testMinWordLength()
     {
         $this->_object->setMinWordLength(1);
-        $this->assertEquals($this->_object->getMinWordLength(), 1);
+        $this->assertSame($this->_object->getMinWordLength(), 1);
 
         $this->_object->setMinWordLength(6);
-        $this->assertEquals($this->_object->getMinWordLength(), 6);
+        $this->assertSame($this->_object->getMinWordLength(), 6);
 
         $this->setExpectedException('InvalidArgumentException');
         $this->_object->setMinWordLength(-6);
@@ -59,10 +59,10 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     public function testMaxWordLength()
     {
         $this->_object->setMaxWordLength(1);
-        $this->assertEquals($this->_object->getMaxWordLength(), 1);
+        $this->assertSame($this->_object->getMaxWordLength(), 1);
 
         $this->_object->setMaxWordLength(6);
-        $this->assertEquals($this->_object->getMaxWordLength(), 6);
+        $this->assertSame($this->_object->getMaxWordLength(), 6);
 
         $this->setExpectedException('InvalidArgumentException');
         $this->_object->setMaxWordLength(-6);
@@ -77,13 +77,13 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     public function testWordSeparator()
     {
         $this->_object->setWordSeparator('');
-        $this->assertEquals($this->_object->getWordSeparator(), '');
+        $this->assertSame($this->_object->getWordSeparator(), '');
 
         $this->_object->setWordSeparator('-');
-        $this->assertEquals($this->_object->getWordSeparator(), '-');
+        $this->assertSame($this->_object->getWordSeparator(), '-');
 
         $this->_object->setWordSeparator('-?*');
-        $this->assertEquals($this->_object->getWordSeparator(), '-?*');
+        $this->assertSame($this->_object->getWordSeparator(), '-?*');
 
         $this->setExpectedException('InvalidArgumentException');
         $this->_object->setWordSeparator(-6);
@@ -98,7 +98,7 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     public function getSimpleWordList()
     {
         $reflClass = new \ReflectionClass(get_class($this));
-        $filename = dirname($reflClass->getFileName()) . DIRECTORY_SEPARATOR . 'Data' . DIRECTORY_SEPARATOR . 'WordList' . DIRECTORY_SEPARATOR . 'simple.txt';
+        $filename = dirname($reflClass->getFileName()).DIRECTORY_SEPARATOR.'Data'.DIRECTORY_SEPARATOR.'WordList'.DIRECTORY_SEPARATOR.'simple.txt';
 
         return $filename;
     }
@@ -109,7 +109,7 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     public function getEmptyWordList()
     {
         $reflClass = new \ReflectionClass(get_class($this));
-        $filename = dirname($reflClass->getFileName()) . DIRECTORY_SEPARATOR . 'Data' . DIRECTORY_SEPARATOR . 'WordList' . DIRECTORY_SEPARATOR . 'empty.txt';
+        $filename = dirname($reflClass->getFileName()).DIRECTORY_SEPARATOR.'Data'.DIRECTORY_SEPARATOR.'WordList'.DIRECTORY_SEPARATOR.'empty.txt';
 
         return $filename;
     }
@@ -122,7 +122,7 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         $filename = $this->getSimpleWordList();
 
         $this->_object->setWordList($filename);
-        $this->assertEquals($this->_object->getWordList(), $filename);
+        $this->assertSame($this->_object->getWordList(), $filename);
 
         $this->setExpectedException('InvalidArgumentException');
         $this->_object->setWordList(7);
@@ -157,12 +157,13 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->_object->setWordList($filename);
         $words = $this->_object->generateWordList();
 
-        $this->assertEquals(count($words), 7);
-        $this->assertEquals($words[0], 'blancmange');
+        $this->assertSame(count($words), 7);
+        $this->assertSame($words[0], 'blancmange');
     }
 
     /**
      * @dataProvider lengthProvider
+     *
      * @param $length
      */
     public function testGeneratePasswords($length)
@@ -173,15 +174,16 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->_object->setWordCount($length);
         $passwords = $this->_object->generatePasswords($length);
 
-        $this->assertEquals(count($passwords), $length);
+        $this->assertSame(count($passwords), $length);
 
         foreach ($passwords as $password) {
-            $this->assertEquals($password, \str_repeat('blancmange', $length));
+            $this->assertSame($password, \str_repeat('blancmange', $length));
         }
     }
 
     /**
      * @dataProvider lengthProvider
+     *
      * @param $length
      */
     public function testGeneratePassword($length)
@@ -190,7 +192,7 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
         $this->_object->setWordList($filename);
         $this->_object->setWordCount($length);
-        $this->assertEquals($this->_object->generatePassword(), \str_repeat('blancmange', $length));
+        $this->assertSame($this->_object->generatePassword(), \str_repeat('blancmange', $length));
     }
 
     /**
@@ -213,6 +215,7 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider lengthProvider
+     *
      * @param $length
      */
     public function testGeneratePasswordWithSeparator($length)
@@ -222,7 +225,7 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->_object->setWordList($filename);
         $this->_object->setWordCount($length);
         $this->_object->setWordSeparator('-');
-        $this->assertEquals($this->_object->generatePassword(), $this->makePassword('blancmange', $length, '-'));
+        $this->assertSame($this->_object->generatePassword(), $this->makePassword('blancmange', $length, '-'));
     }
 
     /**
@@ -236,7 +239,7 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     {
         $password = '';
 
-        for ($i = 0; $i < $length; $i++) {
+        for ($i = 0; $i < $length; ++$i) {
             if ($i) {
                 $password .= $separator;
             }

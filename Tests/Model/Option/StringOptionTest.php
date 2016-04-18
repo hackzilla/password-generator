@@ -18,11 +18,12 @@ class StringOptionTest extends \PHPUnit_Framework_TestCase
     {
         $option = new StringOption();
 
-        $this->assertEquals(StringOption::TYPE_STRING, $option->getType());
+        $this->assertSame(StringOption::TYPE_STRING, $option->getType());
     }
 
     /**
      * @dataProvider validValueProvider
+     *
      * @param mixed $value
      */
     public function testValidValue($value)
@@ -30,7 +31,7 @@ class StringOptionTest extends \PHPUnit_Framework_TestCase
         $option = new StringOption();
         $option->setValue($value);
 
-        $this->assertEquals($option->getValue(), $value);
+        $this->assertSame($option->getValue(), $value);
     }
 
     public function validValueProvider()
@@ -42,6 +43,7 @@ class StringOptionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider invalidValueProvider
+     *
      * @param mixed $value
      * @expectedException \InvalidArgumentException
      */
@@ -64,13 +66,13 @@ class StringOptionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider minMaxProvider
+     *
      * @param $min
      * @param $max
      * @param $value
      */
     public function testMinMax($min, $max, $value)
     {
-
     }
 
     public function minMaxProvider()
@@ -87,6 +89,7 @@ class StringOptionTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider minMaxExceptionProvider
      * @expectedException \InvalidArgumentException
+     *
      * @param $min
      * @param $max
      * @param $value

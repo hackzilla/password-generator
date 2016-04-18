@@ -61,8 +61,8 @@ class HybridPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     public function testSetSegmentCount($count)
     {
         $this->_object->setSegmentCount($count);
-        $this->assertEquals($this->_object->getSegmentCount(), $count);
-        $this->assertEquals($this->_object->getLength(), $count);
+        $this->assertSame($this->_object->getSegmentCount(), $count);
+        $this->assertSame($this->_object->getLength(), $count);
     }
 
     /**
@@ -75,12 +75,13 @@ class HybridPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider lengthProvider
+     *
      * @param $length
      */
     public function testSetSegmentLength($length)
     {
         $this->_object->setSegmentLength($length);
-        $this->assertEquals($this->_object->getSegmentLength(), $length);
+        $this->assertSame($this->_object->getSegmentLength(), $length);
     }
 
     /**
@@ -93,12 +94,13 @@ class HybridPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider lengthProvider
+     *
      * @param $length
      */
     public function testSetLength($length)
     {
         $this->_object->setLength($length);
-        $this->assertEquals($this->_object->getLength(), $length);
+        $this->assertSame($this->_object->getLength(), $length);
     }
 
     public function lengthProvider()
@@ -113,12 +115,13 @@ class HybridPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider segmentProvider
+     *
      * @param $separator
      */
     public function testSetSegmentSeparator($separator)
     {
         $this->_object->setSegmentSeparator($separator);
-        $this->assertEquals($this->_object->getSegmentSeparator(), $separator);
+        $this->assertSame($this->_object->getSegmentSeparator(), $separator);
     }
 
     public function segmentProvider()
@@ -139,6 +142,7 @@ class HybridPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider optionsProvider
+     *
      * @param $option
      * @param $parameter
      */
@@ -152,7 +156,7 @@ class HybridPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
             ->setSegmentCount(4)
         ;
 
-        $this->assertEquals('A-A-A-A', $this->_object->generatePassword());
+        $this->assertSame('A-A-A-A', $this->_object->generatePassword());
     }
 
     /**

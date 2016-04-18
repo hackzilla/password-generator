@@ -18,6 +18,7 @@ class DummyPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider lengthProvider
+     *
      * @param $length
      * @param $comparePassword
      */
@@ -26,32 +27,34 @@ class DummyPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->_object->setOptionValue(DummyPasswordGenerator::OPTION_LENGTH, $length);
         $passwords = $this->_object->generatePasswords($length);
 
-        $this->assertEquals(count($passwords), $length);
+        $this->assertSame(count($passwords), $length);
 
         foreach ($passwords as $password) {
-            $this->assertEquals($password, $comparePassword);
+            $this->assertSame($password, $comparePassword);
         }
     }
 
     /**
      * @dataProvider lengthProvider
+     *
      * @param $length
      * @param $password
      */
     public function testGeneratePassword($length, $password)
     {
         $this->_object->setOptionValue(DummyPasswordGenerator::OPTION_LENGTH, $length);
-        $this->assertEquals($this->_object->generatePassword(), $password);
+        $this->assertSame($this->_object->generatePassword(), $password);
     }
 
     /**
      * @dataProvider lengthProvider
+     *
      * @param $length
      */
     public function testLength($length)
     {
         $this->_object->setLength($length);
-        $this->assertEquals($this->_object->getLength(), $length);
+        $this->assertSame($this->_object->getLength(), $length);
     }
 
     /**
@@ -70,6 +73,7 @@ class DummyPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider      lengthExceptionProvider
      * @expectedException \InvalidArgumentException
+     *
      * @param $param
      */
     public function testLengthException($param)

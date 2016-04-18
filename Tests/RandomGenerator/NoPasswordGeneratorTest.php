@@ -33,6 +33,6 @@ class HybridPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     {
         $randomInteger = $this->_object->randomInteger($min, $max);
 
-        $this->assertEquals($min, $randomInteger);
+        $this->assertSame($min, $randomInteger);
     }
 }
