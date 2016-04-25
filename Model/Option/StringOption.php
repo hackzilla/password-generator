@@ -18,9 +18,10 @@ class StringOption extends Option
     }
 
     /**
-     * Set option string value
+     * Set option string value.
      *
      * @param string $value
+     *
      * @throws \InvalidArgumentException
      */
     public function setValue($value)

@@ -41,9 +41,10 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
     }
 
     /**
-     * Generate character list for us in generating passwords
+     * Generate character list for us in generating passwords.
      *
      * @return CharacterSet Character list
+     *
      * @throws CharactersNotFoundException
      */
     public function getCharacterList()
@@ -79,7 +80,7 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
     }
 
     /**
-     * Generate one password based on options
+     * Generate one password based on options.
      *
      * @return string password
      */
@@ -91,7 +92,7 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
 
         $length = $this->getLength();
 
-        for ($i = 0; $i < $length; $i++) {
+        for ($i = 0; $i < $length; ++$i) {
             $password .= $characterList[$this->randomInteger(0, $characters - 1)];
         }
 
@@ -99,9 +100,9 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
     }
 
     /**
-     * Password length
+     * Password length.
      *
-     * @return integer
+     * @return int
      */
     public function getLength()
     {
@@ -109,9 +110,9 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
     }
 
     /**
-     * Set length of desired password(s)
+     * Set length of desired password(s).
      *
-     * @param integer $characterCount
+     * @param int $characterCount
      *
      * @return $this
      *
@@ -139,9 +140,9 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
     }
 
     /**
-     * Enable uppercase characters
+     * Enable uppercase characters.
      *
-     * @param boolean $enable
+     * @param bool $enable
      *
      * @return $this
      *
@@ -169,9 +170,9 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
     }
 
     /**
-     * Enable lowercase characters
+     * Enable lowercase characters.
      *
-     * @param boolean $enable
+     * @param bool $enable
      *
      * @return $this
      *
@@ -199,9 +200,9 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
     }
 
     /**
-     * Enable numbers
+     * Enable numbers.
      *
-     * @param boolean $enable
+     * @param bool $enable
      *
      * @return $this
      *
@@ -229,9 +230,9 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
     }
 
     /**
-     * Enable symbol characters
+     * Enable symbol characters.
      *
-     * @param boolean $enable
+     * @param bool $enable
      *
      * @return $this
      *
@@ -259,7 +260,7 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
     }
 
     /**
-     * Enable characters to be removed when avoiding similar characters
+     * Enable characters to be removed when avoiding similar characters.
      *
      * @param bool $enable
      *

@@ -18,11 +18,12 @@ class IntegerOptionTest extends \PHPUnit_Framework_TestCase
     {
         $option = new IntegerOption();
 
-        $this->assertEquals(IntegerOption::TYPE_INTEGER, $option->getType());
+        $this->assertSame(IntegerOption::TYPE_INTEGER, $option->getType());
     }
 
     /**
      * @dataProvider validValueProvider
+     *
      * @param mixed $value
      */
     public function testValidValue($value)
@@ -30,7 +31,7 @@ class IntegerOptionTest extends \PHPUnit_Framework_TestCase
         $option = new IntegerOption();
         $option->setValue($value);
 
-        $this->assertEquals($option->getValue(), $value);
+        $this->assertSame($option->getValue(), $value);
     }
 
     public function validValueProvider()
@@ -42,6 +43,7 @@ class IntegerOptionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider invalidValueProvider
+     *
      * @param mixed $value
      * @expectedException \InvalidArgumentException
      */
@@ -64,6 +66,7 @@ class IntegerOptionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider minMaxProvider
+     *
      * @param $min
      * @param $max
      * @param $value
@@ -73,7 +76,7 @@ class IntegerOptionTest extends \PHPUnit_Framework_TestCase
         $option = new IntegerOption(array('min' => $min, 'max' => $max));
         $option->setValue($value);
 
-        $this->assertEquals($option->getValue(), $value);
+        $this->assertSame($option->getValue(), $value);
     }
 
     public function minMaxProvider()
@@ -90,6 +93,7 @@ class IntegerOptionTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider minMaxExceptionProvider
      * @expectedException \InvalidArgumentException
+     *
      * @param $min
      * @param $max
      * @param $value

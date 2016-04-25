@@ -29,9 +29,9 @@ class DummyPasswordGenerator extends AbstractPasswordGenerator
     }
 
     /**
-     * Password length
+     * Password length.
      *
-     * @return integer
+     * @return int
      */
     public function getLength()
     {
@@ -39,9 +39,9 @@ class DummyPasswordGenerator extends AbstractPasswordGenerator
     }
 
     /**
-     * Set length of desired password(s)
+     * Set length of desired password(s).
      *
-     * @param integer $characterCount
+     * @param int $characterCount
      *
      * @return $this
      *

@@ -23,7 +23,7 @@ abstract class Option implements OptionInterface
     }
 
     /**
-     * Set option value
+     * Set option value.
      *
      * @param mixed $value
      */
@@ -45,6 +45,6 @@ abstract class Option implements OptionInterface
                 return new BooleanOption($settings);
         }
 
-        return null;
+        return;
     }
 }

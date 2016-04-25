@@ -8,6 +8,7 @@ class OptionTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider typeProvider
+     *
      * @param string $type
      * @param string $namespace
      */
@@ -17,7 +18,7 @@ class OptionTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('Hackzilla\PasswordGenerator\Model\Option\OptionInterface', $option);
         $this->assertInstanceOf($namespace, $option);
-        $this->assertEquals($type, $option->getType());
+        $this->assertSame($type, $option->getType());
     }
 
     public function testCreateFromTypeNull()
@@ -37,17 +38,18 @@ class OptionTest extends \PHPUnit_Framework_TestCase
     public function testDefault()
     {
         $option = new OptionClass();
-        $this->assertEquals($option->getValue(), null);
+        $this->assertSame($option->getValue(), null);
 
         $option = new OptionClass(array('default' => 1));
-        $this->assertEquals($option->getValue(), 1);
+        $this->assertSame($option->getValue(), 1);
 
         $option = new OptionClass(array('default' => 'a'));
-        $this->assertEquals($option->getValue(), 'a');
+        $this->assertSame($option->getValue(), 'a');
     }
 
     /**
      * @dataProvider valueProvider
+     *
      * @param mixed $value
      */
     public function testValue($value)
@@ -55,7 +57,7 @@ class OptionTest extends \PHPUnit_Framework_TestCase
         $option = new OptionClass();
         $option->setValue($value);
 
-        $this->assertEquals($option->getValue(), $value);
+        $this->assertSame($option->getValue(), $value);
     }
 
     public function valueProvider()
@@ -69,4 +71,3 @@ class OptionTest extends \PHPUnit_Framework_TestCase
         );
     }
 }
- 
