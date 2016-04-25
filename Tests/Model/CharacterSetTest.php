@@ -17,7 +17,6 @@ class CharacterSetTest extends \PHPUnit_Framework_TestCase
         $characterSet = new CharacterSet($characters);
 
         $this->assertSame($result, $characterSet->getCharacters());
-        $this->assertSame($result, $characterSet->__toString());
     }
 
     public function characterProvider()
@@ -25,7 +24,7 @@ class CharacterSetTest extends \PHPUnit_Framework_TestCase
         return array(
             array('ABC', 'ABC'),
             array('', ''),
-            array(null, ''),
+            array(null, null),
         );
     }
 
@@ -39,6 +38,7 @@ class CharacterSetTest extends \PHPUnit_Framework_TestCase
     {
         $characterSet = new CharacterSet($characters);
 
+        $this->assertSame($result, $characterSet->__toString());
         $this->assertSame($result, (string) $characterSet);
     }
 
@@ -47,7 +47,7 @@ class CharacterSetTest extends \PHPUnit_Framework_TestCase
         return array(
             array('ABC', 'ABC'),
             array('', ''),
-            array(null, null),
+            array(null, ''),
         );
     }
 }
