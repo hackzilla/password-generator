@@ -12,9 +12,9 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
     private $parameters = array();
 
     /**
-     * Generate $count number of passwords
+     * Generate $count number of passwords.
      *
-     * @param integer $count Number of passwords to return
+     * @param int $count Number of passwords to return
      *
      * @return array
      *
@@ -24,13 +24,13 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
     {
         if (!is_int($count)) {
             throw new \InvalidArgumentException('Expected integer');
-        } else if ($count < 0) {
+        } elseif ($count < 0) {
             throw new \InvalidArgumentException('Expected positive integer');
         }
 
         $passwords = array();
 
-        for ($i = 0; $i < $count; $i++) {
+        for ($i = 0; $i < $count; ++$i) {
             $passwords[] = $this->generatePassword();
         }
 
@@ -38,10 +38,10 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
     }
 
     /**
-     * Set password generator option
+     * Set password generator option.
      *
      * @param string $option
-     * @param array $optionSettings
+     * @param array  $optionSettings
      *
      * @return $this
      */
@@ -59,7 +59,7 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
     }
 
     /**
-     * Remove Option
+     * Remove Option.
      *
      * @param $option
      *
@@ -73,23 +73,21 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
     }
 
     /**
-     * Get option
+     * Get option.
      *
      * @param $option
-     *
-     * @return null
      */
     public function getOption($option)
     {
         if (!isset($this->options[$option])) {
-            return null;
+            return;
         }
 
         return $this->options[$option];
     }
 
     /**
-     * Set password generator option value
+     * Set password generator option value.
      *
      * @param string $option
      * @param $value
@@ -108,7 +106,7 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
     }
 
     /**
-     * Get option value
+     * Get option value.
      *
      * @param $option
      *
@@ -125,7 +123,7 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
 
     /**
      * @param string $parameter
-     * @param mixed $value
+     * @param mixed  $value
      *
      * @return $this
      */
@@ -138,7 +136,7 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
 
     /**
      * @param string $parameter
-     * @param mixed $default
+     * @param mixed  $default
      *
      * @return null|mixed
      */
@@ -152,7 +150,7 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
     }
 
     /**
-     * Possible options
+     * Possible options.
      *
      * @return array
      */
@@ -162,7 +160,7 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
     }
 
     /**
-     * Set source of randomness
+     * Set source of randomness.
      *
      * @param RandomGeneratorInterface $randomGenerator
      *
@@ -177,7 +175,7 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
 
     /**
      * Generate a random value
-     * Fallback to mt_rand if none provided
+     * Fallback to mt_rand if none provided.
      *
      * @param int $min
      * @param int $max

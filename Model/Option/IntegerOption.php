@@ -18,9 +18,10 @@ class IntegerOption extends Option
     }
 
     /**
-     * Set option integer value
+     * Set option integer value.
      *
-     * @param integer $value
+     * @param int $value
+     *
      * @throws \InvalidArgumentException
      */
     public function setValue($value)

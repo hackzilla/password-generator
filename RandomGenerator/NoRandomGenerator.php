@@ -3,12 +3,12 @@
 namespace Hackzilla\PasswordGenerator\RandomGenerator;
 
 /**
- * Class NoRandomGenerator
+ * Class NoRandomGenerator.
  */
 class NoRandomGenerator implements RandomGeneratorInterface
 {
     /**
-     * This return the $min, and is for testing only
+     * This return the $min, and is for testing only.
      *
      * @param int $min
      * @param int $max

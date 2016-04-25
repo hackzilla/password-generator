@@ -27,9 +27,10 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
     }
 
     /**
-     * Generate character list for us in generating passwords
+     * Generate character list for us in generating passwords.
      *
      * @return string Character list
+     *
      * @throws WordsNotFoundException
      */
     public function generateWordList()
@@ -61,9 +62,10 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
     }
 
     /**
-     * Generate one password based on options
+     * Generate one password based on options.
      *
      * @return string password
+     *
      * @throws WordsNotFoundException
      */
     public function generatePassword()
@@ -79,7 +81,7 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
         $password = '';
         $wordCount = $this->getOptionValue(self::OPTION_WORDS);
 
-        for ($i = 0; $i < $wordCount; $i++) {
+        for ($i = 0; $i < $wordCount; ++$i) {
             if ($i) {
                 $password .= $this->getParameter(self::PARAMETER_WORD_SEPARATOR);
             }
@@ -91,9 +93,9 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
     }
 
     /**
-     * Get number of words in desired password
+     * Get number of words in desired password.
      *
-     * @return integer
+     * @return int
      */
     public function getWordCount()
     {
@@ -101,9 +103,9 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
     }
 
     /**
-     * Set number of words in desired password(s)
+     * Set number of words in desired password(s).
      *
-     * @param integer $characterCount
+     * @param int $characterCount
      *
      * @return $this
      *
@@ -121,9 +123,9 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
     }
 
     /**
-     * get max word length
+     * get max word length.
      *
-     * @return integer
+     * @return int
      */
     public function getMaxWordLength()
     {
@@ -131,10 +133,12 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
     }
 
     /**
-     * set max word length
+     * set max word length.
      *
-     * @param integer $length
+     * @param int $length
+     *
      * @return $this
+     *
      * @throws \InvalidArgumentException
      */
     public function setMaxWordLength($length)
@@ -150,9 +154,9 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
     }
 
     /**
-     * get min word length
+     * get min word length.
      *
-     * @return integer
+     * @return int
      */
     public function getMinWordLength()
     {
@@ -160,10 +164,12 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
     }
 
     /**
-     * set min word length
+     * set min word length.
      *
-     * @param integer $length
+     * @param int $length
+     *
      * @return $this
+     *
      * @throws \InvalidArgumentException
      */
     public function setMinWordLength($length)
@@ -179,10 +185,12 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
     }
 
     /**
-     * Set word list
+     * Set word list.
      *
      * @param string $filename
+     *
      * @return $this
+     *
      * @throws \InvalidArgumentException
      * @throws FileNotFoundException
      */
@@ -190,7 +198,7 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
     {
         if (!is_string($filename)) {
             throw new \InvalidArgumentException('Expected string');
-        } else if (!file_exists($filename)) {
+        } elseif (!file_exists($filename)) {
             throw new FileNotFoundException('File not found');
         }
 
@@ -201,9 +209,10 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
     }
 
     /**
-     * Get word list filename
+     * Get word list filename.
      *
      * @throws FileNotFoundException
+     *
      * @return string
      */
     public function getWordList()
@@ -216,7 +225,7 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
     }
 
     /**
-     * Get word separator
+     * Get word separator.
      *
      * @return string
      */
@@ -226,7 +235,7 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
     }
 
     /**
-     * Set word separator
+     * Set word separator.
      *
      * @param string $separator
      *

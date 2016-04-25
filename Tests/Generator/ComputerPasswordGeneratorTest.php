@@ -25,16 +25,18 @@ class ComputerPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider lengthProvider
+     *
      * @param $length
      */
     public function testLength($length)
     {
         $this->_object->setLength($length);
-        $this->assertEquals($this->_object->getLength(), $length);
+        $this->assertSame($this->_object->getLength(), $length);
     }
 
     /**
      * @dataProvider lengthProvider
+     *
      * @param $length
      */
     public function testGeneratePassword($length)
@@ -47,7 +49,7 @@ class ComputerPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
             ->setOptionValue(ComputerPasswordGenerator::OPTION_AVOID_SIMILAR, true);
 
         $this->_object->setLength($length);
-        $this->assertEquals(\strlen($this->_object->generatePassword()), $length);
+        $this->assertSame(\strlen($this->_object->generatePassword()), $length);
     }
 
     /**
@@ -65,20 +67,22 @@ class ComputerPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider getterSetterProvider
+     *
      * @param $method
      */
     public function testGetterSetters($method)
     {
-        $this->_object->{'set' . $method}(true);
-        $this->assertTrue($this->_object->{'get' . $method}());
+        $this->_object->{'set'.$method}(true);
+        $this->assertTrue($this->_object->{'get'.$method}());
 
-        $this->_object->{'set' . $method}(false);
-        $this->assertTrue(!$this->_object->{'get' . $method}());
+        $this->_object->{'set'.$method}(false);
+        $this->assertTrue(!$this->_object->{'get'.$method}());
     }
 
     /**
      * @dataProvider      lengthExceptionProvider
      * @expectedException \InvalidArgumentException
+     *
      * @param $param
      */
     public function testLengthException($param)
@@ -99,11 +103,12 @@ class ComputerPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider      getterSetterProvider
      * @expectedException \InvalidArgumentException
+     *
      * @param $method
      */
     public function testGetterSettersException($method)
     {
-        $this->_object->{'set' . $method}(1);
+        $this->_object->{'set'.$method}(1);
     }
 
     public function getterSetterProvider()
@@ -119,6 +124,7 @@ class ComputerPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider optionProvider
+     *
      * @param $option
      * @param $exists
      * @param $dontExist
@@ -171,6 +177,7 @@ class ComputerPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider optionsProvider
+     *
      * @param $option
      * @param $parameter
      */
@@ -181,7 +188,7 @@ class ComputerPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
             ->setParameter($parameter, 'A')
             ->setLength(4);
 
-        $this->assertEquals('AAAA', $this->_object->generatePassword());
+        $this->assertSame('AAAA', $this->_object->generatePassword());
     }
 
     /**
@@ -210,7 +217,7 @@ class ComputerPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
         $this->_object->setLength(4);
 
-        $this->assertEquals('AAAA', $this->_object->generatePassword());
+        $this->assertSame('AAAA', $this->_object->generatePassword());
     }
 
     /**
