@@ -5,7 +5,7 @@ namespace Hackzilla\PasswordGenerator\Tests\RandomGenerator;
 use Hackzilla\PasswordGenerator\RandomGenerator\Php7RandomGenerator;
 
 /**
- * Class Php7RandomGeneratorTest
+ * Class Php7RandomGeneratorTest.
  *
  * @requires PHP 7
  */

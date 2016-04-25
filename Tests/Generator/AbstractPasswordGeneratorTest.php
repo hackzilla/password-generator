@@ -2,7 +2,6 @@
 
 namespace Hackzilla\PasswordGenerator\Tests\Generator;
 
-
 class AbstractPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 {
     private $_object;
@@ -15,6 +14,7 @@ class AbstractPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider generatePasswordsProvider
      * @expectedException \InvalidArgumentException
+     *
      * @param $passwordCount
      */
     public function testGeneratePasswordsException($passwordCount)
@@ -35,13 +35,14 @@ class AbstractPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider lengthProvider
+     *
      * @param $count
      */
     public function testGeneratePasswords($count)
     {
         $passwords = $this->_object->generatePasswords($count);
 
-        $this->assertEquals(\count($passwords), $count);
+        $this->assertSame(\count($passwords), $count);
     }
 
     /**
@@ -59,6 +60,7 @@ class AbstractPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider optionProvider
+     *
      * @param string $option
      */
     public function testGetOption($option)
@@ -80,24 +82,25 @@ class AbstractPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     public function testGetPossibleOptions()
     {
         $this->assertTrue(is_array($this->_object->getOptions()));
-        $this->assertEquals(count($this->_object->getOptions()), 5);
+        $this->assertSame(count($this->_object->getOptions()), 5);
     }
 
     public function testGetOptionValueDefault()
     {
-        $this->assertEquals(99, $this->_object->getOptionValue(AbstractPasswordGeneratorClass::OPTION_TEST_INTEGER_DEFAULT));
-        $this->assertEquals('test', $this->_object->getOptionValue(AbstractPasswordGeneratorClass::OPTION_TEST_STRING_DEFAULT));
+        $this->assertSame(99, $this->_object->getOptionValue(AbstractPasswordGeneratorClass::OPTION_TEST_INTEGER_DEFAULT));
+        $this->assertSame('test', $this->_object->getOptionValue(AbstractPasswordGeneratorClass::OPTION_TEST_STRING_DEFAULT));
     }
 
     /**
      * @dataProvider setOptionValueProvider
+     *
      * @param $option
      * @param $value
      */
     public function testSetOptionValue($option, $value)
     {
         $this->_object->setOptionValue($option, $value);
-        $this->assertEquals($this->_object->getOptionValue($option), $value);
+        $this->assertSame($this->_object->getOptionValue($option), $value);
     }
 
     /**
@@ -114,6 +117,7 @@ class AbstractPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider setOptionExceptionProvider
      * @expectedException        \InvalidArgumentException
+     *
      * @param $option
      * @param $value
      */
@@ -176,6 +180,7 @@ class AbstractPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider parameterProvider
+     *
      * @param $parameter
      * @param $value
      */
@@ -183,7 +188,7 @@ class AbstractPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     {
         $this->_object->setParameter($parameter, $value);
 
-        $this->assertEquals($value, $this->_object->getParameter($parameter));
+        $this->assertSame($value, $this->_object->getParameter($parameter));
     }
 
     public function parameterProvider()
@@ -198,6 +203,7 @@ class AbstractPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider validateValueProvider
+     *
      * @param $option
      * @param $value
      * @param $return
@@ -212,7 +218,7 @@ class AbstractPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->_object->setOptionValue($option, $value);
 
         if ($return) {
-            $this->assertEquals($value, $this->_object->getOptionValue($option));
+            $this->assertSame($value, $this->_object->getOptionValue($option));
         }
     }
 

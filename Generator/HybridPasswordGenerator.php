@@ -26,9 +26,10 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
 
     /**
      * Generate character list for us in generating passwords
-     * and remove segment separator from character list pool
+     * and remove segment separator from character list pool.
      *
      * @return CharacterSet Character list
+     *
      * @throws \Exception
      */
     public function getCharacterList()
@@ -40,7 +41,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
     }
 
     /**
-     * Generate one password based on options
+     * Generate one password based on options.
      *
      * @return string password
      */
@@ -53,12 +54,12 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
         $segmentCount = $this->getSegmentCount();
         $segmentLength = $this->getSegmentLength();
 
-        for ($i = 0; $i < $segmentCount; $i++) {
+        for ($i = 0; $i < $segmentCount; ++$i) {
             if ($password) {
                 $password .= $this->getSegmentSeparator();
             }
 
-            for ($j = 0; $j < $segmentLength; $j++) {
+            for ($j = 0; $j < $segmentLength; ++$j) {
                 $password .= $characterList[$this->randomInteger(0, $characters - 1)];
             }
         }
@@ -67,9 +68,9 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
     }
 
     /**
-     * Get number of words in desired password
+     * Get number of words in desired password.
      *
-     * @return integer
+     * @return int
      */
     public function getLength()
     {
@@ -77,9 +78,9 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
     }
 
     /**
-     * Set length of desired password(s)
+     * Set length of desired password(s).
      *
-     * @param integer $characterCount
+     * @param int $characterCount
      *
      * @return $this
      *
@@ -93,9 +94,9 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
     }
 
     /**
-     * Get number of segments in desired password
+     * Get number of segments in desired password.
      *
-     * @return integer
+     * @return int
      */
     public function getSegmentCount()
     {
@@ -103,9 +104,9 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
     }
 
     /**
-     * Set number of segments in desired password(s)
+     * Set number of segments in desired password(s).
      *
-     * @param integer $segmentCount
+     * @param int $segmentCount
      *
      * @return $this
      *
@@ -123,9 +124,9 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
     }
 
     /**
-     * Get number of segments in desired password
+     * Get number of segments in desired password.
      *
-     * @return integer
+     * @return int
      */
     public function getSegmentLength()
     {
@@ -133,9 +134,9 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
     }
 
     /**
-     * Set length of segment
+     * Set length of segment.
      *
-     * @param integer $segmentLength
+     * @param int $segmentLength
      *
      * @return $this
      *
@@ -153,7 +154,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
     }
 
     /**
-     * Get Segment Separator
+     * Get Segment Separator.
      *
      * @return string
      */
@@ -163,11 +164,12 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
     }
 
     /**
-     * Set segment separator
+     * Set segment separator.
      *
      * @param string $segmentSeparator
      *
      * @return \Hackzilla\PasswordGenerator\Generator\HybridPasswordGenerator
+     *
      * @throws \InvalidArgumentException
      */
     public function setSegmentSeparator($segmentSeparator)

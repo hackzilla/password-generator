@@ -7,9 +7,10 @@ use InvalidArgumentException;
 class BooleanOption extends Option
 {
     /**
-     * Set option boolean value
+     * Set option boolean value.
      *
-     * @param boolean $value
+     * @param bool $value
+     *
      * @throws \InvalidArgumentException
      */
     public function setValue($value)

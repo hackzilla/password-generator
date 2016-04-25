@@ -18,11 +18,12 @@ class BooleanOptionTest extends \PHPUnit_Framework_TestCase
     {
         $option = new BooleanOption();
 
-        $this->assertEquals(BooleanOption::TYPE_BOOLEAN, $option->getType());
+        $this->assertSame(BooleanOption::TYPE_BOOLEAN, $option->getType());
     }
 
     /**
      * @dataProvider validValueProvider
+     *
      * @param mixed $value
      */
     public function testValidValue($value)
@@ -30,7 +31,7 @@ class BooleanOptionTest extends \PHPUnit_Framework_TestCase
         $option = new BooleanOption();
         $option->setValue($value);
 
-        $this->assertEquals($option->getValue(), $value);
+        $this->assertSame($option->getValue(), $value);
     }
 
     public function validValueProvider()
@@ -43,6 +44,7 @@ class BooleanOptionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider invalidValueProvider
+     *
      * @param mixed $value
      * @expectedException \InvalidArgumentException
      */
