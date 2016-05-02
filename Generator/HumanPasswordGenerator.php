@@ -115,13 +115,40 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
             throw new ImpossiblePasswordLengthException();
         }
 
-        for ($i = 0; $i < $wordCount; ++$i) {
-            if ($i) {
-                $password .= $this->getWordSeparator();
+        if (!$this->getLength()) {
+            for ($i = 0; $i < $wordCount; $i++) {
+                if ($i) {
+                    $password .= $this->getWordSeparator();
+                }
+
+                $password .= $this->randomWord();
             }
 
-            $password .= $wordList[$this->randomInteger(0, $words - 1)];
+            return $password;
         }
+
+        $desiredLength = $this->getLength() ? $this->getLength() : $this->getMaxPasswordLength();
+        $desiredLength -= (strlen($this->getWordSeparator()) * ($wordCount - 1)) + $wordCount -1;
+
+        $minLength = min($this->getMinWordLength(), $desiredLength);
+        $maxLength = min($this->getMaxWordLength(), $desiredLength);
+
+        while(--$wordCount) {
+            $thisMin = min($minLength, $desiredLength);
+            $thisMax = min($maxLength, $desiredLength);
+
+            $length = $this->randomInteger($thisMin, $thisMax);
+
+            $desiredLength -= ($length-1);
+
+            $password .= $this->randomWord($length, $length);
+
+            if ($wordCount) {
+                $password .= $this->getWordSeparator();
+            }
+        }
+
+        $password .= $this->randomWord($desiredLength, $desiredLength);
 
         return $password;
     }
