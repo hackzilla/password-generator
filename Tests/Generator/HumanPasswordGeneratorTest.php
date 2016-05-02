@@ -129,7 +129,7 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException  Hackzilla\PasswordGenerator\Exception\WordsNotFoundException
+     * @expectedException  \Hackzilla\PasswordGenerator\Exception\WordsNotFoundException
      */
     public function testWordListException()
     {
@@ -140,7 +140,7 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException  Hackzilla\PasswordGenerator\Exception\FileNotFoundException
+     * @expectedException  \Hackzilla\PasswordGenerator\Exception\FileNotFoundException
      */
     public function testUnknownWordList()
     {
@@ -196,7 +196,7 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException  Hackzilla\PasswordGenerator\Exception\FileNotFoundException
+     * @expectedException  \Hackzilla\PasswordGenerator\Exception\FileNotFoundException
      */
     public function testGeneratePasswordException()
     {
@@ -204,7 +204,7 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException  Hackzilla\PasswordGenerator\Exception\ImpossiblePasswordLengthException
+     * @expectedException  \Hackzilla\PasswordGenerator\Exception\ImpossiblePasswordLengthException
      */
     public function testGeneratePasswordImpossiblePasswordLengthException()
     {
@@ -228,7 +228,7 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException  Hackzilla\PasswordGenerator\Exception\NotEnoughWordsException
+     * @expectedException  \Hackzilla\PasswordGenerator\Exception\NotEnoughWordsException
      */
     public function testRandomWordException()
     {
@@ -239,7 +239,7 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException  Hackzilla\PasswordGenerator\Exception\WordsNotFoundException
+     * @expectedException  \Hackzilla\PasswordGenerator\Exception\WordsNotFoundException
      */
     public function testEmptyException()
     {
