@@ -322,7 +322,7 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->_object->setMinWordLength(1);
         $this->_object->setMaxWordLength(10);
 
-        $this->_object->setParameter(HumanPasswordGenerator::PARAMETER_WORD_CACHE, [
+        $this->_object->setParameter(HumanPasswordGenerator::PARAMETER_WORD_CACHE, array(
             'a',
             'ab',
             'abc',
@@ -351,7 +351,7 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
             'abcdefghijklmnopqrstuvwxyz',
             'abcdefghijklmnopqrstuvwxyz0',
             'abcdefghijklmnopqrstuvwxyz01',
-        ]);
+        ));
 
         $this->_object->setLength($length);
         $this->_object->setWordCount(3);
@@ -362,12 +362,12 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
     public function fixedPasswordsProvider()
     {
-        return [
-            [5],
-            [10],
-            [20],
-            [30],
-            [32],
-        ];
+        return array(
+            array(5),
+            array(10),
+            array(20),
+            array(30),
+            array(32),
+        );
     }
 }
