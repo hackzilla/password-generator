@@ -49,7 +49,9 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
         $maxWordLength = $this->getOptionValue(self::OPTION_MAX_WORD_LENGTH);
 
         foreach ($words as $i => $word) {
-            if (\strlen($word) > $maxWordLength || \strlen($word) < $minWordLength) {
+            $wordLength = \strlen($word);
+
+            if ($wordLength > $maxWordLength || $wordLength < $minWordLength) {
                 unset($words[$i]);
             }
         }
