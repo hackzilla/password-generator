@@ -339,18 +339,6 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
             'abcdefghijklmn',
             'abcdefghijklmno',
             'abcdefghijklmnop',
-            'abcdefghijklmnopq',
-            'abcdefghijklmnopqr',
-            'abcdefghijklmnopqrs',
-            'abcdefghijklmnopqrst',
-            'abcdefghijklmnopqrstu',
-            'abcdefghijklmnopqrstuv',
-            'abcdefghijklmnopqrstuvw',
-            'abcdefghijklmnopqrstuvwx',
-            'abcdefghijklmnopqrstuvwxy',
-            'abcdefghijklmnopqrstuvwxyz',
-            'abcdefghijklmnopqrstuvwxyz0',
-            'abcdefghijklmnopqrstuvwxyz01',
         ));
 
         $this->_object->setLength($length);
