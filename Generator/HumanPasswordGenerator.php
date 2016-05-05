@@ -400,28 +400,24 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
     }
 
     /**
-     * @return int|null
+     * Calculate how long the password would be using minimum word length
+     *
+     * @return int
      */
     public function getMinPasswordLength()
     {
-        if (is_null($this->getLength())) {
-            return null;
-        }
-
         $wordCount = $this->getWordCount();
 
         return ($this->getMinWordLength() * $wordCount) + (strlen($this->getWordSeparator()) * ($wordCount - 1));
     }
 
     /**
-     * @return int|null
+     * Calculate how long the password would be using maximum word length
+     *
+     * @return int
      */
     public function getMaxPasswordLength()
     {
-        if (is_null($this->getLength())) {
-            return null;
-        }
-
         $wordCount = $this->getWordCount();
 
         return ($this->getMaxWordLength() * $wordCount) + (strlen($this->getWordSeparator()) * ($wordCount - 1));
