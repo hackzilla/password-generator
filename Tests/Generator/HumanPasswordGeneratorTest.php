@@ -250,9 +250,6 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 
     public function testGetPasswordLength()
     {
-        $this->assertNull($this->_object->getMinPasswordLength());
-        $this->assertNull($this->_object->getMaxPasswordLength());
-
         $this->_object->setLength(1);
         $this->_object->setWordCount(3);
         $this->_object->setMinWordLength(3);
