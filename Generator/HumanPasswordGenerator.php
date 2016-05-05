@@ -19,8 +19,8 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
     const PARAMETER_WORD_CACHE = 'CACHE';
     const PARAMETER_WORD_SEPARATOR = 'SEPARATOR';
 
-    private $minWordLength = INF;
-    private $maxWordLength = 0;
+    private $minWordLength;
+    private $maxWordLength;
 
     public function __construct()
     {
@@ -246,6 +246,10 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
      */
     public function getMaxWordLength()
     {
+        if (is_null($this->maxWordLength)) {
+            return $this->getOptionValue(self::OPTION_MAX_WORD_LENGTH);
+        }
+
         return min(
             $this->maxWordLength,
             $this->getOptionValue(self::OPTION_MAX_WORD_LENGTH)
@@ -269,6 +273,8 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
 
         $this->setOptionValue(self::OPTION_MAX_WORD_LENGTH, $length);
         $this->setParameter(self::PARAMETER_WORD_CACHE, null);
+        $this->minWordLength = null;
+        $this->maxWordLength = null;
 
         return $this;
     }
@@ -303,6 +309,8 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
 
         $this->setOptionValue(self::OPTION_MIN_WORD_LENGTH, $length);
         $this->setParameter(self::PARAMETER_WORD_CACHE, null);
+        $this->minWordLength = null;
+        $this->maxWordLength = null;
 
         return $this;
     }
