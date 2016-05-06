@@ -3,6 +3,8 @@
 namespace Hackzilla\PasswordGenerator\Generator;
 
 use Hackzilla\PasswordGenerator\Exception\FileNotFoundException;
+use Hackzilla\PasswordGenerator\Exception\ImpossiblePasswordLengthException;
+use Hackzilla\PasswordGenerator\Exception\NotEnoughWordsException;
 use Hackzilla\PasswordGenerator\Exception\WordsNotFoundException;
 use Hackzilla\PasswordGenerator\Model\Option\Option;
 
@@ -11,14 +13,19 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
     const OPTION_WORDS = 'WORDS';
     const OPTION_MIN_WORD_LENGTH = 'MIN';
     const OPTION_MAX_WORD_LENGTH = 'MAX';
+    const OPTION_LENGTH = 'LENGTH';
 
     const PARAMETER_DICTIONARY_FILE = 'DICTIONARY';
     const PARAMETER_WORD_CACHE = 'CACHE';
     const PARAMETER_WORD_SEPARATOR = 'SEPARATOR';
 
+    private $minWordLength;
+    private $maxWordLength;
+
     public function __construct()
     {
         $this
+            ->setOption(self::OPTION_LENGTH, array('type' => Option::TYPE_INTEGER, 'default' => null))
             ->setOption(self::OPTION_WORDS, array('type' => Option::TYPE_INTEGER, 'default' => 4))
             ->setOption(self::OPTION_MIN_WORD_LENGTH, array('type' => Option::TYPE_INTEGER, 'default' => 3))
             ->setOption(self::OPTION_MAX_WORD_LENGTH, array('type' => Option::TYPE_INTEGER, 'default' => 20))
@@ -29,13 +36,15 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
     /**
      * Generate character list for us in generating passwords.
      *
-     * @return string Character list
+     * @return string[] Character list
      *
      * @throws WordsNotFoundException
      */
     public function generateWordList()
     {
         if ($this->getParameter(self::PARAMETER_WORD_CACHE) !== null) {
+            $this->findWordListLength();
+
             return $this->getParameter(self::PARAMETER_WORD_CACHE);
         }
 
@@ -45,7 +54,9 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
         $maxWordLength = $this->getOptionValue(self::OPTION_MAX_WORD_LENGTH);
 
         foreach ($words as $i => $word) {
-            if (\strlen($word) > $maxWordLength || \strlen($word) < $minWordLength) {
+            $wordLength = \strlen($word);
+
+            if ($wordLength > $maxWordLength || $wordLength < $minWordLength) {
                 unset($words[$i]);
             }
         }
@@ -57,8 +68,42 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
         }
 
         $this->setParameter(self::PARAMETER_WORD_CACHE, $words);
+        $this->findWordListLength();
 
         return $words;
+    }
+
+    private function findWordListLength()
+    {
+        $words = $this->getParameter(self::PARAMETER_WORD_CACHE);
+
+        $this->minWordLength = INF;
+        $this->maxWordLength = 0;
+
+        foreach ($words as $word) {
+            $wordLength = \strlen($word);
+
+            $this->minWordLength = min($wordLength, $this->minWordLength);
+            $this->maxWordLength = max($wordLength, $this->maxWordLength);
+        }
+    }
+
+    private function generateWordListSubset($min, $max)
+    {
+        $wordList = $this->generateWordList();
+        $newWordList = array();
+
+        foreach ($wordList as $word) {
+            $wordLength = strlen($word);
+
+            if ($wordLength < $min || $wordLength > $max) {
+                continue;
+            }
+
+            $newWordList[] = $word;
+        }
+
+        return $newWordList;
     }
 
     /**
@@ -67,6 +112,7 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
      * @return string password
      *
      * @throws WordsNotFoundException
+     * @throws ImpossiblePasswordLengthException
      */
     public function generatePassword()
     {
@@ -79,17 +125,84 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
         }
 
         $password = '';
-        $wordCount = $this->getOptionValue(self::OPTION_WORDS);
+        $wordCount = $this->getWordCount();
 
-        for ($i = 0; $i < $wordCount; ++$i) {
-            if ($i) {
-                $password .= $this->getParameter(self::PARAMETER_WORD_SEPARATOR);
-            }
-
-            $password .= $wordList[$this->randomInteger(0, $words - 1)];
+        if (
+            $this->getLength() > 0 &&
+            (
+                $this->getMinPasswordLength() > $this->getLength()
+                ||
+                $this->getMaxPasswordLength() < $this->getLength()
+            )
+        ) {
+            throw new ImpossiblePasswordLengthException();
         }
 
+        if (!$this->getLength()) {
+            for ($i = 0; $i < $wordCount; $i++) {
+                if ($i) {
+                    $password .= $this->getWordSeparator();
+                }
+
+                $password .= $this->randomWord();
+            }
+
+            return $password;
+        }
+
+        while(--$wordCount) {
+            $thisMin = $this->getLength() - strlen($password) - ($wordCount * $this->getMaxWordLength()) - (strlen($this->getWordSeparator()) * $wordCount);
+            $thisMax = $this->getLength() - strlen($password) - ($wordCount * $this->getMinWordLength()) - (strlen($this->getWordSeparator()) * $wordCount);
+
+            if ($thisMin < 1) {
+                $thisMin = $this->getMinWordLength();
+            }
+
+            if ($thisMax > $this->getMaxWordLength()) {
+                $thisMax = $this->getMaxWordLength();
+            }
+
+            $length = $this->randomInteger($thisMin, $thisMax);
+
+            $password .= $this->randomWord($length, $length);
+
+            if ($wordCount) {
+                $password .= $this->getWordSeparator();
+            }
+        }
+
+        $desiredLength = $this->getLength() - strlen($password);
+        $password .= $this->randomWord($desiredLength, $desiredLength);
+
         return $password;
+    }
+
+    /**
+     * @param null|int $minLength
+     * @param null|int $maxLength
+     *
+     * @return string
+     *
+     * @throws NotEnoughWordsException
+     */
+    public function randomWord($minLength = null, $maxLength = null)
+    {
+        if (is_null($minLength)) {
+            $minLength = $this->getMinWordLength();
+        }
+
+        if (is_null($maxLength)) {
+            $maxLength = $this->getMaxWordLength();
+        }
+
+        $wordList = $this->generateWordListSubset($minLength, $maxLength);
+        $words = \count($wordList);
+
+        if (!$words) {
+            throw new NotEnoughWordsException(sprintf('No words with a length between %d and %d', $minLength, $maxLength));
+        }
+
+        return $wordList[$this->randomInteger(0, $words - 1)];
     }
 
     /**
@@ -129,7 +242,14 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
      */
     public function getMaxWordLength()
     {
-        return $this->getOptionValue(self::OPTION_MAX_WORD_LENGTH);
+        if (is_null($this->maxWordLength)) {
+            return $this->getOptionValue(self::OPTION_MAX_WORD_LENGTH);
+        }
+
+        return min(
+            $this->maxWordLength,
+            $this->getOptionValue(self::OPTION_MAX_WORD_LENGTH)
+        );
     }
 
     /**
@@ -149,6 +269,8 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
 
         $this->setOptionValue(self::OPTION_MAX_WORD_LENGTH, $length);
         $this->setParameter(self::PARAMETER_WORD_CACHE, null);
+        $this->minWordLength = null;
+        $this->maxWordLength = null;
 
         return $this;
     }
@@ -160,7 +282,10 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
      */
     public function getMinWordLength()
     {
-        return $this->getOptionValue(self::OPTION_MIN_WORD_LENGTH);
+        return max(
+            $this->minWordLength,
+            $this->getOptionValue(self::OPTION_MIN_WORD_LENGTH)
+        );
     }
 
     /**
@@ -180,6 +305,8 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
 
         $this->setOptionValue(self::OPTION_MIN_WORD_LENGTH, $length);
         $this->setParameter(self::PARAMETER_WORD_CACHE, null);
+        $this->minWordLength = null;
+        $this->maxWordLength = null;
 
         return $this;
     }
@@ -252,5 +379,59 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
         $this->setParameter(self::PARAMETER_WORD_SEPARATOR, $separator);
 
         return $this;
+    }
+
+    /**
+     * Password length
+     *
+     * @return integer
+     */
+    public function getLength()
+    {
+        return $this->getOptionValue(self::OPTION_LENGTH);
+    }
+
+    /**
+     * Set length of desired password(s)
+     *
+     * @param integer $characterCount
+     *
+     * @return $this
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function setLength($characterCount)
+    {
+        if (!is_int($characterCount) || $characterCount < 1) {
+            throw new \InvalidArgumentException('Expected positive integer');
+        }
+
+        $this->setOptionValue(self::OPTION_LENGTH, $characterCount);
+
+        return $this;
+    }
+
+    /**
+     * Calculate how long the password would be using minimum word length
+     *
+     * @return int
+     */
+    public function getMinPasswordLength()
+    {
+        $wordCount = $this->getWordCount();
+
+        return ($this->getMinWordLength() * $wordCount) + (strlen($this->getWordSeparator()) * ($wordCount - 1));
+    }
+
+    /**
+     * Calculate how long the password would be using maximum word length
+     *
+     * @return int
+     */
+    public function getMaxPasswordLength()
+    {
+        $wordCount = $this->getWordCount();
+
+        return ($this->getMaxWordLength() * $wordCount) + (strlen($this->getWordSeparator()) * ($wordCount - 1));
     }
 }

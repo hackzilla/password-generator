@@ -129,7 +129,7 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException  Hackzilla\PasswordGenerator\Exception\WordsNotFoundException
+     * @expectedException  \Hackzilla\PasswordGenerator\Exception\WordsNotFoundException
      */
     public function testWordListException()
     {
@@ -140,7 +140,7 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException  Hackzilla\PasswordGenerator\Exception\FileNotFoundException
+     * @expectedException  \Hackzilla\PasswordGenerator\Exception\FileNotFoundException
      */
     public function testUnknownWordList()
     {
@@ -196,7 +196,7 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException  Hackzilla\PasswordGenerator\Exception\FileNotFoundException
+     * @expectedException  \Hackzilla\PasswordGenerator\Exception\FileNotFoundException
      */
     public function testGeneratePasswordException()
     {
@@ -204,13 +204,60 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException  Hackzilla\PasswordGenerator\Exception\WordsNotFoundException
+     * @expectedException  \Hackzilla\PasswordGenerator\Exception\ImpossiblePasswordLengthException
+     */
+    public function testGeneratePasswordImpossiblePasswordLengthException()
+    {
+        $this->_object->setLength(20);
+        $this->_object->setWordCount(3);
+        $this->_object->setMinWordLength(10);
+        $this->_object->setMaxWordLength(10);
+
+        $filename = $this->getSimpleWordList();
+        $this->_object->setWordList($filename);
+
+        $this->_object->generatePassword();
+    }
+
+    public function testRandomWord()
+    {
+        $filename = $this->getSimpleWordList();
+        $this->_object->setWordList($filename);
+
+        $this->assertEquals('blancmange', $this->_object->randomWord(5, 15));
+    }
+
+    /**
+     * @expectedException  \Hackzilla\PasswordGenerator\Exception\NotEnoughWordsException
+     */
+    public function testRandomWordException()
+    {
+        $filename = $this->getSimpleWordList();
+        $this->_object->setWordList($filename);
+
+        $this->_object->randomWord(12, 15);
+    }
+
+    /**
+     * @expectedException  \Hackzilla\PasswordGenerator\Exception\WordsNotFoundException
      */
     public function testEmptyException()
     {
         $generator = new HumanPasswordGeneratorClass();
 
         $generator->generatePassword();
+    }
+
+    public function testGetPasswordLength()
+    {
+        $this->_object->setLength(1);
+        $this->_object->setWordCount(3);
+        $this->_object->setMinWordLength(3);
+        $this->_object->setMaxWordLength(6);
+        $this->_object->setWordSeparator('-');
+
+        $this->assertEquals(11, $this->_object->getMinPasswordLength());
+        $this->assertEquals(20, $this->_object->getMaxPasswordLength());
     }
 
     /**
@@ -260,6 +307,73 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
             array(4),
             array(8),
             array(16),
+        );
+    }
+
+    /**
+     * @dataProvider lengthExceptionProvider
+     *
+     * @expectedException  \InvalidArgumentException
+     */
+    public function testLengthException($length)
+    {
+        $this->_object->setLength($length);
+    }
+
+    /**
+     * @return array
+     */
+    public function lengthExceptionProvider()
+    {
+        return array(
+            array(null),
+            array('A'),
+            array(-1),
+        );
+    }
+    /**
+     * @dataProvider fixedPasswordsProvider
+     * @param $length
+     */
+    public function testGeneratePasswordFixedLength($length)
+    {
+        $this->_object->setMinWordLength(1);
+        $this->_object->setMaxWordLength(10);
+
+        $this->_object->setParameter(HumanPasswordGenerator::PARAMETER_WORD_CACHE, array(
+            'a',
+            'ab',
+            'abc',
+            'abcd',
+            'abcde',
+            'abcdef',
+            'abcdefg',
+            'abcdefgh',
+            'abcdefghi',
+            'abcdefghij',
+            'abcdefghijk',
+            'abcdefghijkl',
+            'abcdefghijklm',
+            'abcdefghijklmn',
+            'abcdefghijklmno',
+            'abcdefghijklmnop',
+        ));
+
+        $this->_object->setLength($length);
+        $this->_object->setWordCount(3);
+        $this->_object->setWordSeparator('-');
+
+        $this->assertEquals($length, \strlen($this->_object->generatePassword()));
+    }
+
+    public function fixedPasswordsProvider()
+    {
+        return array(
+            array(5),
+            array(10),
+            array(20),
+            array(30),
+            array(32),
         );
     }
 }
