@@ -156,14 +156,10 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
 
             if ($thisMin < 1) {
                 $thisMin = $this->getMinWordLength();
-            } elseif ($thisMin > $this->getMaxWordLength()) {
-                $thisMin = $this->getMaxWordLength();
             }
 
             if ($thisMax > $this->getMaxWordLength()) {
                 $thisMax = $this->getMaxWordLength();
-            } else if ($thisMax < $thisMin) {
-                $thisMax = $thisMin;
             }
 
             $length = $this->randomInteger($thisMin, $thisMax);
