@@ -311,6 +311,27 @@ class HumanPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider lengthExceptionProvider
+     *
+     * @expectedException  \InvalidArgumentException
+     */
+    public function testLengthException($length)
+    {
+        $this->_object->setLength($length);
+    }
+
+    /**
+     * @return array
+     */
+    public function lengthExceptionProvider()
+    {
+        return array(
+            array(null),
+            array('A'),
+            array(-1),
+        );
+    }
+    /**
      * @dataProvider fixedPasswordsProvider
      * @param $length
      */
