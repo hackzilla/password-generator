@@ -122,7 +122,7 @@ $password = $generator->generatePasswords(10);
 Example Implementations
 -----------------------
 
-* Password Generator Library [https://github.com/hackzilla/password-generator-app]
+* Password Generator App [https://github.com/hackzilla/password-generator-app]
 * Password Generator Bundle [https://github.com/hackzilla/password-generator-bundle]
 
 
