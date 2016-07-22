@@ -285,7 +285,7 @@ class RequirementPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testValidateLimits()
+    public function testvalidLimits()
     {
         $this->_object
             ->setLength(4)
@@ -295,10 +295,10 @@ class RequirementPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
             ->setMinimumCount(RequirementPasswordGenerator::OPTION_SYMBOLS, 1)
         ;
 
-        $this->assertTrue($this->_object->validateLimits());
+        $this->assertTrue($this->_object->validLimits());
     }
 
-    public function testValidateLimitsFalse()
+    public function testvalidLimitsFalse()
     {
         $this->_object
             ->setLength(3)
@@ -308,7 +308,20 @@ class RequirementPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
             ->setMinimumCount(RequirementPasswordGenerator::OPTION_SYMBOLS, 1)
         ;
 
-        $this->assertFalse($this->_object->validateLimits());
+        $this->assertFalse($this->_object->validLimits());
+    }
+
+    public function testPartialvalidLimits()
+    {
+        $this->_object
+            ->setLength(4)
+            ->setOptionValue(RequirementPasswordGenerator::OPTION_UPPER_CASE, true)
+            ->setOptionValue(RequirementPasswordGenerator::OPTION_LOWER_CASE, false)
+            ->setMinimumCount(RequirementPasswordGenerator::OPTION_UPPER_CASE, 5)
+            ->setMaximumCount(RequirementPasswordGenerator::OPTION_LOWER_CASE, 1)
+        ;
+
+        $this->assertFalse($this->_object->validLimits());
     }
 
     /**
@@ -360,6 +373,9 @@ class RequirementPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         ;
 
         $this->_object->setLength($length);
+
+        $this->assertTrue($this->_object->validLimits());
+
         $passwords = $this->_object->generatePasswords(5);
         $this->assertCount(5, $passwords);
 

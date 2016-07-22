@@ -137,7 +137,7 @@ class RequirementPasswordGenerator extends ComputerPasswordGenerator
         return $this;
     }
 
-    public function validateLimits()
+    public function validLimits()
     {
         $total = 0;
 
