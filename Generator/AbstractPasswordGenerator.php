@@ -2,6 +2,8 @@
 
 namespace Hackzilla\PasswordGenerator\Generator;
 
+use Hackzilla\PasswordGenerator\Exception\InvalidOptionException;
+use Hackzilla\PasswordGenerator\Exception\InvalidOptionTypeException;
 use Hackzilla\PasswordGenerator\Model\Option\Option;
 use Hackzilla\PasswordGenerator\RandomGenerator\RandomGeneratorInterface;
 
@@ -44,6 +46,7 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
      * @param array  $optionSettings
      *
      * @return $this
+     * @throws InvalidOptionTypeException
      */
     public function setOption($option, $optionSettings)
     {
@@ -52,7 +55,7 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
         $this->options[$option] = Option::createFromType($type, $optionSettings);
 
         if ($this->options[$option] === null) {
-            throw new \InvalidArgumentException('Invalid Option Type');
+            throw new InvalidOptionTypeException('Invalid Option Type');
         }
 
         return $this;
@@ -76,6 +79,8 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
      * Get option.
      *
      * @param $option
+     *
+     * @return mixed
      */
     public function getOption($option)
     {
@@ -97,7 +102,7 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
     public function setOptionValue($option, $value)
     {
         if (!isset($this->options[$option])) {
-            throw new \InvalidArgumentException('Invalid Option');
+            throw new InvalidOptionException('Invalid Option');
         }
 
         $this->options[$option]->setValue($value);
@@ -115,7 +120,7 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
     public function getOptionValue($option)
     {
         if (!isset($this->options[$option])) {
-            throw new \InvalidArgumentException('Invalid Option');
+            throw new InvalidOptionException('Invalid Option');
         }
 
         return $this->options[$option]->getValue();
