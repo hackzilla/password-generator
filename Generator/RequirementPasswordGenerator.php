@@ -13,9 +13,9 @@ use Hackzilla\PasswordGenerator\Exception\InvalidOptionException;
  */
 class RequirementPasswordGenerator extends ComputerPasswordGenerator
 {
-    private $minimumCounts = [];
-    private $maximumCounts = [];
-    private $validOptions = [];
+    private $minimumCounts = array();
+    private $maximumCounts = array();
+    private $validOptions = array();
 
     /**
      */
@@ -23,12 +23,12 @@ class RequirementPasswordGenerator extends ComputerPasswordGenerator
     {
         parent::__construct();
 
-        $this->validOptions = [
+        $this->validOptions = array(
             self::OPTION_UPPER_CASE,
             self::OPTION_LOWER_CASE,
             self::OPTION_NUMBERS,
             self::OPTION_SYMBOLS,
-        ];
+        );
     }
 
     /**
@@ -207,7 +207,7 @@ class RequirementPasswordGenerator extends ComputerPasswordGenerator
             throw new \InvalidArgumentException('Expected positive integer');
         }
 
-        $passwords = [];
+        $passwords = array();
 
         while ($i < $count) {
             $password = $this->generatePassword();
