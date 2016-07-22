@@ -2,6 +2,7 @@
 
 namespace Hackzilla\PasswordGenerator\Tests\Generator;
 
+use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator;
 use Hackzilla\PasswordGenerator\Generator\RequirementPasswordGenerator;
 
 class RequirementPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
@@ -336,6 +337,45 @@ class RequirementPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
             array('ABCdef^\'%', RequirementPasswordGenerator::OPTION_SYMBOLS, 2, 3, true),
             array('ABcdef!@', RequirementPasswordGenerator::OPTION_SYMBOLS, 2, 3, true),
             array('Abcdef!', RequirementPasswordGenerator::OPTION_SYMBOLS, 2, 3, false),
+        );
+    }
+
+    /**
+     * @dataProvider minLengthProvider
+     *
+     * @param $length
+     */
+    public function testMinGeneratePassword($length)
+    {
+        $this->_object
+            ->setOptionValue(ComputerPasswordGenerator::OPTION_UPPER_CASE, true)
+            ->setOptionValue(ComputerPasswordGenerator::OPTION_LOWER_CASE, true)
+            ->setOptionValue(ComputerPasswordGenerator::OPTION_NUMBERS, true)
+            ->setOptionValue(ComputerPasswordGenerator::OPTION_SYMBOLS, true)
+            ->setOptionValue(ComputerPasswordGenerator::OPTION_AVOID_SIMILAR, true)
+            ->setMinimumCount(RequirementPasswordGenerator::OPTION_UPPER_CASE, 2)
+            ->setMinimumCount(RequirementPasswordGenerator::OPTION_LOWER_CASE, 2)
+            ->setMinimumCount(RequirementPasswordGenerator::OPTION_NUMBERS, 2)
+            ->setMinimumCount(RequirementPasswordGenerator::OPTION_SYMBOLS, 2)
+        ;
+
+        $this->_object->setLength($length);
+        $passwords = $this->_object->generatePasswords(5);
+        $this->assertCount(5, $passwords);
+
+        foreach ($passwords as $password) {
+            $this->assertSame($length, \strlen($password));
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function minLengthProvider()
+    {
+        return array(
+            array(8),
+            array(16),
         );
     }
 }

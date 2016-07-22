@@ -207,6 +207,7 @@ class RequirementPasswordGenerator extends ComputerPasswordGenerator
             throw new \InvalidArgumentException('Expected positive integer');
         }
 
+        $i = 0;
         $passwords = array();
 
         while ($i < $count) {
@@ -217,7 +218,7 @@ class RequirementPasswordGenerator extends ComputerPasswordGenerator
             }
 
             $i++;
-            $password[] = $password;
+            $passwords[] = $password;
         }
 
         return $passwords;
