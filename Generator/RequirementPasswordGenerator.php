@@ -2,10 +2,7 @@
 
 namespace Hackzilla\PasswordGenerator\Generator;
 
-use Hackzilla\PasswordGenerator\Exception\CharactersNotFoundException;
 use Hackzilla\PasswordGenerator\Exception\InvalidOptionException;
-use Hackzilla\PasswordGenerator\Model\CharacterSet;
-use Hackzilla\PasswordGenerator\Model\Option\Option;
 
 /**
  * Class RequirementPasswordGenerator
