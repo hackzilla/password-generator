@@ -2,6 +2,7 @@
 
 namespace Hackzilla\PasswordGenerator\Generator;
 
+use Hackzilla\PasswordGenerator\Exception\ImpossibleMinMaxLimitsException;
 use Hackzilla\PasswordGenerator\Exception\InvalidOptionException;
 
 /**
@@ -16,6 +17,7 @@ class RequirementPasswordGenerator extends ComputerPasswordGenerator
     private $minimumCounts = array();
     private $maximumCounts = array();
     private $validOptions = array();
+    private $dirtyCheck = true;
 
     /**
      */
@@ -35,22 +37,22 @@ class RequirementPasswordGenerator extends ComputerPasswordGenerator
      * Generate one password based on options.
      *
      * @return string password
+     * @throws ImpossibleMinMaxLimitsException
+     * @throws \Hackzilla\PasswordGenerator\Exception\CharactersNotFoundException
      */
     public function generatePassword()
     {
-        $characterList = $this->getCharacterList()->getCharacters();
-        $characters = \strlen($characterList);
-        $password = '';
+        if ($this->dirtyCheck) {
+            if (!$this->validLimits()) {
+                throw new ImpossibleMinMaxLimitsException();
+            }
 
-        $length = $this->getLength();
-
-        for ($i = 0; $i < $length; ++$i) {
-            $password .= $characterList[$this->randomInteger(0, $characters - 1)];
+            $this->dirtyCheck = false;
         }
 
-        if (!$this->validatePassword($password)) {
-            $password = $this->generatePassword();
-        }
+        do {
+            $password = parent::generatePassword();
+        } while (!$this->validatePassword($password));
 
         return $password;
     }
@@ -91,6 +93,8 @@ class RequirementPasswordGenerator extends ComputerPasswordGenerator
      */
     public function setMinimumCount($option, $characterCount)
     {
+        $this->dirtyCheck = true;
+
         if (!$this->validOption($option)) {
             throw new InvalidOptionException('Invalid Option');
         }
@@ -122,6 +126,8 @@ class RequirementPasswordGenerator extends ComputerPasswordGenerator
      */
     public function setMaximumCount($option, $characterCount)
     {
+        $this->dirtyCheck = true;
+
         if (!$this->validOption($option)) {
             throw new InvalidOptionException('Invalid Option');
         }
