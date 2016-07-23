@@ -392,6 +392,7 @@ class RequirementPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     public function validatePasswordProvider()
     {
         return array(
+            array('ABCDef', RequirementPasswordGenerator::OPTION_UPPER_CASE, 2, 3, false),
             array('ABCdef', RequirementPasswordGenerator::OPTION_UPPER_CASE, 2, 3, true),
             array('ABcdef', RequirementPasswordGenerator::OPTION_UPPER_CASE, 2, 3, true),
             array('Abcdef', RequirementPasswordGenerator::OPTION_UPPER_CASE, 2, 3, false),
