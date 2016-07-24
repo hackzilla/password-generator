@@ -2,6 +2,7 @@
 
 namespace Hackzilla\PasswordGenerator\Generator;
 
+use Hackzilla\PasswordGenerator\Exception\ImpossibleMinMaxLimitsException;
 use Hackzilla\PasswordGenerator\Exception\InvalidOptionException;
 
 /**
@@ -16,6 +17,7 @@ class RequirementPasswordGenerator extends ComputerPasswordGenerator
     private $minimumCounts = array();
     private $maximumCounts = array();
     private $validOptions = array();
+    private $dirtyCheck = true;
 
     /**
      */
@@ -35,18 +37,22 @@ class RequirementPasswordGenerator extends ComputerPasswordGenerator
      * Generate one password based on options.
      *
      * @return string password
+     * @throws ImpossibleMinMaxLimitsException
+     * @throws \Hackzilla\PasswordGenerator\Exception\CharactersNotFoundException
      */
     public function generatePassword()
     {
-        $characterList = $this->getCharacterList()->getCharacters();
-        $characters = \strlen($characterList);
-        $password = '';
+        if ($this->dirtyCheck) {
+            if (!$this->validLimits()) {
+                throw new ImpossibleMinMaxLimitsException();
+            }
 
-        $length = $this->getLength();
-
-        for ($i = 0; $i < $length; ++$i) {
-            $password .= $characterList[$this->randomInteger(0, $characters - 1)];
+            $this->dirtyCheck = false;
         }
+
+        do {
+            $password = parent::generatePassword();
+        } while (!$this->validatePassword($password));
 
         return $password;
     }
@@ -87,6 +93,8 @@ class RequirementPasswordGenerator extends ComputerPasswordGenerator
      */
     public function setMinimumCount($option, $characterCount)
     {
+        $this->dirtyCheck = true;
+
         if (!$this->validOption($option)) {
             throw new InvalidOptionException('Invalid Option');
         }
@@ -118,6 +126,8 @@ class RequirementPasswordGenerator extends ComputerPasswordGenerator
      */
     public function setMaximumCount($option, $characterCount)
     {
+        $this->dirtyCheck = true;
+
         if (!$this->validOption($option)) {
             throw new InvalidOptionException('Invalid Option');
         }
@@ -139,6 +149,25 @@ class RequirementPasswordGenerator extends ComputerPasswordGenerator
 
     public function validLimits()
     {
+        $elements = 0;
+
+        if ($this->getOptionValue(self::OPTION_UPPER_CASE)) {
+            $elements++;
+        }
+
+        if ($this->getOptionValue(self::OPTION_LOWER_CASE)) {
+            $elements++;
+        }
+
+        if ($this->getOptionValue(self::OPTION_NUMBERS)) {
+            $elements++;
+        }
+
+        if ($this->getOptionValue(self::OPTION_SYMBOLS)) {
+            $elements++;
+        }
+
+        // check if there is wiggle room in minimums
         $total = 0;
 
         foreach ($this->minimumCounts as $minOption => $minCount) {
@@ -149,30 +178,15 @@ class RequirementPasswordGenerator extends ComputerPasswordGenerator
             return false;
         }
 
-        foreach ($this->minimumCounts as $minOption => $minCount) {
-            $total = $minCount;
+        // check if there is wiggle room in maximums
+        if ($elements <= count($this->maximumCounts)) {
+            $total = 0;
 
             foreach ($this->maximumCounts as $maxOption => $maxCount) {
-                if ($minOption !== $maxOption) {
-                    $total += $maxCount;
-                }
+                $total += $maxCount;
             }
 
-            if ($total > $this->getLength()) {
-                return false;
-            }
-        }
-
-        foreach ($this->maximumCounts as $maxOption => $maxCount) {
-            $total = $maxCount;
-
-            foreach ($this->minimumCounts as $minOption => $minCount) {
-                if ($minOption !== $maxOption) {
-                    $total += $minCount;
-                }
-            }
-
-            if ($total > $this->getLength()) {
+            if ($total < $this->getLength()) {
                 return false;
             }
         }
@@ -207,18 +221,10 @@ class RequirementPasswordGenerator extends ComputerPasswordGenerator
             throw new \InvalidArgumentException('Expected positive integer');
         }
 
-        $i = 0;
         $passwords = array();
 
-        while ($i < $count) {
-            $password = $this->generatePassword();
-
-            if (!$this->validatePassword($password)) {
-                continue;
-            }
-
-            $i++;
-            $passwords[] = $password;
+        for ($i = 0; $i < $count; $i++) {
+            $passwords[] = $this->generatePassword();
         }
 
         return $passwords;

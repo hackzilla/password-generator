@@ -66,6 +66,18 @@ class RequirementPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testGeneratePasswordNonIntException()
+    {
+        $this->setExpectedException('\InvalidArgumentException');
+        $this->_object->generatePasswords('A');
+    }
+
+    public function testGeneratePasswordNegativeIntException()
+    {
+        $this->setExpectedException('\InvalidArgumentException');
+        $this->_object->generatePasswords(-1);
+    }
+
     /**
      * @dataProvider getterSetterProvider
      *
@@ -285,9 +297,25 @@ class RequirementPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testvalidLimits()
+    public function testSetMinimumCountException()
+    {
+        $this->setExpectedException('\InvalidArgumentException');
+        $this->_object->setMinimumCount(RequirementPasswordGenerator::OPTION_UPPER_CASE, 'A');
+    }
+
+    public function testSetMaximumCountException()
+    {
+        $this->setExpectedException('\InvalidArgumentException');
+        $this->_object->setMaximumCount(RequirementPasswordGenerator::OPTION_UPPER_CASE, 'A');
+    }
+
+    public function testValidLimits()
     {
         $this->_object
+            ->setOptionValue(RequirementPasswordGenerator::OPTION_UPPER_CASE, true)
+            ->setOptionValue(RequirementPasswordGenerator::OPTION_LOWER_CASE, true)
+            ->setOptionValue(RequirementPasswordGenerator::OPTION_NUMBERS, true)
+            ->setOptionValue(RequirementPasswordGenerator::OPTION_SYMBOLS, true)
             ->setLength(4)
             ->setMinimumCount(RequirementPasswordGenerator::OPTION_UPPER_CASE, 1)
             ->setMinimumCount(RequirementPasswordGenerator::OPTION_LOWER_CASE, 1)
@@ -298,9 +326,13 @@ class RequirementPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->_object->validLimits());
     }
 
-    public function testvalidLimitsFalse()
+    public function testValidLimitsFalse()
     {
         $this->_object
+            ->setOptionValue(RequirementPasswordGenerator::OPTION_UPPER_CASE, true)
+            ->setOptionValue(RequirementPasswordGenerator::OPTION_LOWER_CASE, true)
+            ->setOptionValue(RequirementPasswordGenerator::OPTION_NUMBERS, true)
+            ->setOptionValue(RequirementPasswordGenerator::OPTION_SYMBOLS, true)
             ->setLength(3)
             ->setMinimumCount(RequirementPasswordGenerator::OPTION_UPPER_CASE, 1)
             ->setMinimumCount(RequirementPasswordGenerator::OPTION_LOWER_CASE, 1)
@@ -311,14 +343,66 @@ class RequirementPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->_object->validLimits());
     }
 
-    public function testPartialvalidLimits()
+    public function testvalidLimitsFalse2()
+    {
+        $this->_object
+            ->setOptionValue(RequirementPasswordGenerator::OPTION_UPPER_CASE, true)
+            ->setOptionValue(RequirementPasswordGenerator::OPTION_LOWER_CASE, true)
+            ->setOptionValue(RequirementPasswordGenerator::OPTION_NUMBERS, true)
+            ->setOptionValue(RequirementPasswordGenerator::OPTION_SYMBOLS, true)
+            ->setLength(3)
+            ->setMinimumCount(RequirementPasswordGenerator::OPTION_UPPER_CASE, 4)
+        ;
+
+        $this->assertFalse($this->_object->validLimits());
+    }
+
+    public function testValidLimitsMaxFalse()
+    {
+        $this->_object
+            ->setOptionValue(RequirementPasswordGenerator::OPTION_UPPER_CASE, true)
+            ->setOptionValue(RequirementPasswordGenerator::OPTION_LOWER_CASE, true)
+            ->setOptionValue(RequirementPasswordGenerator::OPTION_NUMBERS, true)
+            ->setOptionValue(RequirementPasswordGenerator::OPTION_SYMBOLS, true)
+            ->setLength(5)
+            ->setMaximumCount(RequirementPasswordGenerator::OPTION_UPPER_CASE, 1)
+            ->setMaximumCount(RequirementPasswordGenerator::OPTION_LOWER_CASE, 1)
+            ->setMaximumCount(RequirementPasswordGenerator::OPTION_NUMBERS, 1)
+            ->setMaximumCount(RequirementPasswordGenerator::OPTION_SYMBOLS, 1)
+        ;
+
+        $this->assertFalse($this->_object->validLimits());
+    }
+
+    public function testGeneratePasswordException()
+    {
+        $this->_object
+            ->setOptionValue(RequirementPasswordGenerator::OPTION_UPPER_CASE, true)
+            ->setLength(4)
+            ->setMinimumCount(RequirementPasswordGenerator::OPTION_UPPER_CASE, 5)
+        ;
+
+        $this->setExpectedException('\Hackzilla\PasswordGenerator\Exception\ImpossibleMinMaxLimitsException');
+        $this->_object->generatePassword();
+    }
+
+    public function testMaxPartialValidLimits()
     {
         $this->_object
             ->setLength(4)
             ->setOptionValue(RequirementPasswordGenerator::OPTION_UPPER_CASE, true)
-            ->setOptionValue(RequirementPasswordGenerator::OPTION_LOWER_CASE, false)
+            ->setMaximumCount(RequirementPasswordGenerator::OPTION_UPPER_CASE, 1)
+        ;
+
+        $this->assertFalse($this->_object->validLimits());
+    }
+
+    public function testMinPartialValidLimits()
+    {
+        $this->_object
+            ->setLength(4)
+            ->setOptionValue(RequirementPasswordGenerator::OPTION_UPPER_CASE, true)
             ->setMinimumCount(RequirementPasswordGenerator::OPTION_UPPER_CASE, 5)
-            ->setMaximumCount(RequirementPasswordGenerator::OPTION_LOWER_CASE, 1)
         ;
 
         $this->assertFalse($this->_object->validLimits());
@@ -344,6 +428,7 @@ class RequirementPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
     public function validatePasswordProvider()
     {
         return array(
+            array('ABCDef', RequirementPasswordGenerator::OPTION_UPPER_CASE, 2, 3, false),
             array('ABCdef', RequirementPasswordGenerator::OPTION_UPPER_CASE, 2, 3, true),
             array('ABcdef', RequirementPasswordGenerator::OPTION_UPPER_CASE, 2, 3, true),
             array('Abcdef', RequirementPasswordGenerator::OPTION_UPPER_CASE, 2, 3, false),
@@ -392,6 +477,46 @@ class RequirementPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
         return array(
             array(8),
             array(16),
+        );
+    }
+
+    /**
+     * @dataProvider      countOptionExceptionProvider
+     * @expectedException \Hackzilla\PasswordGenerator\Exception\InvalidOptionException
+     *
+     * @param $method
+     * @param $option
+     */
+    public function testCountOptionException($method, $option)
+    {
+        $this->_object->{$method}($option, 1);
+    }
+
+    public function countOptionExceptionProvider()
+    {
+        return array(
+            array('setMinimumCount', 'INVALID_OPTION'),
+            array('setMaximumCount', 'INVALID_OPTION'),
+        );
+    }
+
+    /**
+     * @dataProvider      countValueExceptionProvider
+     * @expectedException \InvalidArgumentException
+     *
+     * @param $method
+     * @param $option
+     */
+    public function testCountValueException($method, $option)
+    {
+        $this->_object->{$method}($option, 0);
+    }
+
+    public function countValueExceptionProvider()
+    {
+        return array(
+            array('setMinimumCount', 'INVALID_OPTION'),
+            array('setMaximumCount', 'INVALID_OPTION'),
         );
     }
 }
