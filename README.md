@@ -118,6 +118,57 @@ $generator
 $password = $generator->generatePasswords(10);
 ```
 
+Requirement Password Generator Usage
+------------------------------------
+
+```php
+use Hackzilla\PasswordGenerator\Generator\RequirementPasswordGenerator;
+
+$generator = new RequirementPasswordGenerator();
+
+$generator
+  ->setLength(16)
+  ->setOptionValue(RequirementPasswordGenerator::OPTION_UPPER_CASE, true)
+  ->setOptionValue(RequirementPasswordGenerator::OPTION_LOWER_CASE, true)
+  ->setOptionValue(RequirementPasswordGenerator::OPTION_NUMBERS, true)
+  ->setOptionValue(RequirementPasswordGenerator::OPTION_SYMBOLS, true)
+  ->setMinimumCount(RequirementPasswordGenerator::OPTION_UPPER_CASE, 2)
+  ->setMinimumCount(RequirementPasswordGenerator::OPTION_LOWER_CASE, 2)
+  ->setMinimumCount(RequirementPasswordGenerator::OPTION_NUMBERS, 2)
+  ->setMaximumCount(RequirementPasswordGenerator::OPTION_SYMBOLS, 2)
+  ->setMaximumCount(RequirementPasswordGenerator::OPTION_UPPER_CASE, 8)
+  ->setMaximumCount(RequirementPasswordGenerator::OPTION_LOWER_CASE, 8)
+  ->setMaximumCount(RequirementPasswordGenerator::OPTION_NUMBERS, 8)
+  ->setMaximumCount(RequirementPasswordGenerator::OPTION_SYMBOLS, 8)
+;
+
+$password = $generator->generatePassword();
+```
+
+A limit can be removed by passing ```null```
+
+```php
+$generator
+  ->setMinimumCount(RequirementPasswordGenerator::OPTION_UPPER_CASE, null)
+  ->setMaximumCount(RequirementPasswordGenerator::OPTION_UPPER_CASE, null)
+;
+```
+
+When setting the minimum and maximum values, be careful of unachievable settings.
+
+For example the following will end up in an infinite loop.
+
+$generator
+  ->setLength(4)
+  ->setOptionValue(RequirementPasswordGenerator::OPTION_UPPER_CASE, true)
+  ->setOptionValue(RequirementPasswordGenerator::OPTION_LOWER_CASE, false)
+  ->setMinimumCount(RequirementPasswordGenerator::OPTION_UPPER_CASE, 5)
+  ->setMaximumCount(RequirementPasswordGenerator::OPTION_LOWER_CASE, 1)
+;
+
+For the moment you can call ```$generator->validLimits()``` to test whether the counts will cause problems.
+If the method returns true, then you can proceed. If false, then generatePassword() will likely cause an infinite loop.
+
 
 Example Implementations
 -----------------------
