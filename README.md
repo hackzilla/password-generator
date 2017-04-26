@@ -135,7 +135,7 @@ $generator
   ->setMinimumCount(RequirementPasswordGenerator::OPTION_UPPER_CASE, 2)
   ->setMinimumCount(RequirementPasswordGenerator::OPTION_LOWER_CASE, 2)
   ->setMinimumCount(RequirementPasswordGenerator::OPTION_NUMBERS, 2)
-  ->setMaximumCount(RequirementPasswordGenerator::OPTION_SYMBOLS, 2)
+  ->setMinimumCount(RequirementPasswordGenerator::OPTION_SYMBOLS, 2)
   ->setMaximumCount(RequirementPasswordGenerator::OPTION_UPPER_CASE, 8)
   ->setMaximumCount(RequirementPasswordGenerator::OPTION_LOWER_CASE, 8)
   ->setMaximumCount(RequirementPasswordGenerator::OPTION_NUMBERS, 8)
