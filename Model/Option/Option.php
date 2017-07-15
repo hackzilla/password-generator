@@ -10,6 +10,9 @@ abstract class Option implements OptionInterface
 
     private $value = null;
 
+    /**
+     * {@inheritdoc}
+     */
     public function __construct(array $settings = array())
     {
         if (isset($settings['default'])) {
@@ -17,21 +20,25 @@ abstract class Option implements OptionInterface
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getValue()
     {
         return $this->value;
     }
 
     /**
-     * Set option value.
-     *
-     * @param mixed $value
+     * {@inheritdoc}
      */
     public function setValue($value)
     {
         $this->value = $value;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public static function createFromType($type, array $settings = array())
     {
         switch ($type) {

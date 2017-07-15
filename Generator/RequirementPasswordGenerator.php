@@ -195,7 +195,7 @@ class RequirementPasswordGenerator extends ComputerPasswordGenerator
     }
 
     /**
-     * @param $option
+     * @param string $option
      *
      * @return bool
      */

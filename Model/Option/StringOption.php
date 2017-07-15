@@ -9,6 +9,9 @@ class StringOption extends Option
     private $minRange;
     private $maxRange;
 
+    /**
+     * {@inheritdoc}
+     */
     public function __construct(array $settings = array())
     {
         parent::__construct($settings);
@@ -18,11 +21,7 @@ class StringOption extends Option
     }
 
     /**
-     * Set option string value.
-     *
-     * @param string $value
-     *
-     * @throws \InvalidArgumentException
+     * {@inheritdoc}
      */
     public function setValue($value)
     {
@@ -37,6 +36,9 @@ class StringOption extends Option
         parent::setValue($value);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getType()
     {
         return self::TYPE_STRING;

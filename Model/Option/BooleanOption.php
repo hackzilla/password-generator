@@ -7,11 +7,7 @@ use InvalidArgumentException;
 class BooleanOption extends Option
 {
     /**
-     * Set option boolean value.
-     *
-     * @param bool $value
-     *
-     * @throws \InvalidArgumentException
+     * {@inheritdoc}
      */
     public function setValue($value)
     {
@@ -22,6 +18,9 @@ class BooleanOption extends Option
         parent::setValue($value);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getType()
     {
         return self::TYPE_BOOLEAN;

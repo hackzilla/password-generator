@@ -64,7 +64,7 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
     /**
      * Remove Option.
      *
-     * @param $option
+     * @param string $option
      *
      * @return $this
      */
