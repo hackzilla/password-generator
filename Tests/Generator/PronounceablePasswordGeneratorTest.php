@@ -6,7 +6,7 @@ use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator;
 use Hackzilla\PasswordGenerator\Generator\PasswordGeneratorInterface;
 use Hackzilla\PasswordGenerator\Generator\PronounceablePasswordGenerator;
 
-class PronounceablePasswordGeneratorTest extends \PHPUnit_Framework_TestCase
+class PronounceablePasswordGeneratorTest extends \PHPUnit\Framework\TestCase
 {
     /** @var PasswordGeneratorInterface */
     private $_object;

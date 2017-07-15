@@ -9,7 +9,7 @@ use Hackzilla\PasswordGenerator\RandomGenerator\Php7RandomGenerator;
  *
  * @requires PHP 7
  */
-class Php7RandomGeneratorTest extends \PHPUnit_Framework_TestCase
+class Php7RandomGeneratorTest extends \PHPUnit\Framework\TestCase
 {
     private $_object;
 

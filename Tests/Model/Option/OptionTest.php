@@ -4,7 +4,7 @@ namespace Hackzilla\PasswordGenerator\Tests\Model\Option;
 
 use Hackzilla\PasswordGenerator\Model\Option\Option;
 
-class OptionTest extends \PHPUnit_Framework_TestCase
+class OptionTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider typeProvider

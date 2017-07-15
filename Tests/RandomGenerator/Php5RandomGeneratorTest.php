@@ -4,7 +4,7 @@ namespace Hackzilla\PasswordGenerator\Tests\RandomGenerator;
 
 use Hackzilla\PasswordGenerator\RandomGenerator\Php5RandomGenerator;
 
-class Php5RandomGeneratorTest extends \PHPUnit_Framework_TestCase
+class Php5RandomGeneratorTest extends \PHPUnit\Framework\TestCase
 {
     private $_object;
 

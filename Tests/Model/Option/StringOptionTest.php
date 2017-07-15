@@ -4,7 +4,7 @@ namespace Hackzilla\PasswordGenerator\Tests\Model\Option;
 
 use Hackzilla\PasswordGenerator\Model\Option\StringOption;
 
-class StringOptionTest extends \PHPUnit_Framework_TestCase
+class StringOptionTest extends \PHPUnit\Framework\TestCase
 {
     public function testInstantiation()
     {

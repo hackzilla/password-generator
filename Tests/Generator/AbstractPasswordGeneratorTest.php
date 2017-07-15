@@ -2,7 +2,7 @@
 
 namespace Hackzilla\PasswordGenerator\Tests\Generator;
 
-class AbstractPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
+class AbstractPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
 {
     private $_object;
 

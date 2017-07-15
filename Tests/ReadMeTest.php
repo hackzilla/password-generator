@@ -8,7 +8,7 @@ use Hackzilla\PasswordGenerator\Generator\HybridPasswordGenerator;
 use Hackzilla\PasswordGenerator\RandomGenerator\Php5RandomGenerator;
 use Hackzilla\PasswordGenerator\RandomGenerator\Php7RandomGenerator;
 
-class ReadMeTest extends \PHPUnit_Framework_TestCase
+class ReadMeTest extends \PHPUnit\Framework\TestCase
 {
     public function testSimpleUsage()
     {

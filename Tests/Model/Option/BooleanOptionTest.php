@@ -4,7 +4,7 @@ namespace Hackzilla\PasswordGenerator\Tests\Model\Option;
 
 use Hackzilla\PasswordGenerator\Model\Option\BooleanOption;
 
-class BooleanOptionTest extends \PHPUnit_Framework_TestCase
+class BooleanOptionTest extends \PHPUnit\Framework\TestCase
 {
     public function testInstantiation()
     {

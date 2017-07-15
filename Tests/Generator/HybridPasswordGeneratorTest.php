@@ -4,7 +4,7 @@ namespace Hackzilla\PasswordGenerator\Tests\Generator;
 
 use Hackzilla\PasswordGenerator\Generator\HybridPasswordGenerator;
 
-class HybridPasswordGeneratorTest extends \PHPUnit_Framework_TestCase
+class HybridPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
 {
     private $_object;
 

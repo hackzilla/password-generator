@@ -4,7 +4,7 @@ namespace Hackzilla\PasswordGenerator\Tests\Model;
 
 use Hackzilla\PasswordGenerator\Model\CharacterSet;
 
-class CharacterSetTest extends \PHPUnit_Framework_TestCase
+class CharacterSetTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider characterProvider
