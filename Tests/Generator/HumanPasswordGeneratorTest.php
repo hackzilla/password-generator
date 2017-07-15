@@ -28,10 +28,10 @@ class HumanPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
         $this->_object->setWordCount(6);
         $this->assertSame($this->_object->getWordCount(), 6);
 
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
         $this->_object->setWordCount(-6);
 
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
         $this->_object->setWordCount('fail');
     }
 
@@ -46,10 +46,10 @@ class HumanPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
         $this->_object->setMinWordLength(6);
         $this->assertSame($this->_object->getMinWordLength(), 6);
 
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
         $this->_object->setMinWordLength(-6);
 
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
         $this->_object->setMinWordLength('fail');
     }
 
@@ -64,10 +64,10 @@ class HumanPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
         $this->_object->setMaxWordLength(6);
         $this->assertSame($this->_object->getMaxWordLength(), 6);
 
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
         $this->_object->setMaxWordLength(-6);
 
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
         $this->_object->setMaxWordLength('fail');
     }
 
@@ -85,10 +85,10 @@ class HumanPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
         $this->_object->setWordSeparator('-?*');
         $this->assertSame($this->_object->getWordSeparator(), '-?*');
 
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
         $this->_object->setWordSeparator(-6);
 
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
         $this->_object->setMaxWordLength(null);
     }
 
@@ -124,7 +124,7 @@ class HumanPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
         $this->_object->setWordList($filename);
         $this->assertSame($this->_object->getWordList(), $filename);
 
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
         $this->_object->setWordList(7);
     }
 

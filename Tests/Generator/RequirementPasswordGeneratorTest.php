@@ -68,13 +68,13 @@ class RequirementPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
 
     public function testGeneratePasswordNonIntException()
     {
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->expectException('\InvalidArgumentException');
         $this->_object->generatePasswords('A');
     }
 
     public function testGeneratePasswordNegativeIntException()
     {
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->expectException('\InvalidArgumentException');
         $this->_object->generatePasswords(-1);
     }
 
@@ -238,7 +238,7 @@ class RequirementPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
      */
     public function testCharacterListException()
     {
-        $this->setExpectedException('\Hackzilla\PasswordGenerator\Exception\CharactersNotFoundException');
+        $this->expectException('\Hackzilla\PasswordGenerator\Exception\CharactersNotFoundException');
         $this->_object->getCharacterList();
     }
 
@@ -299,13 +299,13 @@ class RequirementPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
 
     public function testSetMinimumCountException()
     {
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->expectException('\InvalidArgumentException');
         $this->_object->setMinimumCount(RequirementPasswordGenerator::OPTION_UPPER_CASE, 'A');
     }
 
     public function testSetMaximumCountException()
     {
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->expectException('\InvalidArgumentException');
         $this->_object->setMaximumCount(RequirementPasswordGenerator::OPTION_UPPER_CASE, 'A');
     }
 
@@ -382,7 +382,7 @@ class RequirementPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
             ->setMinimumCount(RequirementPasswordGenerator::OPTION_UPPER_CASE, 5)
         ;
 
-        $this->setExpectedException('\Hackzilla\PasswordGenerator\Exception\ImpossibleMinMaxLimitsException');
+        $this->expectException('\Hackzilla\PasswordGenerator\Exception\ImpossibleMinMaxLimitsException');
         $this->_object->generatePassword();
     }
 

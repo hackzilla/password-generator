@@ -225,7 +225,7 @@ class ComputerPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
      */
     public function testCharacterListException()
     {
-        $this->setExpectedException('\Hackzilla\PasswordGenerator\Exception\CharactersNotFoundException');
+        $this->expectException('\Hackzilla\PasswordGenerator\Exception\CharactersNotFoundException');
         $this->_object->getCharacterList();
     }
 }

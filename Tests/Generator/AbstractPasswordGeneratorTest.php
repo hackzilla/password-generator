@@ -210,11 +210,10 @@ class AbstractPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
      */
     public function testValidateValue($option, $value, $return)
     {
-        if ($return) {
-            $this->setExpectedException(null);
-        } else {
-            $this->setExpectedException('\InvalidArgumentException');
+        if (!$return) {
+            $this->expectException('\InvalidArgumentException');
         }
+
         $this->_object->setOptionValue($option, $value);
 
         if ($return) {
