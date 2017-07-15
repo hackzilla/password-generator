@@ -17,6 +17,7 @@ Requirements
 ------------
 
 * PHP >= 5.3.2
+(No longer testing <= PHP 5.6, and next version will drop support)
 
 Installation
 ------------
