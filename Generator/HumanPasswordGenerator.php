@@ -100,7 +100,7 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
                 continue;
             }
 
-            $newWordList[] = $word;
+            $newWordList[] = trim($word);
         }
 
         return $newWordList;
