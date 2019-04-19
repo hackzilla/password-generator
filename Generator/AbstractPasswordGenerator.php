@@ -5,13 +5,13 @@ namespace Hackzilla\PasswordGenerator\Generator;
 use Hackzilla\PasswordGenerator\Exception\InvalidOptionException;
 use Hackzilla\PasswordGenerator\Exception\InvalidOptionTypeException;
 use Hackzilla\PasswordGenerator\Model\Option\Option;
+use Hackzilla\PasswordGenerator\RandomGenerator\Php7RandomGenerator;
 use Hackzilla\PasswordGenerator\RandomGenerator\RandomGeneratorInterface;
 
 abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
 {
+    /** @var RandomGeneratorInterface */
     private $randomGenerator;
-    private $options = array();
-    private $parameters = array();
 
     private $options = [];
     private $parameters = [];
@@ -46,7 +46,7 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
      * Set password generator option.
      *
      * @param string $option
-     * @param array  $optionSettings
+     * @param array $optionSettings
      *
      * @return $this
      * @throws InvalidOptionTypeException
@@ -131,7 +131,7 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
 
     /**
      * @param string $parameter
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return $this
      */
@@ -144,7 +144,7 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
 
     /**
      * @param string $parameter
-     * @param mixed  $default
+     * @param mixed $default
      *
      * @return null|mixed
      */
@@ -192,10 +192,10 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
      */
     public function randomInteger($min, $max)
     {
-        if ($this->randomGenerator) {
-            return $this->randomGenerator->randomInteger($min, $max);
+        if (!$this->randomGenerator) {
+            $this->randomGenerator = new Php7RandomGenerator();
         }
 
-        return mt_rand($min, $max);
+        return $this->randomGenerator->randomInteger($min, $max);
     }
 }
