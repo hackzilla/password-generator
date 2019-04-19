@@ -36,6 +36,3 @@ before_script:
 
 script:
   - make test
-
-after_success:
-  - php vendor/bin/coveralls -c .coveralls.yml -v
