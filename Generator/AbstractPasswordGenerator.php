@@ -13,6 +13,9 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
     private $options = array();
     private $parameters = array();
 
+    private $options = [];
+    private $parameters = [];
+
     /**
      * Generate $count number of passwords.
      *
