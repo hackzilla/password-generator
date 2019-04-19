@@ -21,7 +21,7 @@ class ReadMeTest extends \PHPUnit\Framework\TestCase
             ->setOptionValue(ComputerPasswordGenerator::OPTION_SYMBOLS, false)
         ;
 
-        $generator->generatePassword();
+        $this->assertIsString($generator->generatePassword());
     }
 
     public function testMorePasswordsUsage()
@@ -35,7 +35,10 @@ class ReadMeTest extends \PHPUnit\Framework\TestCase
             ->setSymbols(false)
             ->setLength(12);
 
-        $password = $generator->generatePasswords(10);
+        $passwords = $generator->generatePasswords(10);
+
+        $this->assertCount(10, $passwords);
+        $this->assertIsString($passwords[0]);
     }
 
     public function testHybridPasswordGeneratorUsage()
@@ -51,7 +54,10 @@ class ReadMeTest extends \PHPUnit\Framework\TestCase
             ->setSegmentCount(4)
             ->setSegmentSeparator('-');
 
-        $password = $generator->generatePasswords(10);
+        $passwords = $generator->generatePasswords(10);
+
+        $this->assertCount(10, $passwords);
+        $this->assertIsString($passwords[0]);
     }
 
     public function testHumanPasswordGeneratorUsage()
@@ -65,7 +71,10 @@ class ReadMeTest extends \PHPUnit\Framework\TestCase
             ->setWordCount(3)
             ->setWordSeparator('-');
 
-        $password = $generator->generatePasswords(10);
+        $passwords = $generator->generatePasswords(10);
+
+        $this->assertCount(10, $passwords);
+        $this->assertIsString($passwords[0]);
     }
 
     /**
@@ -83,7 +92,10 @@ class ReadMeTest extends \PHPUnit\Framework\TestCase
             ->setWordCount(3)
             ->setWordSeparator('-');
 
-        $password = $generator->generatePasswords(10);
+        $passwords = $generator->generatePasswords(10);
+
+        $this->assertCount(10, $passwords);
+        $this->assertIsString($passwords[0]);
     }
 
     /**
@@ -103,6 +115,9 @@ class ReadMeTest extends \PHPUnit\Framework\TestCase
             ->setWordCount(3)
             ->setWordSeparator('-');
 
-        $password = $generator->generatePasswords(10);
+        $passwords = $generator->generatePasswords(10);
+
+        $this->assertCount(10, $passwords);
+        $this->assertIsString($passwords[0]);
     }
 }

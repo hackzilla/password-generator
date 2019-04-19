@@ -73,6 +73,10 @@ class StringOptionTest extends \PHPUnit\Framework\TestCase
      */
     public function testMinMax($min, $max, $value)
     {
+        $option = new StringOption(array('min' => $min, 'max' => $max));
+        $option->setValue($value);
+
+        $this->assertTrue(true);
     }
 
     public function minMaxProvider()
