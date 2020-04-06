@@ -14,7 +14,7 @@ class PronounceablePasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      *
      */
-    public function setup()
+    public function setup(): void
     {
         $this->_object = new PronounceablePasswordGenerator();
     }
@@ -27,7 +27,7 @@ class PronounceablePasswordGeneratorTest extends \PHPUnit\Framework\TestCase
      * @param bool   $symbols
      * @param bool   $numbers
      */
-    public function testGeneratePassword($vowels, $upperCase, $symbols, $numbers)
+    public function testGeneratePassword($vowels, $upperCase, $symbols, $numbers): void
     {
         $this->_object->setParameter(PronounceablePasswordGenerator::PARAMETER_VOWELS, $vowels);
         $this->_object->setOptionValue(ComputerPasswordGenerator::OPTION_LENGTH, 16);

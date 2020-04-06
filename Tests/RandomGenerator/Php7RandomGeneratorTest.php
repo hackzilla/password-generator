@@ -13,7 +13,7 @@ class Php7RandomGeneratorTest extends \PHPUnit\Framework\TestCase
 {
     private $_object;
 
-    public function setup()
+    public function setup(): void
     {
         $this->_object = new Php7RandomGenerator();
     }
@@ -34,7 +34,7 @@ class Php7RandomGeneratorTest extends \PHPUnit\Framework\TestCase
      * @param int $min
      * @param int $max
      */
-    public function testRandomGenerator($min, $max)
+    public function testRandomGenerator($min, $max): void
     {
         $randomInteger = $this->_object->randomInteger($min, $max);
 

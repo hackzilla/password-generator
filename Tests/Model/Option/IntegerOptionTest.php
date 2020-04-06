@@ -45,10 +45,11 @@ class IntegerOptionTest extends \PHPUnit\Framework\TestCase
      * @dataProvider invalidValueProvider
      *
      * @param mixed $value
-     * @expectedException \InvalidArgumentException
      */
     public function testInvalidValue($value)
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $option = new IntegerOption();
         $option->setValue($value);
     }
@@ -92,7 +93,6 @@ class IntegerOptionTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider minMaxExceptionProvider
-     * @expectedException \InvalidArgumentException
      *
      * @param $min
      * @param $max
@@ -100,6 +100,8 @@ class IntegerOptionTest extends \PHPUnit\Framework\TestCase
      */
     public function testMinMaxException($min, $max, $value)
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $option = new IntegerOption(array('min' => $min, 'max' => $max));
         $option->setValue($value);
     }

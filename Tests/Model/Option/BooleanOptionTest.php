@@ -46,10 +46,11 @@ class BooleanOptionTest extends \PHPUnit\Framework\TestCase
      * @dataProvider invalidValueProvider
      *
      * @param mixed $value
-     * @expectedException \InvalidArgumentException
      */
     public function testInvalidValue($value)
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $option = new BooleanOption();
         $option->setValue($value);
     }

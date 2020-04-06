@@ -11,7 +11,7 @@ class DummyPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      *
      */
-    public function setup()
+    public function setup(): void
     {
         $this->_object = new DummyPasswordGenerator();
     }
@@ -22,7 +22,7 @@ class DummyPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
      * @param $length
      * @param $comparePassword
      */
-    public function testGeneratePasswords($length, $comparePassword)
+    public function testGeneratePasswords($length, $comparePassword): void
     {
         $this->_object->setOptionValue(DummyPasswordGenerator::OPTION_LENGTH, $length);
         $passwords = $this->_object->generatePasswords($length);
@@ -51,7 +51,7 @@ class DummyPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
      *
      * @param $length
      */
-    public function testLength($length)
+    public function testLength($length): void
     {
         $this->_object->setLength($length);
         $this->assertSame($this->_object->getLength(), $length);
@@ -72,12 +72,12 @@ class DummyPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider      lengthExceptionProvider
-     * @expectedException \InvalidArgumentException
      *
      * @param $param
      */
-    public function testLengthException($param)
+    public function testLengthException($param): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->_object->setLength($param);
     }
 

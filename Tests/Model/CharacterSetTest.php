@@ -12,7 +12,7 @@ class CharacterSetTest extends \PHPUnit\Framework\TestCase
      * @param $characters
      * @param $result
      */
-    public function testConstruct($characters, $result)
+    public function testConstruct($characters, $result): void
     {
         $characterSet = new CharacterSet($characters);
 
@@ -34,7 +34,7 @@ class CharacterSetTest extends \PHPUnit\Framework\TestCase
      * @param $characters
      * @param $result
      */
-    public function testConstructCast($characters, $result)
+    public function testConstructCast($characters, $result): void
     {
         $characterSet = new CharacterSet($characters);
 

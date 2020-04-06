@@ -8,7 +8,7 @@ class Php5RandomGeneratorTest extends \PHPUnit\Framework\TestCase
 {
     private $_object;
 
-    public function setup()
+    public function setup(): void
     {
         $this->_object = new Php5RandomGenerator();
     }
@@ -29,7 +29,7 @@ class Php5RandomGeneratorTest extends \PHPUnit\Framework\TestCase
      * @param int $min
      * @param int $max
      */
-    public function testRandomGenerator($min, $max)
+    public function testRandomGenerator($min, $max): void
     {
         $randomInteger = $this->_object->randomInteger($min, $max);
 

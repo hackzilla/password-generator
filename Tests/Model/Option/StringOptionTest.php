@@ -45,10 +45,11 @@ class StringOptionTest extends \PHPUnit\Framework\TestCase
      * @dataProvider invalidValueProvider
      *
      * @param mixed $value
-     * @expectedException \InvalidArgumentException
      */
     public function testInvalidValue($value)
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $option = new StringOption();
         $option->setValue($value);
     }
@@ -65,34 +66,7 @@ class StringOptionTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @dataProvider minMaxProvider
-     *
-     * @param $min
-     * @param $max
-     * @param $value
-     */
-    public function testMinMax($min, $max, $value)
-    {
-        $option = new StringOption(array('min' => $min, 'max' => $max));
-        $option->setValue($value);
-
-        $this->assertTrue(true);
-    }
-
-    public function minMaxProvider()
-    {
-        return array(
-            array(0, 255, 'abcdefghijklmnopqrstuvwxyz'),
-            array(0, 1, 'a'),
-            array(1, 1, 'a'),
-            array(4, 4, 'abcd'),
-            array(0, 10, 'abcdef'),
-        );
-    }
-
-    /**
      * @dataProvider minMaxExceptionProvider
-     * @expectedException \InvalidArgumentException
      *
      * @param $min
      * @param $max
@@ -100,6 +74,8 @@ class StringOptionTest extends \PHPUnit\Framework\TestCase
      */
     public function testMinMaxException($min, $max, $value)
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $option = new StringOption(array('min' => $min, 'max' => $max));
         $option->setValue($value);
     }

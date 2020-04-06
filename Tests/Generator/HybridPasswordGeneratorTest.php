@@ -8,7 +8,7 @@ class HybridPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
 {
     private $_object;
 
-    public function setup()
+    public function setup(): void
     {
         $this->_object = new HybridPasswordGenerator();
 
@@ -38,7 +38,7 @@ class HybridPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
      * @param $segmentSeparator
      * @param $regExp
      */
-    public function testGeneratePassword($segmentLength, $segmentCount, $segmentSeparator, $regExp)
+    public function testGeneratePassword($segmentLength, $segmentCount, $segmentSeparator, $regExp): void
     {
         $this->_object
             ->setOptionValue(HybridPasswordGenerator::OPTION_UPPER_CASE, true)
@@ -58,18 +58,16 @@ class HybridPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
      *
      * @param $count
      */
-    public function testSetSegmentCount($count)
+    public function testSetSegmentCount($count): void
     {
         $this->_object->setSegmentCount($count);
         $this->assertSame($this->_object->getSegmentCount(), $count);
         $this->assertSame($this->_object->getLength(), $count);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testSetSegmentCountException()
+    public function testSetSegmentCountException(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->_object->setSegmentCount(-1);
     }
 
@@ -78,17 +76,15 @@ class HybridPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
      *
      * @param $length
      */
-    public function testSetSegmentLength($length)
+    public function testSetSegmentLength($length): void
     {
         $this->_object->setSegmentLength($length);
         $this->assertSame($this->_object->getSegmentLength(), $length);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testSetSegmentLengthException()
+    public function testSetSegmentLengthException(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->_object->setSegmentLength(-1);
     }
 
@@ -97,7 +93,7 @@ class HybridPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
      *
      * @param $length
      */
-    public function testSetLength($length)
+    public function testSetLength($length): void
     {
         $this->_object->setLength($length);
         $this->assertSame($this->_object->getLength(), $length);
@@ -118,7 +114,7 @@ class HybridPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
      *
      * @param $separator
      */
-    public function testSetSegmentSeparator($separator)
+    public function testSetSegmentSeparator($separator): void
     {
         $this->_object->setSegmentSeparator($separator);
         $this->assertSame($this->_object->getSegmentSeparator(), $separator);
@@ -132,11 +128,9 @@ class HybridPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testSetSegmentSeparatorException()
+    public function testSetSegmentSeparatorException(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->_object->setSegmentSeparator(-1);
     }
 
@@ -146,7 +140,7 @@ class HybridPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
      * @param $option
      * @param $parameter
      */
-    public function testSetGet($option, $parameter)
+    public function testSetGet($option, $parameter): void
     {
         $this->_object
             ->setOptionValue($option, true)
@@ -172,7 +166,7 @@ class HybridPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testCharacterListException()
+    public function testCharacterListException(): void
     {
         $this->expectException('\Hackzilla\PasswordGenerator\Exception\CharactersNotFoundException');
         $this->_object->getCharacterList();

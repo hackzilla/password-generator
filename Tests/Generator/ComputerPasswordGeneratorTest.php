@@ -11,7 +11,7 @@ class ComputerPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      *
      */
-    public function setup()
+    public function setup(): void
     {
         $this->_object = new ComputerPasswordGenerator();
 
@@ -28,7 +28,7 @@ class ComputerPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
      *
      * @param $length
      */
-    public function testLength($length)
+    public function testLength($length): void
     {
         $this->_object->setLength($length);
         $this->assertSame($this->_object->getLength(), $length);
@@ -39,7 +39,7 @@ class ComputerPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
      *
      * @param $length
      */
-    public function testGeneratePassword($length)
+    public function testGeneratePassword($length): void
     {
         $this->_object
             ->setOptionValue(ComputerPasswordGenerator::OPTION_UPPER_CASE, true)
@@ -70,7 +70,7 @@ class ComputerPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
      *
      * @param $method
      */
-    public function testGetterSetters($method)
+    public function testGetterSetters($method): void
     {
         $this->_object->{'set'.$method}(true);
         $this->assertTrue($this->_object->{'get'.$method}());
@@ -81,12 +81,12 @@ class ComputerPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider      lengthExceptionProvider
-     * @expectedException \InvalidArgumentException
      *
      * @param $param
      */
-    public function testLengthException($param)
+    public function testLengthException($param): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->_object->setLength($param);
     }
 
@@ -102,12 +102,12 @@ class ComputerPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider      getterSetterProvider
-     * @expectedException \InvalidArgumentException
      *
      * @param $method
      */
-    public function testGetterSettersException($method)
+    public function testGetterSettersException($method): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->_object->{'set'.$method}(1);
     }
 
@@ -129,16 +129,16 @@ class ComputerPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
      * @param $exists
      * @param $dontExist
      */
-    public function testSetOption($option, $exists, $dontExist)
+    public function testSetOption($option, $exists, $dontExist): void
     {
         $this->_object->setOptionValue($option, true);
         $availableCharacters = $this->_object->getCharacterList()->getCharacters();
 
         foreach ($exists as $check) {
-            $this->assertContains($check, $availableCharacters);
+            $this->assertStringContainsString($check, $availableCharacters);
         }
         foreach ($dontExist as $check) {
-            $this->assertNotContains($check, $availableCharacters);
+            $this->assertStringNotContainsString($check, $availableCharacters);
         }
     }
 
@@ -155,7 +155,7 @@ class ComputerPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testSetOptionSimilar()
+    public function testSetOptionSimilar(): void
     {
         $exists = array('a', 'b', 'c', 'A', 'B', 'C');
         $dontExist = array('o', 'l', 'O');
@@ -168,10 +168,10 @@ class ComputerPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
         $availableCharacters = $this->_object->getCharacterList()->getCharacters();
 
         foreach ($exists as $check) {
-            $this->assertContains($check, $availableCharacters);
+            $this->assertStringContainsString($check, $availableCharacters);
         }
         foreach ($dontExist as $check) {
-            $this->assertNotContains($check, $availableCharacters);
+            $this->assertStringNotContainsString($check, $availableCharacters);
         }
     }
 
@@ -181,7 +181,7 @@ class ComputerPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
      * @param $option
      * @param $parameter
      */
-    public function testSetGet($option, $parameter)
+    public function testSetGet($option, $parameter): void
     {
         $this->_object
             ->setOptionValue($option, true)
@@ -207,7 +207,7 @@ class ComputerPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      *
      */
-    public function testAvoidSimilar()
+    public function testAvoidSimilar(): void
     {
         $this->_object
             ->setParameter(ComputerPasswordGenerator::PARAMETER_UPPER_CASE, 'AB')
@@ -223,7 +223,7 @@ class ComputerPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      *
      */
-    public function testCharacterListException()
+    public function testCharacterListException(): void
     {
         $this->expectException('\Hackzilla\PasswordGenerator\Exception\CharactersNotFoundException');
         $this->_object->getCharacterList();
