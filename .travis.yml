@@ -26,7 +26,7 @@ cache:
 
 before_script:
   - composer selfupdate
-  - composer global require phpunit/phpunit fabpot/php-cs-fixer --no-update
+  - composer global require fabpot/php-cs-fixer --no-update
   - composer global update --prefer-dist --no-interaction
   - composer update --prefer-dist --no-interaction $COMPOSER_FLAGS
 
