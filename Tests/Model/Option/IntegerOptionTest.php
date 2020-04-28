@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hackzilla\PasswordGenerator\Tests\Model\Option;
 
 use Hackzilla\PasswordGenerator\Model\Option\IntegerOption;
@@ -68,11 +70,11 @@ class IntegerOptionTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider minMaxProvider
      *
-     * @param $min
-     * @param $max
-     * @param $value
+     * @param int $min
+     * @param int $max
+     * @param int $value
      */
-    public function testMinMax($min, $max, $value)
+    public function testMinMax(int $min, int $max, int $value)
     {
         $option = new IntegerOption(array('min' => $min, 'max' => $max));
         $option->setValue($value);
@@ -94,11 +96,11 @@ class IntegerOptionTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider minMaxExceptionProvider
      *
-     * @param $min
-     * @param $max
-     * @param $value
+     * @param int $min
+     * @param int $max
+     * @param int $value
      */
-    public function testMinMaxException($min, $max, $value)
+    public function testMinMaxException(int $min, int $max, int $value)
     {
         $this->expectException(\InvalidArgumentException::class);
 

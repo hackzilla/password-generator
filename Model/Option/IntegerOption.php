@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hackzilla\PasswordGenerator\Model\Option;
 
 use InvalidArgumentException;
@@ -21,7 +23,7 @@ class IntegerOption extends Option
     }
 
     /**
-     * {@inheritdoc}
+     * @param int $value
      */
     public function setValue($value)
     {
@@ -39,7 +41,7 @@ class IntegerOption extends Option
     /**
      * {@inheritdoc}
      */
-    public function getType()
+    public function getType() : string
     {
         return self::TYPE_INTEGER;
     }

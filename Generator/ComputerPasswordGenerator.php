@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hackzilla\PasswordGenerator\Generator;
 
 use Hackzilla\PasswordGenerator\Exception\CharactersNotFoundException;
@@ -47,7 +49,7 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
      *
      * @throws CharactersNotFoundException
      */
-    public function getCharacterList()
+    public function getCharacterList() : CharacterSet
     {
         $characters = '';
 
@@ -84,7 +86,7 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
      *
      * @return string password
      */
-    public function generatePassword()
+    public function generatePassword() : string
     {
         $characterList = $this->getCharacterList()->getCharacters();
         $characters = \strlen($characterList);
@@ -104,7 +106,7 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
      *
      * @return int
      */
-    public function getLength()
+    public function getLength() : int
     {
         return $this->getOptionValue(self::OPTION_LENGTH);
     }
@@ -118,7 +120,7 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
      *
      * @throws \InvalidArgumentException
      */
-    public function setLength($characterCount)
+    public function setLength(int $characterCount) : self
     {
         if (!is_int($characterCount) || $characterCount < 1) {
             throw new \InvalidArgumentException('Expected positive integer');
@@ -134,7 +136,7 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
      *
      * @return bool
      */
-    public function getUppercase()
+    public function getUppercase() : bool
     {
         return $this->getOptionValue(self::OPTION_UPPER_CASE);
     }
@@ -148,7 +150,7 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
      *
      * @throws \InvalidArgumentException
      */
-    public function setUppercase($enable = true)
+    public function setUppercase(bool $enable = true) : self
     {
         if (!is_bool($enable)) {
             throw new \InvalidArgumentException('Expected boolean');
@@ -162,9 +164,9 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
     /**
      * Are Lowercase characters enabled?
      *
-     * @return string
+     * @return bool
      */
-    public function getLowercase()
+    public function getLowercase() : bool
     {
         return $this->getOptionValue(self::OPTION_LOWER_CASE);
     }
@@ -178,7 +180,7 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
      *
      * @throws \InvalidArgumentException
      */
-    public function setLowercase($enable = true)
+    public function setLowercase(bool $enable = true) : self
     {
         if (!is_bool($enable)) {
             throw new \InvalidArgumentException('Expected boolean');
@@ -192,9 +194,9 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
     /**
      * Are Numbers enabled?
      *
-     * @return string
+     * @return bool
      */
-    public function getNumbers()
+    public function getNumbers() : bool
     {
         return $this->getOptionValue(self::OPTION_NUMBERS);
     }
@@ -208,7 +210,7 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
      *
      * @throws \InvalidArgumentException
      */
-    public function setNumbers($enable = true)
+    public function setNumbers(bool $enable = true) : self
     {
         if (!is_bool($enable)) {
             throw new \InvalidArgumentException('Expected boolean');
@@ -222,9 +224,9 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
     /**
      * Are Symbols enabled?
      *
-     * @return string
+     * @return bool
      */
-    public function getSymbols()
+    public function getSymbols() : bool
     {
         return $this->getOptionValue(self::OPTION_SYMBOLS);
     }
@@ -238,7 +240,7 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
      *
      * @throws \InvalidArgumentException
      */
-    public function setSymbols($enable = true)
+    public function setSymbols(bool $enable = true) : self
     {
         if (!is_bool($enable)) {
             throw new \InvalidArgumentException('Expected boolean');
@@ -252,9 +254,9 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
     /**
      * Avoid similar characters enabled?
      *
-     * @return string
+     * @return bool
      */
-    public function getAvoidSimilar()
+    public function getAvoidSimilar() : bool
     {
         return $this->getOptionValue(self::OPTION_AVOID_SIMILAR);
     }
@@ -268,7 +270,7 @@ class ComputerPasswordGenerator extends AbstractPasswordGenerator
      *
      * @throws \InvalidArgumentException
      */
-    public function setAvoidSimilar($enable = true)
+    public function setAvoidSimilar(bool $enable = true) : self
     {
         if (!is_bool($enable)) {
             throw new \InvalidArgumentException('Expected boolean');

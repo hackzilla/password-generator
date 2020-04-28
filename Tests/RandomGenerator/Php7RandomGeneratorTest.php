@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hackzilla\PasswordGenerator\Tests\RandomGenerator;
 
 use Hackzilla\PasswordGenerator\RandomGenerator\Php7RandomGenerator;

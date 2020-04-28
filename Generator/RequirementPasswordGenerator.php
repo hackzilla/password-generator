@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hackzilla\PasswordGenerator\Generator;
 
 use Hackzilla\PasswordGenerator\Exception\ImpossibleMinMaxLimitsException;
@@ -18,6 +20,8 @@ class RequirementPasswordGenerator extends ComputerPasswordGenerator
     private $maximumCounts = array();
     private $validOptions = array();
     private $dirtyCheck = true;
+    private $limitRepeatingChars = false;
+    private $limitConsecutiveChars = false;
 
     /**
      */
@@ -40,7 +44,7 @@ class RequirementPasswordGenerator extends ComputerPasswordGenerator
      * @throws ImpossibleMinMaxLimitsException
      * @throws \Hackzilla\PasswordGenerator\Exception\CharactersNotFoundException
      */
-    public function generatePassword()
+    public function generatePassword() : string
     {
         if ($this->dirtyCheck) {
             if (!$this->validLimits()) {
@@ -64,7 +68,7 @@ class RequirementPasswordGenerator extends ComputerPasswordGenerator
      *
      * @return int|null
      */
-    public function getMinimumCount($option)
+    public function getMinimumCount($option) : ?int
     {
         return isset($this->minimumCounts[$option]) ? $this->minimumCounts[$option] : null;
     }
@@ -76,7 +80,7 @@ class RequirementPasswordGenerator extends ComputerPasswordGenerator
      *
      * @return int|null
      */
-    public function getMaximumCount($option)
+    public function getMaximumCount($option) : ?int
     {
         return isset($this->maximumCounts[$option]) ? $this->maximumCounts[$option] : null;
     }
@@ -91,7 +95,7 @@ class RequirementPasswordGenerator extends ComputerPasswordGenerator
      *
      * @throws InvalidOptionException
      */
-    public function setMinimumCount($option, $characterCount)
+    public function setMinimumCount(string $option, ?int $characterCount) : self
     {
         $this->dirtyCheck = true;
 
@@ -124,7 +128,7 @@ class RequirementPasswordGenerator extends ComputerPasswordGenerator
      *
      * @throws InvalidOptionException
      */
-    public function setMaximumCount($option, $characterCount)
+    public function setMaximumCount(string $option, ?int $characterCount) : self
     {
         $this->dirtyCheck = true;
 
@@ -147,7 +151,7 @@ class RequirementPasswordGenerator extends ComputerPasswordGenerator
         return $this;
     }
 
-    public function validLimits()
+    public function validLimits() : bool
     {
         $elements = 0;
 
@@ -213,7 +217,7 @@ class RequirementPasswordGenerator extends ComputerPasswordGenerator
      *
      * @throws \InvalidArgumentException
      */
-    public function generatePasswords($count = 1)
+    public function generatePasswords(int $count = 1) : array
     {
         if (!is_int($count)) {
             throw new \InvalidArgumentException('Expected integer');
@@ -237,7 +241,7 @@ class RequirementPasswordGenerator extends ComputerPasswordGenerator
      *
      * @return bool
      */
-    public function validatePassword($password)
+    public function validatePassword($password) : bool
     {
         foreach ($this->validOptions as $option) {
             $minCount = $this->getMinimumCount($option);

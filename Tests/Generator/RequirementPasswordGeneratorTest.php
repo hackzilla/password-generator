@@ -1,10 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hackzilla\PasswordGenerator\Tests\Generator;
 
 use Hackzilla\PasswordGenerator\Exception\InvalidOptionException;
 use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator;
 use Hackzilla\PasswordGenerator\Generator\RequirementPasswordGenerator;
+use InvalidArgumentException;
+use TypeError;
 
 class RequirementPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
 {
@@ -28,9 +32,9 @@ class RequirementPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider lengthProvider
      *
-     * @param $length
+     * @param int $length
      */
-    public function testLength($length): void
+    public function testLength(int $length): void
     {
         $this->_object->setLength($length);
         $this->assertSame($this->_object->getLength(), $length);
@@ -39,9 +43,9 @@ class RequirementPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider lengthProvider
      *
-     * @param $length
+     * @param int $length
      */
-    public function testGeneratePassword($length): void
+    public function testGeneratePassword(int $length): void
     {
         $this->_object
             ->setOptionValue(RequirementPasswordGenerator::OPTION_UPPER_CASE, true)
@@ -69,20 +73,20 @@ class RequirementPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
 
     public function testGeneratePasswordNonIntException(): void
     {
-        $this->expectException('\InvalidArgumentException');
+        $this->expectException(TypeError::class);
         $this->_object->generatePasswords('A');
     }
 
     public function testGeneratePasswordNegativeIntException(): void
     {
-        $this->expectException('\InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->_object->generatePasswords(-1);
     }
 
     /**
      * @dataProvider getterSetterProvider
      *
-     * @param $method
+     * @param string $method
      */
     public function testGetterSetters($method): void
     {
@@ -94,14 +98,20 @@ class RequirementPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue(!$this->_object->{'get'.$method}());
     }
 
+    public function testNegativeLengthException(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->_object->setLength(-1);
+    }
+
     /**
      * @dataProvider      lengthExceptionProvider
      *
-     * @param $param
+     * @param mixed $param
      */
     public function testLengthException($param): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(TypeError::class);
         $this->_object->setLength($param);
     }
 
@@ -111,18 +121,17 @@ class RequirementPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
             array('a'),
             array(false),
             array(null),
-            array(-1),
         );
     }
 
     /**
      * @dataProvider      getterSetterProvider
      *
-     * @param $method
+     * @param string $method
      */
     public function testGetterSettersException($method): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(TypeError::class);
         $this->_object->{'set'.$method}(1);
     }
 
@@ -140,11 +149,11 @@ class RequirementPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider optionProvider
      *
-     * @param $option
-     * @param $exists
-     * @param $dontExist
+     * @param string $option
+     * @param array $exists
+     * @param array $dontExist
      */
-    public function testSetOption($option, $exists, $dontExist): void
+    public function testSetOption(string $option, array $exists, array $dontExist): void
     {
         $this->_object->setOptionValue($option, true);
         $availableCharacters = $this->_object->getCharacterList()->getCharacters();
@@ -193,10 +202,10 @@ class RequirementPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider optionsProvider
      *
-     * @param $option
-     * @param $parameter
+     * @param string $option
+     * @param string $parameter
      */
-    public function testSetGet($option, $parameter): void
+    public function testSetGet(string $option, string $parameter): void
     {
         $this->_object
             ->setOptionValue($option, true)
@@ -269,8 +278,8 @@ class RequirementPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider minMaxProvider
      *
-     * @param $option
-     * @param $count
+     * @param string $option
+     * @param mixed $count
      */
     public function testMinMax($option, $count): void
     {
@@ -301,13 +310,13 @@ class RequirementPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
 
     public function testSetMinimumCountException(): void
     {
-        $this->expectException('\InvalidArgumentException');
+        $this->expectException(TypeError::class);
         $this->_object->setMinimumCount(RequirementPasswordGenerator::OPTION_UPPER_CASE, 'A');
     }
 
     public function testSetMaximumCountException(): void
     {
-        $this->expectException('\InvalidArgumentException');
+        $this->expectException(TypeError::class);
         $this->_object->setMaximumCount(RequirementPasswordGenerator::OPTION_UPPER_CASE, 'A');
     }
 
@@ -413,13 +422,13 @@ class RequirementPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider validatePasswordProvider
      *
-     * @param $password
-     * @param $option
-     * @param $min
-     * @param $max
-     * @param $valid
+     * @param string $password
+     * @param string $option
+     * @param int $min
+     * @param int $max
+     * @param bool $valid
      */
-    public function testValidatePassword($password, $option, $min, $max, $valid): void
+    public function testValidatePassword(string $password, string $option, int $min, int $max, bool $valid): void
     {
         $this->_object->setMinimumCount($option, $min);
         $this->_object->setMaximumCount($option, $max);
@@ -443,9 +452,9 @@ class RequirementPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider minLengthProvider
      *
-     * @param $length
+     * @param int $length
      */
-    public function testMinGeneratePassword($length): void
+    public function testMinGeneratePassword(int $length): void
     {
         $this->_object
             ->setOptionValue(ComputerPasswordGenerator::OPTION_UPPER_CASE, true)
@@ -486,10 +495,10 @@ class RequirementPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
      * @dataProvider      countOptionExceptionProvider
      * @expectException \Hackzilla\PasswordGenerator\Exception\InvalidOptionException
      *
-     * @param $method
-     * @param $option
+     * @param string $method
+     * @param string $option
      */
-    public function testCountOptionException($method, $option): void
+    public function testCountOptionException(string $method, string $option): void
     {
         $this->expectException(InvalidOptionException::class);
         $this->_object->{$method}($option, 1);
@@ -506,10 +515,10 @@ class RequirementPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider      countValueExceptionProvider
      *
-     * @param $method
-     * @param $option
+     * @param string $method
+     * @param string $option
      */
-    public function testCountValueException($method, $option): void
+    public function testCountValueException(string $method, string $option): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->_object->{$method}($option, 0);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hackzilla\PasswordGenerator\Tests\Generator;
 
 use Hackzilla\PasswordGenerator\Generator\AbstractPasswordGenerator;
@@ -23,7 +25,7 @@ class AbstractPasswordGeneratorClass extends AbstractPasswordGenerator
             ->setOption(self::OPTION_TEST_STRING_DEFAULT, array('type' => Option::TYPE_STRING, 'default' => 'test'));
     }
 
-    public function generatePassword()
+    public function generatePassword() : string
     {
         return '';
     }

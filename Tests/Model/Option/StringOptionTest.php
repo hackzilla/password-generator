@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hackzilla\PasswordGenerator\Tests\Model\Option;
 
 use Hackzilla\PasswordGenerator\Model\Option\StringOption;
@@ -68,11 +70,11 @@ class StringOptionTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider minMaxExceptionProvider
      *
-     * @param $min
-     * @param $max
-     * @param $value
+     * @param int $min
+     * @param int $max
+     * @param string $value
      */
-    public function testMinMaxException($min, $max, $value)
+    public function testMinMaxException(int $min, int $max, string $value)
     {
         $this->expectException(\InvalidArgumentException::class);
 

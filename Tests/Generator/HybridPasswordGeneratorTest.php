@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hackzilla\PasswordGenerator\Tests\Generator;
 
+use Hackzilla\PasswordGenerator\Exception\CharactersNotFoundException;
 use Hackzilla\PasswordGenerator\Generator\HybridPasswordGenerator;
+use TypeError;
 
 class HybridPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
 {
@@ -33,12 +37,12 @@ class HybridPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider passwordProvider
      *
-     * @param $segmentLength
-     * @param $segmentCount
-     * @param $segmentSeparator
-     * @param $regExp
+     * @param int $segmentLength
+     * @param int  $segmentCount
+     * @param string $segmentSeparator
+     * @param string $regExp
      */
-    public function testGeneratePassword($segmentLength, $segmentCount, $segmentSeparator, $regExp): void
+    public function testGeneratePassword(int $segmentLength, int $segmentCount, string $segmentSeparator, string $regExp): void
     {
         $this->_object
             ->setOptionValue(HybridPasswordGenerator::OPTION_UPPER_CASE, true)
@@ -50,15 +54,15 @@ class HybridPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
         $this->_object->setSegmentCount($segmentCount);
         $this->_object->setSegmentSeparator($segmentSeparator);
 
-        $this->assertRegExp($regExp, $this->_object->generatePassword());
+        $this->assertMatchesRegularExpression($regExp, $this->_object->generatePassword());
     }
 
     /**
      * @dataProvider lengthProvider
      *
-     * @param $count
+     * @param int $count
      */
-    public function testSetSegmentCount($count): void
+    public function testSetSegmentCount(int $count): void
     {
         $this->_object->setSegmentCount($count);
         $this->assertSame($this->_object->getSegmentCount(), $count);
@@ -74,9 +78,9 @@ class HybridPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider lengthProvider
      *
-     * @param $length
+     * @param int $length
      */
-    public function testSetSegmentLength($length): void
+    public function testSetSegmentLength(int $length): void
     {
         $this->_object->setSegmentLength($length);
         $this->assertSame($this->_object->getSegmentLength(), $length);
@@ -91,9 +95,9 @@ class HybridPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider lengthProvider
      *
-     * @param $length
+     * @param int $length
      */
-    public function testSetLength($length): void
+    public function testSetLength(int $length): void
     {
         $this->_object->setLength($length);
         $this->assertSame($this->_object->getLength(), $length);
@@ -112,9 +116,9 @@ class HybridPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider segmentProvider
      *
-     * @param $separator
+     * @param string $separator
      */
-    public function testSetSegmentSeparator($separator): void
+    public function testSetSegmentSeparator(string $separator): void
     {
         $this->_object->setSegmentSeparator($separator);
         $this->assertSame($this->_object->getSegmentSeparator(), $separator);
@@ -130,17 +134,17 @@ class HybridPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
 
     public function testSetSegmentSeparatorException(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(TypeError::class);
         $this->_object->setSegmentSeparator(-1);
     }
 
     /**
      * @dataProvider optionsProvider
      *
-     * @param $option
-     * @param $parameter
+     * @param string $option
+     * @param mixed $parameter
      */
-    public function testSetGet($option, $parameter): void
+    public function testSetGet(string $option, $parameter): void
     {
         $this->_object
             ->setOptionValue($option, true)
@@ -168,7 +172,7 @@ class HybridPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
 
     public function testCharacterListException(): void
     {
-        $this->expectException('\Hackzilla\PasswordGenerator\Exception\CharactersNotFoundException');
+        $this->expectException(CharactersNotFoundException::class);
         $this->_object->getCharacterList();
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hackzilla\PasswordGenerator\Generator;
 
 /**
@@ -15,7 +17,7 @@ class PronounceablePasswordGenerator extends ComputerPasswordGenerator
         $this->setParameter(self::PARAMETER_VOWELS, 'aeiou');
     }
 
-    public function generatePassword()
+    public function generatePassword() : string
     {
         $vowels = $this->getParameter(self::PARAMETER_VOWELS, '');
 

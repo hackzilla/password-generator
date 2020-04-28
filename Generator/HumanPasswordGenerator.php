@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hackzilla\PasswordGenerator\Generator;
 
 use Hackzilla\PasswordGenerator\Exception\FileNotFoundException;
@@ -40,7 +42,7 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
      *
      * @throws WordsNotFoundException
      */
-    public function generateWordList()
+    public function generateWordList() : array
     {
         if ($this->getParameter(self::PARAMETER_WORD_CACHE) !== null) {
             $this->findWordListLength();
@@ -89,7 +91,7 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
         }
     }
 
-    private function generateWordListSubset($min, $max)
+    private function generateWordListSubset(int $min, int $max)
     {
         $wordList = $this->generateWordList();
         $newWordList = array();
@@ -115,7 +117,7 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
      * @throws WordsNotFoundException
      * @throws ImpossiblePasswordLengthException
      */
-    public function generatePassword()
+    public function generatePassword() : string
     {
         $wordList = $this->generateWordList();
 
@@ -186,7 +188,7 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
      *
      * @throws NotEnoughWordsException
      */
-    public function randomWord($minLength = null, $maxLength = null)
+    public function randomWord(?int $minLength = null, ?int $maxLength = null)
     {
         if (is_null($minLength)) {
             $minLength = $this->getMinWordLength();
@@ -211,7 +213,7 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
      *
      * @return int
      */
-    public function getWordCount()
+    public function getWordCount() : int
     {
         return $this->getOptionValue(self::OPTION_WORDS);
     }
@@ -225,7 +227,7 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
      *
      * @throws \InvalidArgumentException
      */
-    public function setWordCount($characterCount)
+    public function setWordCount(int $characterCount) : self
     {
         if (!is_int($characterCount) || $characterCount < 1) {
             throw new \InvalidArgumentException('Expected positive integer');
@@ -239,9 +241,9 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
     /**
      * get max word length.
      *
-     * @return int
+     * @return int|null
      */
-    public function getMaxWordLength()
+    public function getMaxWordLength() : ?int
     {
         if (is_null($this->maxWordLength)) {
             return $this->getOptionValue(self::OPTION_MAX_WORD_LENGTH);
@@ -256,13 +258,13 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
     /**
      * set max word length.
      *
-     * @param int $length
+     * @param int|null $length
      *
      * @return $this
      *
      * @throws \InvalidArgumentException
      */
-    public function setMaxWordLength($length)
+    public function setMaxWordLength(?int $length) : self
     {
         if (!is_int($length) || $length < 1) {
             throw new \InvalidArgumentException('Expected positive integer');
@@ -279,9 +281,9 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
     /**
      * get min word length.
      *
-     * @return int
+     * @return int|null
      */
-    public function getMinWordLength()
+    public function getMinWordLength() : ?int
     {
         return max(
             $this->minWordLength,
@@ -292,13 +294,13 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
     /**
      * set min word length.
      *
-     * @param int $length
+     * @param int|null $length
      *
      * @return $this
      *
      * @throws \InvalidArgumentException
      */
-    public function setMinWordLength($length)
+    public function setMinWordLength(?int $length) : self
     {
         if (!is_int($length) || $length < 1) {
             throw new \InvalidArgumentException('Expected positive integer');
@@ -322,11 +324,9 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
      * @throws \InvalidArgumentException
      * @throws FileNotFoundException
      */
-    public function setWordList($filename)
+    public function setWordList(string $filename) : self
     {
-        if (!is_string($filename)) {
-            throw new \InvalidArgumentException('Expected string');
-        } elseif (!file_exists($filename)) {
+        if (!file_exists($filename)) {
             throw new FileNotFoundException('File not found');
         }
 
@@ -343,9 +343,11 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
      *
      * @return string
      */
-    public function getWordList()
+    public function getWordList(): string
     {
-        if (!file_exists($this->getParameter(self::PARAMETER_DICTIONARY_FILE))) {
+        if (!$this->getParameter(self::PARAMETER_DICTIONARY_FILE)
+            || !file_exists($this->getParameter(self::PARAMETER_DICTIONARY_FILE)
+            )) {
             throw new FileNotFoundException();
         }
 
@@ -357,7 +359,7 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
      *
      * @return string
      */
-    public function getWordSeparator()
+    public function getWordSeparator() : string
     {
         return $this->getParameter(self::PARAMETER_WORD_SEPARATOR);
     }
@@ -371,12 +373,8 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
      *
      * @throws \InvalidArgumentException
      */
-    public function setWordSeparator($separator)
+    public function setWordSeparator(string $separator) : self
     {
-        if (!is_string($separator)) {
-            throw new \InvalidArgumentException('Expected string');
-        }
-
         $this->setParameter(self::PARAMETER_WORD_SEPARATOR, $separator);
 
         return $this;
@@ -387,7 +385,7 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
      *
      * @return integer
      */
-    public function getLength()
+    public function getLength() : ?int
     {
         return $this->getOptionValue(self::OPTION_LENGTH);
     }
@@ -401,9 +399,9 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
      *
      * @throws \InvalidArgumentException
      */
-    public function setLength($characterCount)
+    public function setLength(int $characterCount) : self
     {
-        if (!is_int($characterCount) || $characterCount < 1) {
+        if ($characterCount < 1) {
             throw new \InvalidArgumentException('Expected positive integer');
         }
 
@@ -417,7 +415,7 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
      *
      * @return int
      */
-    public function getMinPasswordLength()
+    public function getMinPasswordLength() : int
     {
         $wordCount = $this->getWordCount();
 
@@ -429,7 +427,7 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
      *
      * @return int
      */
-    public function getMaxPasswordLength()
+    public function getMaxPasswordLength() : int
     {
         $wordCount = $this->getWordCount();
 

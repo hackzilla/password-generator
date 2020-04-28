@@ -14,7 +14,7 @@ interface PasswordGeneratorInterface
      *
      * @return array
      */
-    public function getOptions();
+    public function getOptions() : array;
 
     /**
      * Set password generator option.
@@ -25,16 +25,16 @@ interface PasswordGeneratorInterface
      * @return $this
      * @throws InvalidOptionTypeException
      */
-    public function setOption($option, $optionSettings);
+    public function setOption(string $option, array $optionSettings);
 
     /**
      * Get option.
      *
-     * @param $option
+     * @param string $option
      *
      * @return mixed
      */
-    public function getOption($option);
+    public function getOption(string $option);
 
 //    /**
 //     * Remove Option.
@@ -49,20 +49,20 @@ interface PasswordGeneratorInterface
      * Set password generator option value.
      *
      * @param string $option
-     * @param $value
+     * @param mixed $value
      *
      * @return $this
      */
-    public function setOptionValue($option, $value);
+    public function setOptionValue(string $option, $value) : self;
 
     /**
      * Get option value.
      *
-     * @param $option
+     * @param string $option
      *
      * @return mixed
      */
-    public function getOptionValue($option);
+    public function getOptionValue(string $option);
 
     /**
      * @param string $parameter
@@ -70,7 +70,7 @@ interface PasswordGeneratorInterface
      *
      * @return $this
      */
-    public function setParameter($parameter, $value);
+    public function setParameter(string $parameter, $value) : self;
 
     /**
      * @param string $parameter
@@ -78,7 +78,7 @@ interface PasswordGeneratorInterface
      *
      * @return null|mixed
      */
-    public function getParameter($parameter);
+    public function getParameter(string $parameter, $default = null);
 
     /**
      * Generate $count number of passwords.
@@ -89,14 +89,14 @@ interface PasswordGeneratorInterface
      *
      * @throws \InvalidArgumentException
      */
-    public function generatePasswords($count = 1);
+    public function generatePasswords(int $count = 1) : array;
 
     /**
      * Generate one password based on options.
      *
      * @return string password
      */
-    public function generatePassword();
+    public function generatePassword() : string;
 
 
 //    /**

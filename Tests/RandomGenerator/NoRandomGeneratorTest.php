@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hackzilla\PasswordGenerator\Tests\RandomGenerator;
 
 use Hackzilla\PasswordGenerator\RandomGenerator\NoRandomGenerator;
@@ -8,7 +10,7 @@ class NoRandomGeneratorTest extends \PHPUnit\Framework\TestCase
 {
     private $_object;
 
-    public function setup()
+    public function setup() : void
     {
         $this->_object = new NoRandomGenerator();
     }

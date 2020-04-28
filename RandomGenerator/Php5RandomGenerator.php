@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hackzilla\PasswordGenerator\RandomGenerator;
 
 /**
@@ -16,7 +18,7 @@ class Php5RandomGenerator implements RandomGeneratorInterface
      *
      * @return int
      */
-    public function randomInteger($min, $max)
+    public function randomInteger(int $min, int $max)
     {
         return \mt_rand($min, $max);
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hackzilla\PasswordGenerator\Generator;
 
 use Hackzilla\PasswordGenerator\Model\CharacterSet;
@@ -32,7 +34,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
      *
      * @throws \Exception
      */
-    public function getCharacterList()
+    public function getCharacterList() : CharacterSet
     {
         $characterList = parent::getCharacterList();
         $characterList = \str_replace($this->getSegmentSeparator(), '', $characterList);
@@ -45,7 +47,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
      *
      * @return string password
      */
-    public function generatePassword()
+    public function generatePassword() : string
     {
         $characterList = $this->getCharacterList()->getCharacters();
         $characters = \strlen($characterList);
@@ -72,7 +74,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
      *
      * @return int
      */
-    public function getLength()
+    public function getLength() : int
     {
         return $this->getSegmentCount();
     }
@@ -86,7 +88,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
      *
      * @throws \InvalidArgumentException
      */
-    public function setLength($characterCount)
+    public function setLength(int $characterCount) : self
     {
         $this->setSegmentCount($characterCount);
 
@@ -98,7 +100,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
      *
      * @return int
      */
-    public function getSegmentCount()
+    public function getSegmentCount() : int
     {
         return $this->getOptionValue(self::OPTION_SEGMENT_COUNT);
     }
@@ -112,7 +114,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
      *
      * @throws \InvalidArgumentException
      */
-    public function setSegmentCount($segmentCount)
+    public function setSegmentCount(int $segmentCount) : self
     {
         if (!is_int($segmentCount) || $segmentCount < 1) {
             throw new \InvalidArgumentException('Expected positive integer');
@@ -128,7 +130,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
      *
      * @return int
      */
-    public function getSegmentLength()
+    public function getSegmentLength() : int
     {
         return $this->getOptionValue(self::OPTION_SEGMENT_LENGTH);
     }
@@ -142,7 +144,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
      *
      * @throws \InvalidArgumentException
      */
-    public function setSegmentLength($segmentLength)
+    public function setSegmentLength(int $segmentLength) : self
     {
         if (!is_int($segmentLength) || $segmentLength < 1) {
             throw new \InvalidArgumentException('Expected positive integer');
@@ -158,7 +160,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
      *
      * @return string
      */
-    public function getSegmentSeparator()
+    public function getSegmentSeparator() : string
     {
         return $this->getParameter(self::PARAMETER_SEPARATOR);
     }
@@ -172,7 +174,7 @@ class HybridPasswordGenerator extends ComputerPasswordGenerator
      *
      * @throws \InvalidArgumentException
      */
-    public function setSegmentSeparator($segmentSeparator)
+    public function setSegmentSeparator(string $segmentSeparator)
     {
         if (!is_string($segmentSeparator)) {
             throw new \InvalidArgumentException('Expected string');

@@ -17,7 +17,7 @@ interface OptionInterface
      *
      * @return string
      */
-    public function getType();
+    public function getType() : string;
 
     /**
      * Get option value
@@ -29,7 +29,7 @@ interface OptionInterface
     /**
      * Set option string value.
      *
-     * @param string $value
+     * @param mixed $value
      *
      * @throws \InvalidArgumentException
      */

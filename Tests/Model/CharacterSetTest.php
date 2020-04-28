@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hackzilla\PasswordGenerator\Tests\Model;
 
 use Hackzilla\PasswordGenerator\Model\CharacterSet;
@@ -9,8 +11,8 @@ class CharacterSetTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider characterProvider
      *
-     * @param $characters
-     * @param $result
+     * @param mixed $characters
+     * @param mixed $result
      */
     public function testConstruct($characters, $result): void
     {
@@ -24,15 +26,14 @@ class CharacterSetTest extends \PHPUnit\Framework\TestCase
         return array(
             array('ABC', 'ABC'),
             array('', ''),
-            array(null, null),
         );
     }
 
     /**
      * @dataProvider castCharacterProvider
      *
-     * @param $characters
-     * @param $result
+     * @param mixed $characters
+     * @param mixed $result
      */
     public function testConstructCast($characters, $result): void
     {
@@ -47,7 +48,6 @@ class CharacterSetTest extends \PHPUnit\Framework\TestCase
         return array(
             array('ABC', 'ABC'),
             array('', ''),
-            array(null, ''),
         );
     }
 }

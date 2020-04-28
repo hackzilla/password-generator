@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hackzilla\PasswordGenerator\Generator;
 
 use Hackzilla\PasswordGenerator\Exception\InvalidOptionException;
@@ -10,10 +12,13 @@ use Hackzilla\PasswordGenerator\RandomGenerator\RandomGeneratorInterface;
 
 abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
 {
-    /** @var RandomGeneratorInterface */
+    /** @var RandomGeneratorInterface|null */
     private $randomGenerator;
 
+    /** @var array */
     private $options = [];
+
+    /** @var array */
     private $parameters = [];
 
     /**
@@ -25,11 +30,9 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
      *
      * @throws \InvalidArgumentException
      */
-    public function generatePasswords($count = 1)
+    public function generatePasswords(int $count = 1) : array
     {
-        if (!is_int($count)) {
-            throw new \InvalidArgumentException('Expected integer');
-        } elseif ($count < 0) {
+        if ($count < 0) {
             throw new \InvalidArgumentException('Expected positive integer');
         }
 
@@ -51,7 +54,7 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
      * @return $this
      * @throws InvalidOptionTypeException
      */
-    public function setOption($option, $optionSettings)
+    public function setOption(string $option, array $optionSettings) : self
     {
         $type = isset($optionSettings['type']) ? $optionSettings['type'] : '';
 
@@ -71,7 +74,7 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
      *
      * @return $this
      */
-    public function removeOption($option)
+    public function removeOption(string $option) : self
     {
         unset($this->options[$option]);
 
@@ -81,11 +84,11 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
     /**
      * Get option.
      *
-     * @param $option
+     * @param string $option
      *
      * @return mixed
      */
-    public function getOption($option)
+    public function getOption(string $option)
     {
         if (!isset($this->options[$option])) {
             return;
@@ -98,11 +101,11 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
      * Set password generator option value.
      *
      * @param string $option
-     * @param $value
+     * @param mixed $value
      *
      * @return $this
      */
-    public function setOptionValue($option, $value)
+    public function setOptionValue(string $option, $value) : self
     {
         if (!isset($this->options[$option])) {
             throw new InvalidOptionException('Invalid Option');
@@ -116,11 +119,11 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
     /**
      * Get option value.
      *
-     * @param $option
+     * @param string $option
      *
      * @return mixed
      */
-    public function getOptionValue($option)
+    public function getOptionValue(string $option)
     {
         if (!isset($this->options[$option])) {
             throw new InvalidOptionException('Invalid Option');
@@ -135,7 +138,7 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
      *
      * @return $this
      */
-    public function setParameter($parameter, $value)
+    public function setParameter(string $parameter, $value) : self
     {
         $this->parameters[$parameter] = $value;
 
@@ -148,7 +151,7 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
      *
      * @return null|mixed
      */
-    public function getParameter($parameter, $default = null)
+    public function getParameter(string $parameter, $default = null)
     {
         if (!isset($this->parameters[$parameter])) {
             return $default;
@@ -162,7 +165,7 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
      *
      * @return array
      */
-    public function getOptions()
+    public function getOptions() : array
     {
         return $this->options;
     }
@@ -174,7 +177,7 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
      *
      * @return $this
      */
-    public function setRandomGenerator(RandomGeneratorInterface $randomGenerator)
+    public function setRandomGenerator(RandomGeneratorInterface $randomGenerator) : self
     {
         $this->randomGenerator = $randomGenerator;
 
@@ -190,9 +193,9 @@ abstract class AbstractPasswordGenerator implements PasswordGeneratorInterface
      *
      * @return int
      */
-    public function randomInteger($min, $max)
+    public function randomInteger(int $min, int $max) : int
     {
-        if (!$this->randomGenerator) {
+        if (is_null($this->randomGenerator)) {
             $this->randomGenerator = new Php7RandomGenerator();
         }
 

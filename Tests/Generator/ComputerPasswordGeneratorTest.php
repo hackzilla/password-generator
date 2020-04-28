@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hackzilla\PasswordGenerator\Tests\Generator;
 
+use InvalidArgumentException;
 use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator;
+use TypeError;
 
 class ComputerPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
 {
@@ -26,7 +30,7 @@ class ComputerPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider lengthProvider
      *
-     * @param $length
+     * @param int $length
      */
     public function testLength($length): void
     {
@@ -37,7 +41,7 @@ class ComputerPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider lengthProvider
      *
-     * @param $length
+     * @param int $length
      */
     public function testGeneratePassword($length): void
     {
@@ -57,79 +61,84 @@ class ComputerPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
      */
     public function lengthProvider()
     {
-        return array(
-            array(1),
-            array(4),
-            array(8),
-            array(16),
-        );
+        return [
+            [1],
+            [4],
+            [8],
+            [16],
+        ];
     }
 
     /**
      * @dataProvider getterSetterProvider
      *
-     * @param $method
+     * @param string $method
      */
     public function testGetterSetters($method): void
     {
-        $this->_object->{'set'.$method}(true);
-        $this->assertTrue($this->_object->{'get'.$method}());
+        $this->_object->{'set' . $method}(true);
+        $this->assertTrue($this->_object->{'get' . $method}());
 
-        $this->_object->{'set'.$method}(false);
-        $this->assertTrue(!$this->_object->{'get'.$method}());
+        $this->_object->{'set' . $method}(false);
+        $this->assertTrue(!$this->_object->{'get' . $method}());
+    }
+
+    public function testNegativeLengthException(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->_object->setLength(-1);
     }
 
     /**
      * @dataProvider      lengthExceptionProvider
      *
-     * @param $param
+     * @param mixed $param
      */
     public function testLengthException($param): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(TypeError::class);
         $this->_object->setLength($param);
     }
 
     public function lengthExceptionProvider()
     {
-        return array(
-            array('a'),
-            array(false),
-            array(null),
-            array(-1),
-        );
+        return [
+            ['a'],
+            [false],
+            [null],
+        ];
     }
 
     /**
      * @dataProvider      getterSetterProvider
      *
-     * @param $method
+     * @param string $method
      */
-    public function testGetterSettersException($method): void
+    public function testGetterSettersException(string $method): void
     {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->_object->{'set'.$method}(1);
+        $this->expectException(TypeError::class);
+        $this->_object->{'set' . $method}(1);
     }
 
     public function getterSetterProvider()
     {
-        return array(
-            array('Uppercase'),
-            array('Lowercase'),
-            array('Numbers'),
-            array('Symbols'),
-            array('AvoidSimilar'),
-        );
+        return [
+            ['Uppercase'],
+            ['Lowercase'],
+            ['Numbers'],
+            ['Symbols'],
+            ['AvoidSimilar'],
+        ];
     }
 
     /**
      * @dataProvider optionProvider
      *
-     * @param $option
-     * @param $exists
-     * @param $dontExist
+     * @param string $option
+     * @param array $exists
+     * @param array $dontExist
      */
-    public function testSetOption($option, $exists, $dontExist): void
+    public function testSetOption(string $option, array $exists, array $dontExist): void
     {
         $this->_object->setOptionValue($option, true);
         $availableCharacters = $this->_object->getCharacterList()->getCharacters();
@@ -147,18 +156,18 @@ class ComputerPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
      */
     public function optionProvider()
     {
-        return array(
-            array(ComputerPasswordGenerator::OPTION_UPPER_CASE, array('A', 'B', 'C'), array('a', 'b', 'c')),
-            array(ComputerPasswordGenerator::OPTION_LOWER_CASE, array('a', 'b', 'c'), array('A', 'B', 'C')),
-            array(ComputerPasswordGenerator::OPTION_NUMBERS, array('1', '2', '3'), array('a', 'b', 'c', 'A', 'B', 'C')),
-            array(ComputerPasswordGenerator::OPTION_SYMBOLS, array('+', '=', '?'), array('a', 'b', 'c', 'A', 'B', 'C')),
-        );
+        return [
+            [ComputerPasswordGenerator::OPTION_UPPER_CASE, ['A', 'B', 'C'], ['a', 'b', 'c']],
+            [ComputerPasswordGenerator::OPTION_LOWER_CASE, ['a', 'b', 'c'], ['A', 'B', 'C']],
+            [ComputerPasswordGenerator::OPTION_NUMBERS, ['1', '2', '3'], ['a', 'b', 'c', 'A', 'B', 'C']],
+            [ComputerPasswordGenerator::OPTION_SYMBOLS, ['+', '=', '?'], ['a', 'b', 'c', 'A', 'B', 'C']],
+        ];
     }
 
     public function testSetOptionSimilar(): void
     {
-        $exists = array('a', 'b', 'c', 'A', 'B', 'C');
-        $dontExist = array('o', 'l', 'O');
+        $exists = ['a', 'b', 'c', 'A', 'B', 'C'];
+        $dontExist = ['o', 'l', 'O'];
 
         $this->_object
             ->setOptionValue(ComputerPasswordGenerator::OPTION_UPPER_CASE, true)
@@ -178,10 +187,10 @@ class ComputerPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider optionsProvider
      *
-     * @param $option
-     * @param $parameter
+     * @param string $option
+     * @param string $parameter
      */
-    public function testSetGet($option, $parameter): void
+    public function testSetGet(string $option, string $parameter): void
     {
         $this->_object
             ->setOptionValue($option, true)
@@ -196,12 +205,12 @@ class ComputerPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
      */
     public function optionsProvider()
     {
-        return array(
-            array(ComputerPasswordGenerator::OPTION_UPPER_CASE, ComputerPasswordGenerator::PARAMETER_UPPER_CASE),
-            array(ComputerPasswordGenerator::OPTION_LOWER_CASE, ComputerPasswordGenerator::PARAMETER_LOWER_CASE),
-            array(ComputerPasswordGenerator::OPTION_NUMBERS, ComputerPasswordGenerator::PARAMETER_NUMBERS),
-            array(ComputerPasswordGenerator::OPTION_SYMBOLS, ComputerPasswordGenerator::PARAMETER_SYMBOLS),
-        );
+        return [
+            [ComputerPasswordGenerator::OPTION_UPPER_CASE, ComputerPasswordGenerator::PARAMETER_UPPER_CASE],
+            [ComputerPasswordGenerator::OPTION_LOWER_CASE, ComputerPasswordGenerator::PARAMETER_LOWER_CASE],
+            [ComputerPasswordGenerator::OPTION_NUMBERS, ComputerPasswordGenerator::PARAMETER_NUMBERS],
+            [ComputerPasswordGenerator::OPTION_SYMBOLS, ComputerPasswordGenerator::PARAMETER_SYMBOLS],
+        ];
     }
 
     /**

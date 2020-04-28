@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hackzilla\PasswordGenerator\Model\Option;
 
 abstract class Option implements OptionInterface
@@ -39,7 +41,7 @@ abstract class Option implements OptionInterface
     /**
      * {@inheritdoc}
      */
-    public static function createFromType($type, array $settings = array())
+    public static function createFromType($type, array $settings = array()) : ?OptionInterface
     {
         switch ($type) {
             case self::TYPE_STRING:
@@ -52,6 +54,6 @@ abstract class Option implements OptionInterface
                 return new BooleanOption($settings);
         }
 
-        return;
+        return null;
     }
 }

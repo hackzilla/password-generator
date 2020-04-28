@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hackzilla\PasswordGenerator\Tests\Generator;
 
 use Hackzilla\PasswordGenerator\Generator\DummyPasswordGenerator;
 
 class DummyPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
 {
+    /** @var DummyPasswordGenerator */
     private $_object;
 
     /**
@@ -19,8 +22,8 @@ class DummyPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider lengthProvider
      *
-     * @param $length
-     * @param $comparePassword
+     * @param int $length
+     * @param string $comparePassword
      */
     public function testGeneratePasswords($length, $comparePassword): void
     {
@@ -37,8 +40,8 @@ class DummyPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider lengthProvider
      *
-     * @param $length
-     * @param $password
+     * @param int $length
+     * @param string $password
      */
     public function testGeneratePassword($length, $password)
     {
@@ -49,7 +52,7 @@ class DummyPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider lengthProvider
      *
-     * @param $length
+     * @param int $length
      */
     public function testLength($length): void
     {
@@ -70,14 +73,20 @@ class DummyPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
         );
     }
 
+    public function testNegativeLengthException(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->_object->setLength(-1);
+    }
+
     /**
      * @dataProvider      lengthExceptionProvider
      *
-     * @param $param
+     * @param mixed $param
      */
     public function testLengthException($param): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(\TypeError::class);
         $this->_object->setLength($param);
     }
 
@@ -87,7 +96,6 @@ class DummyPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
             array('a'),
             array(false),
             array(null),
-            array(-1),
         );
     }
 }

@@ -1,11 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hackzilla\PasswordGenerator\Tests\Generator;
 
+use Hackzilla\PasswordGenerator\Exception\FileNotFoundException;
 use Hackzilla\PasswordGenerator\Generator\HumanPasswordGenerator;
+use TypeError;
 
 class HumanPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
 {
+    /** @var HumanPasswordGenerator */
     private $_object;
 
     /**
@@ -28,10 +33,10 @@ class HumanPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
         $this->_object->setWordCount(6);
         $this->assertSame($this->_object->getWordCount(), 6);
 
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(\InvalidArgumentException::class);
         $this->_object->setWordCount(-6);
 
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(TypeError::class);
         $this->_object->setWordCount('fail');
     }
 
@@ -46,10 +51,10 @@ class HumanPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
         $this->_object->setMinWordLength(6);
         $this->assertSame($this->_object->getMinWordLength(), 6);
 
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(\InvalidArgumentException::class);
         $this->_object->setMinWordLength(-6);
 
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(TypeError::class);
         $this->_object->setMinWordLength('fail');
     }
 
@@ -64,10 +69,10 @@ class HumanPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
         $this->_object->setMaxWordLength(6);
         $this->assertSame($this->_object->getMaxWordLength(), 6);
 
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(\InvalidArgumentException::class);
         $this->_object->setMaxWordLength(-6);
 
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(TypeError::class);
         $this->_object->setMaxWordLength('fail');
     }
 
@@ -85,10 +90,10 @@ class HumanPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
         $this->_object->setWordSeparator('-?*');
         $this->assertSame($this->_object->getWordSeparator(), '-?*');
 
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(TypeError::class);
         $this->_object->setWordSeparator(-6);
 
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(TypeError::class);
         $this->_object->setMaxWordLength(null);
     }
 
@@ -124,7 +129,7 @@ class HumanPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
         $this->_object->setWordList($filename);
         $this->assertSame($this->_object->getWordList(), $filename);
 
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(TypeError::class);
         $this->_object->setWordList(7);
     }
 
@@ -157,9 +162,9 @@ class HumanPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider lengthProvider
      *
-     * @param $length
+     * @param int $length
      */
-    public function testGeneratePasswords($length): void
+    public function testGeneratePasswords(int $length): void
     {
         $filename = $this->getSimpleWordList();
 
@@ -177,9 +182,9 @@ class HumanPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider lengthProvider
      *
-     * @param $length
+     * @param int $length
      */
-    public function testGeneratePassword($length): void
+    public function testGeneratePassword(int $length): void
     {
         $filename = $this->getSimpleWordList();
 
@@ -190,7 +195,7 @@ class HumanPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
 
     public function testGeneratePasswordException(): void
     {
-        $this->expectException('\Hackzilla\PasswordGenerator\Exception\FileNotFoundException');
+        $this->expectException(FileNotFoundException::class);
         $this->_object->generatePassword();
     }
 
@@ -250,9 +255,9 @@ class HumanPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider lengthProvider
      *
-     * @param $length
+     * @param int $length
      */
-    public function testGeneratePasswordWithSeparator($length): void
+    public function testGeneratePasswordWithSeparator(int $length): void
     {
         $filename = $this->getSimpleWordList();
 
@@ -263,13 +268,13 @@ class HumanPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param $word
-     * @param $length
-     * @param $separator
+     * @param string $word
+     * @param int $length
+     * @param string $separator
      *
      * @return string
      */
-    private function makePassword($word, $length, $separator)
+    private function makePassword(string $word, int $length, string $separator)
     {
         $password = '';
 
@@ -297,12 +302,18 @@ class HumanPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
         );
     }
 
+    public function testNegativeLengthException(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->_object->setLength(-1);
+    }
+
     /**
      * @dataProvider lengthExceptionProvider
      */
     public function testLengthException($length): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(TypeError::class);
         $this->_object->setLength($length);
     }
 
@@ -314,14 +325,13 @@ class HumanPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
         return array(
             array(null),
             array('A'),
-            array(-1),
         );
     }
     /**
      * @dataProvider fixedPasswordsProvider
-     * @param $length
+     * @param int $length
      */
-    public function testGeneratePasswordFixedLength($length): void
+    public function testGeneratePasswordFixedLength(int $length): void
     {
         $this->_object->setMinWordLength(1);
         $this->_object->setMaxWordLength(10);

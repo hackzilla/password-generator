@@ -13,5 +13,5 @@ interface RandomGeneratorInterface
      *
      * @return int
      */
-    public function randomInteger($min, $max);
+    public function randomInteger(int $min, int $max);
 }

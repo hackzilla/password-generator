@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hackzilla\PasswordGenerator\Tests;
 
 use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator;

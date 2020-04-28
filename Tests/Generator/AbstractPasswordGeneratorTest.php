@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hackzilla\PasswordGenerator\Tests\Generator;
 
 class AbstractPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
@@ -14,11 +16,11 @@ class AbstractPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider generatePasswordsProvider
      *
-     * @param $passwordCount
+     * @param mixed $passwordCount
      */
     public function testGeneratePasswordsException($passwordCount): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(\TypeError::class);
         $this->_object->generatePasswords($passwordCount);
     }
 
@@ -27,16 +29,21 @@ class AbstractPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
         return array(
             array(''),
             array(null),
-            array(-1),
             array(0.1),
             array(true),
         );
     }
 
+    public function testGenerateNegativePasswordsException(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->_object->generatePasswords(-1);
+    }
+
     /**
      * @dataProvider lengthProvider
      *
-     * @param $count
+     * @param int $count
      */
     public function testGeneratePasswords($count): void
     {
@@ -48,7 +55,7 @@ class AbstractPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public function lengthProvider()
+    public function lengthProvider() : array
     {
         return array(
             array(1),
@@ -68,7 +75,7 @@ class AbstractPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf('Hackzilla\PasswordGenerator\Model\Option\OptionInterface', $this->_object->getOption($option));
     }
 
-    public function optionProvider()
+    public function optionProvider() : array
     {
         return array(
             array(AbstractPasswordGeneratorClass::OPTION_TEST_BOOLEAN),
@@ -94,8 +101,8 @@ class AbstractPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider setOptionValueProvider
      *
-     * @param $option
-     * @param $value
+     * @param string $option
+     * @param mixed $value
      */
     public function testSetOptionValue($option, $value): void
     {
@@ -106,7 +113,7 @@ class AbstractPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public function setOptionValueProvider()
+    public function setOptionValueProvider() : array
     {
         return array(
             array(AbstractPasswordGeneratorClass::OPTION_TEST_BOOLEAN, true),
@@ -117,8 +124,8 @@ class AbstractPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider setOptionExceptionProvider
      *
-     * @param $option
-     * @param $value
+     * @param string $option
+     * @param mixed $value
      */
     public function testSetExceptionOption($option, $value): void
     {
@@ -129,7 +136,7 @@ class AbstractPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public function setOptionExceptionProvider()
+    public function setOptionExceptionProvider() : array
     {
         return array(
             array(AbstractPasswordGeneratorClass::OPTION_TEST_BOOLEAN, 99),
@@ -175,8 +182,8 @@ class AbstractPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider parameterProvider
      *
-     * @param $parameter
-     * @param $value
+     * @param string $parameter
+     * @param mixed $value
      */
     public function testParameter($parameter, $value): void
     {
@@ -198,9 +205,9 @@ class AbstractPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider validateValueProvider
      *
-     * @param $option
-     * @param $value
-     * @param $return
+     * @param string $option
+     * @param mixed $value
+     * @param mixed $return
      */
     public function testValidateValue($option, $value, $return): void
     {
