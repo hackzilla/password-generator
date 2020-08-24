@@ -157,7 +157,7 @@ $generator
 When setting the minimum and maximum values, be careful of unachievable settings.
 
 For example the following will end up in an infinite loop.
-
+```php
 $generator
   ->setLength(4)
   ->setOptionValue(RequirementPasswordGenerator::OPTION_UPPER_CASE, true)
@@ -165,6 +165,7 @@ $generator
   ->setMinimumCount(RequirementPasswordGenerator::OPTION_UPPER_CASE, 5)
   ->setMaximumCount(RequirementPasswordGenerator::OPTION_LOWER_CASE, 1)
 ;
+```
 
 For the moment you can call ```$generator->validLimits()``` to test whether the counts will cause problems.
 If the method returns true, then you can proceed. If false, then generatePassword() will likely cause an infinite loop.
