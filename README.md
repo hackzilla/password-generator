@@ -15,8 +15,7 @@ Simple library for generating random passwords.
 Requirements
 ------------
 
-* PHP >= 5.3.2
-(No longer testing <= PHP 5.6, and next version will drop support)
+* PHP >= 7.1
 
 Installation
 ------------
@@ -104,7 +103,6 @@ The segment separator will be remove from the possible characters.
 Human Password Generator Usage
 -------------------------------
 
-
 ```php
 use Hackzilla\PasswordGenerator\Generator\HumanPasswordGenerator;
 
@@ -178,27 +176,7 @@ Example Implementations
 * Password Generator Bundle [https://github.com/hackzilla/password-generator-bundle]
 
 
-Caution
+Random Note
 -------
 
-This library uses [mt_rand](http://www.php.net/manual/en/function.mt-rand.php) which is does not generate cryptographically secure values.
-Basically an attacker could predict the random passwords this library produces given the right conditions.
-
-If you have a source of randomness you can inject it into the PasswordGenerator, using RandomGeneratorInterface.
-
-PHP 7 has [random_int](http://www.php.net/random_int) function which they say is good to use for cryptographic random integers.
-
-```php
-use Hackzilla\PasswordGenerator\Generator\HumanPasswordGenerator;
-use Hackzilla\PasswordGenerator\RandomGenerator\Php7RandomGenerator;
-
-$generator = new HumanPasswordGenerator();
-
-$generator
-  ->setRandomGenerator(new Php7RandomGenerator())
-  ->setWordList('/usr/share/dict/words')
-  ->setWordCount(3)
-  ->setWordSeparator('-');
-
-$password = $generator->generatePasswords(10);
-```
+Since version 1.5.0, the library depends on the presence of [random_int](http://www.php.net/random_int) which is found in PHP 7.0+
