@@ -1,9 +1,9 @@
 language: php
 
 php:
-  - 7.2
   - 7.3
   - 7.4
+  - 8.0
   - nightly
 
 env:
@@ -13,11 +13,11 @@ env:
 matrix:
   fast_finish: true
   include:
+    - php: 8.0
+      env: CS_FIXER=run
     - php: 7.3
       env: CS_FIXER=run
-    - php: 7.2
-      env: CS_FIXER=run
-    - php: 7.2
+    - php: 7.3
       env: COMPOSER_FLAGS="--prefer-lowest"
   allow_failures:
     - php: nightly
