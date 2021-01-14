@@ -17,6 +17,7 @@ Requirements
 
 * PHP >= 7.1
 
+We only support PHP 7.3+ 
 
 Installation
 ------------
