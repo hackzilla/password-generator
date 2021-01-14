@@ -15,7 +15,7 @@ Simple library for generating random passwords.
 Requirements
 ------------
 
-* PHP >= 7.3
+* PHP >= 7.1
 
 
 Installation
