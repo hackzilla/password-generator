@@ -1,7 +1,12 @@
 language: php
 
 php:
+<<<<<<< HEAD
+=======
+  - 7.3
+>>>>>>> master
   - 7.4
+  - 8.0
   - nightly
 
 env:
@@ -11,9 +16,17 @@ env:
 matrix:
   fast_finish: true
   include:
+<<<<<<< HEAD
     - php: 7.4
       env: CS_FIXER=run
     - php: 7.4
+=======
+    - php: 8.0
+      env: CS_FIXER=run
+    - php: 7.3
+      env: CS_FIXER=run
+    - php: 7.3
+>>>>>>> master
       env: COMPOSER_FLAGS="--prefer-lowest"
   allow_failures:
     - php: nightly
