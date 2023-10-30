@@ -1,10 +1,6 @@
-Password Generator Library
-==========================
+# Password Generator Library
 
 Simple library for generating random passwords.
-
-[![Build Status](https://travis-ci.org/hackzilla/password-generator.png?branch=master)](https://travis-ci.org/hackzilla/password-generator) 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/dd072918-d39c-4bd8-bbf0-f9928acee31e/mini.png)](https://insight.sensiolabs.com/projects/dd072918-d39c-4bd8-bbf0-f9928acee31e)
 
 [![Latest Stable Version](https://poser.pugx.org/hackzilla/password-generator/v/stable.svg)](https://packagist.org/packages/hackzilla/password-generator)
 [![Total Downloads](https://poser.pugx.org/hackzilla/password-generator/downloads.svg)](https://packagist.org/packages/hackzilla/password-generator)
@@ -12,15 +8,13 @@ Simple library for generating random passwords.
 [![License](https://poser.pugx.org/hackzilla/password-generator/license.svg)](https://packagist.org/packages/hackzilla/password-generator)
 
 
-Requirements
-------------
+## Requirements
 
 * PHP >= 7.1
 
 We only support PHP 7.3+ 
 
-Installation
-------------
+## Installation
 
 Install Composer
 
@@ -38,8 +32,7 @@ $ composer require hackzilla/password-generator
 Composer will add the library to your composer.json file and install it into your project's `vendor/hackzilla` directory.
 
 
-Simple Usage
-------------
+## Simple Usage
 
 ```php
 use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator;
@@ -57,8 +50,7 @@ $password = $generator->generatePassword();
 ```
 
 
-More Passwords Usage
---------------------
+## More Passwords Usage
 
 If you want to generate 10 passwords that are 12 characters long.
 
@@ -77,8 +69,7 @@ $generator
 $password = $generator->generatePasswords(10);
 ```
 
-Hybrid Password Generator Usage
--------------------------------
+## Hybrid Password Generator Usage
 
 ```php
 use Hackzilla\PasswordGenerator\Generator\HybridPasswordGenerator;
@@ -102,8 +93,7 @@ If you can think of a better name for this password generator then let me know.
 The segment separator will be remove from the possible characters.
 
 
-Human Password Generator Usage
--------------------------------
+## Human Password Generator Usage
 
 ```php
 use Hackzilla\PasswordGenerator\Generator\HumanPasswordGenerator;
@@ -118,8 +108,7 @@ $generator
 $password = $generator->generatePasswords(10);
 ```
 
-Requirement Password Generator Usage
-------------------------------------
+## Requirement Password Generator Usage
 
 ```php
 use Hackzilla\PasswordGenerator\Generator\RequirementPasswordGenerator;
@@ -170,15 +159,22 @@ $generator
 For the moment you can call ```$generator->validLimits()``` to test whether the counts will cause problems.
 If the method returns true, then you can proceed. If false, then generatePassword() will likely cause an infinite loop.
 
-
-Example Implementations
------------------------
+## Example Implementations
 
 * Password Generator App [https://github.com/hackzilla/password-generator-app]
 * Password Generator Bundle [https://github.com/hackzilla/password-generator-bundle]
 
-
-Random Note
--------
+## Random Note
 
 Since version 1.5.0, the library depends on the presence of [random_int](http://www.php.net/random_int) which is found in PHP 7.0+
+
+## Contributions and Issues
+See all contributors on [GitHub](https://github.com/hackzilla/password-generator/graphs/contributors).
+
+Please report issues using GitHub's issue tracker: [GitHub Repo](https://github.com/hackzilla/password-generator)
+
+If you find this project useful, consider [buying me a coffee](https://www.buymeacoffee.com/hackzilla).
+
+## License
+
+This bundle is released under the MIT license. See the [LICENSE](https://github.com/hackzilla/password-generator/blob/main/LICENSE) file for details.
