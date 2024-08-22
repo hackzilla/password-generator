@@ -51,7 +51,7 @@ class RequirementPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
             ->setOptionValue(RequirementPasswordGenerator::OPTION_AVOID_SIMILAR, true);
 
         $this->_object->setLength($length);
-        $this->assertSame(\strlen($this->_object->generatePassword()), $length);
+        $this->assertSame(\mb_strlen($this->_object->generatePassword()), $length);
     }
 
     /**
@@ -467,7 +467,7 @@ class RequirementPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
         $this->assertCount(5, $passwords);
 
         foreach ($passwords as $password) {
-            $this->assertSame($length, \strlen($password));
+            $this->assertSame($length, \mb_strlen($password));
         }
     }
 

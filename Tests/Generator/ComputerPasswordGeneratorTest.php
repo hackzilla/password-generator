@@ -49,7 +49,35 @@ class ComputerPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
             ->setOptionValue(ComputerPasswordGenerator::OPTION_AVOID_SIMILAR, true);
 
         $this->_object->setLength($length);
-        $this->assertSame(\strlen($this->_object->generatePassword()), $length);
+        $this->assertSame(\mb_strlen($this->_object->generatePassword()), $length);
+    }
+
+    /**
+     * @dataProvider lengthProvider
+     *
+     * @param $length
+     */
+    public function testGenerateMultiBytePassword($length): void
+    {
+        $this->_object
+            ->setOptionValue(ComputerPasswordGenerator::OPTION_UPPER_CASE, true)
+            ->setOptionValue(ComputerPasswordGenerator::OPTION_LOWER_CASE, true)
+            ->setParameter(ComputerPasswordGenerator::PARAMETER_UPPER_CASE, 'ßAÄÖÜÉÑÇŠŽДЖЮИЫ')
+            ->setParameter(ComputerPasswordGenerator::PARAMETER_LOWER_CASE, 'ßaäöüéñçšžджюиы')
+        ;
+
+        $this->_object->setLength($length);
+        $generatedPassword = $this->_object->generatePassword();
+
+        $this->assertSame(\mb_strlen($generatedPassword), $length);
+
+        $uppercase = $this->_object->getParameter(ComputerPasswordGenerator::PARAMETER_UPPER_CASE);
+        $lowercase = $this->_object->getParameter(ComputerPasswordGenerator::PARAMETER_LOWER_CASE);
+
+        // Check each character in the generated password
+        foreach (mb_str_split($generatedPassword) as $char) {
+            $this->assertTrue(mb_strpos($uppercase, $char) !== false || mb_strpos($lowercase, $char) !== false, "Character '{$char}' is not in the allowed character sets");
+        }
     }
 
     /**
