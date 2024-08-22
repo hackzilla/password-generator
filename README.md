@@ -10,9 +10,8 @@ Simple library for generating random passwords.
 
 ## Requirements
 
-* PHP >= 7.1
-
-We only support PHP 7.3+ 
+* PHP >= 8.0
+* ext-mbstring
 
 ## Installation
 
