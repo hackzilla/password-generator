@@ -345,11 +345,13 @@ class HumanPasswordGenerator extends AbstractPasswordGenerator
      */
     public function getWordList()
     {
-        if (!file_exists($this->getParameter(self::PARAMETER_DICTIONARY_FILE))) {
-            throw new FileNotFoundException();
+        $filename = $this->getParameter(self::PARAMETER_DICTIONARY_FILE);
+
+        if ($filename === null || !file_exists($filename)) {
+            throw new FileNotFoundException($filename ?? 'No file provided');
         }
 
-        return $this->getParameter(self::PARAMETER_DICTIONARY_FILE);
+        return $filename;
     }
 
     /**
