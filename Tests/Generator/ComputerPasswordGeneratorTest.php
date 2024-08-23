@@ -2,6 +2,7 @@
 
 namespace Hackzilla\PasswordGenerator\Tests\Generator;
 
+use Hackzilla\PasswordGenerator\Exception\CharactersNotFoundException;
 use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator;
 
 class ComputerPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
@@ -253,7 +254,7 @@ class ComputerPasswordGeneratorTest extends \PHPUnit\Framework\TestCase
      */
     public function testCharacterListException(): void
     {
-        $this->expectException('\Hackzilla\PasswordGenerator\Exception\CharactersNotFoundException');
+        $this->expectException(CharactersNotFoundException::class);
         $this->_object->getCharacterList();
     }
 }
